@@ -1,0 +1,8 @@
+# AnswerCard
+
+Bob's spoken answer written out for a glance: the question in quotes, a headline with the number, and up to three short lines.
+
+- The headline carries the answer on its own: “Pin is 236 yards”, “Red penalty area: 1 stroke”.
+- Body lines are options or detail, numbered when they are choices.
+- “Spoken through the speaker” confirms the golfer heard it; hide it when sound is off.
+- Under it, `Done` (secondary) and `Ask again` (primary) replace the bottom bar.

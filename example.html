@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teemeup Cart — example</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components/bundle.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="components/bundle.js"></script>
+<style>body{margin:0;background:#edf2f7;font-family:var(--font-sans)}</style>
+</head>
+<body>
+<div id="root" style="display:flex;flex-wrap:wrap;gap:24px;padding:24px"></div>
+<script>
+  // The same hole view by day and at dusk, plus Bob's answer, built only from the components.
+  const T = window.TeemeupCart, h = React.createElement;
+
+  function HoleView(theme) {
+    return h(T.DeviceFrame, { theme: theme },
+      h(T.CartHeader, { monogram: 'PR', course: 'Pine Ridge Golf Club', accent: '#0F5B3A', title: 'Hole 7', meta: 'Par 4', battery: 82 }),
+      h(T.YardageReadout, { front: 398, middle: 412, back: 427 }),
+      h(T.HoleMap, { zone: true, tap: theme === 'day' ? '176 yds' : undefined }),
+      h(T.BottomBar, null));
+  }
+
+  function BobAnswer() {
+    return h(T.DeviceFrame, null,
+      h(T.CartHeader, { back: true, title: 'Talk to Bob', device: 'Cart 12' }),
+      h('div', { className: 'tmc-body' },
+        h(T.ChatBubble, { from: 'golfer' }, 'How far to the pin?'),
+        h(T.AnswerCard, { question: 'How far to the pin?', headline: 'Pin is 236 yards' }, 'Middle of the green from where your cart is now.')),
+      h('div', { className: 'tmc-bar', style: { gridTemplateColumns: '1fr 1fr' } },
+        h(T.Button, { variant: 'secondary', block: true }, 'Done'),
+        h(T.Button, { block: true }, 'Ask again')));
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(React.Fragment, null, HoleView('day'), HoleView('dusk'), BobAnswer()));
+</script>
+</body>
+</html>

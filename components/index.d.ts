@@ -1,0 +1,78 @@
+import type * as React from 'react';
+
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x';
+
+export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
+export declare function Icon(props: IconProps): React.ReactElement;
+
+export interface DeviceFrameProps { theme?: 'day' | 'dusk'; children?: React.ReactNode; className?: string; style?: React.CSSProperties }
+export declare function DeviceFrame(props: DeviceFrameProps): React.ReactElement;
+
+export interface CourseMarkProps { monogram: string; accent?: string; onAccent?: string; size?: number; label?: string }
+export declare function CourseMark(props: CourseMarkProps): React.ReactElement;
+
+export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; offline?: boolean; device?: string; right?: React.ReactNode }
+export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
+
+export interface BottomBarProps { items?: 'mvp' | 'full'; active?: 'talk' | 'food' | 'music' | 'help'; onTalk?: () => void; onFood?: () => void; onMusic?: () => void; onHelp?: () => void }
+export declare function BottomBar(props: BottomBarProps): React.ReactElement;
+
+export interface ButtonProps { variant?: 'primary' | 'secondary' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }
+export declare function Button(props: ButtonProps): React.ReactElement;
+
+export interface IconButtonProps { icon: IconName; label: string; size?: 'md' | 'sm'; variant?: 'surface' | 'map'; onClick?: () => void; className?: string; style?: React.CSSProperties }
+export declare function IconButton(props: IconButtonProps): React.ReactElement;
+
+export interface YardageReadoutProps { front: number | string; middle: number | string; back: number | string; unit?: 'yds' | 'm' }
+export declare function YardageReadout(props: YardageReadoutProps): React.ReactElement;
+
+export interface HoleMapProps { zone?: boolean; zoneLabel?: string; inZone?: boolean; walker?: boolean; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string }
+export declare function HoleMap(props: HoleMapProps): React.ReactElement;
+
+export interface StatusTagProps { tone?: 'neutral' | 'brand' | 'go' | 'confirmed' | 'warning' | 'lightning' | 'zone'; icon?: IconName | false; children?: React.ReactNode }
+export declare function StatusTag(props: StatusTagProps): React.ReactElement;
+
+export interface BobAvatarProps { size?: number; onAccent?: boolean }
+export declare function BobAvatar(props: BobAvatarProps): React.ReactElement;
+
+export interface ChatBubbleProps { from?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
+export declare function ChatBubble(props: ChatBubbleProps): React.ReactElement;
+
+export interface MicButtonProps { state?: 'ready' | 'listening'; label?: string; onClick?: () => void }
+export declare function MicButton(props: MicButtonProps): React.ReactElement;
+
+export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; children?: React.ReactNode }
+export declare function AnswerCard(props: AnswerCardProps): React.ReactElement;
+
+export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery'; children?: React.ReactNode }
+export declare function Banner(props: BannerProps): React.ReactElement;
+
+export interface AlertSheetProps { tone?: 'pace' | 'message' | 'zone' | 'battery' | 'exited'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; children?: React.ReactNode }
+export declare function AlertSheet(props: AlertSheetProps): React.ReactElement;
+
+export interface AlertTakeoverProps { kind?: 'lightning' | 'zone' | 'clear'; title: string; message?: string; detail?: React.ReactNode; detailIcon?: IconName; icon?: IconName; footnote?: string; action?: string; onAction?: () => void; flash?: boolean }
+export declare function AlertTakeover(props: AlertTakeoverProps): React.ReactElement;
+
+export interface QRPanelProps { title?: string; hint?: string; size?: number }
+export declare function QRPanel(props: QRPanelProps): React.ReactElement;
+
+export interface ChoiceCardProps { icon: IconName; title: string; description?: string; selected?: boolean; onSelect?: () => void }
+export declare function ChoiceCard(props: ChoiceCardProps): React.ReactElement;
+
+export interface GolferRowProps { name: string; initials?: string; status?: string; tone?: StatusTagProps['tone'] }
+export declare function GolferRow(props: GolferRowProps): React.ReactElement;
+
+export interface KeypadProps { filled?: number; length?: number; onKey?: (key: string) => void }
+export declare function Keypad(props: KeypadProps): React.ReactElement;
+
+declare global {
+  interface Window {
+    TeemeupCart: {
+      Icon: typeof Icon; iconNames: IconName[]; DeviceFrame: typeof DeviceFrame; CourseMark: typeof CourseMark; CartHeader: typeof CartHeader;
+      BottomBar: typeof BottomBar; Button: typeof Button; IconButton: typeof IconButton; YardageReadout: typeof YardageReadout; HoleMap: typeof HoleMap;
+      StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard;
+      Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
+      GolferRow: typeof GolferRow; Keypad: typeof Keypad;
+    };
+  }
+}

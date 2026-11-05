@@ -1,0 +1,30 @@
+/* Teemeup Cart Design System — compiled from tokens.json for this canvas */
+:root, [data-theme="day"] {
+  --primary: #4817ce; --primary-foreground: #ffffff; --primary-text: #4817ce; --primary-tint: #4817ce1a;
+  --secondary: #008200; --secondary-text: #007a00; --secondary-tint: #0082001a; --secondary-solid: #008200;
+  --background: #ffffff; --foreground: #0a1e2c; --card: #ffffff; --muted: #edf2f7; --muted-foreground: #5a7184;
+  --border: #0a1e2c1a; --ring: #4817ce; --device-frame: #0a1e2c;
+  --course-accent: #4817ce; --course-on-accent: #ffffff;
+  --lightning: #a8071a; --lightning-flash: #8a0515; --zone: #ff8a1f; --zone-tint: #ff8a1f4d; --caution: #ffd21f; --clear: #075e30;
+  --warning-text: #b45309; --warning-tint: #fffbeb; --destructive-text: #c0142f; --scrim: #0a1e2c99;
+  --map-rough: #21482a; --map-trees: #1a3b22; --map-fairway: #4a8a3a; --map-green: #6fb552; --map-sand: #e6dcb0;
+  --map-water: #2c78b0; --map-penalty: #e5484d; --map-label: #0a1e2cd9;
+  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+  --shadow-float: 0 4px 8px -2px rgba(0,0,0,0.25);
+  --shadow-sheet: 0 -12px 32px -8px rgba(0,0,0,0.3);
+}
+[data-theme="dusk"] {
+  --primary: #7c4dff; --primary-text: #b39dff; --primary-tint: #7c4dff26;
+  --secondary: #00c400; --secondary-text: #00c400; --secondary-tint: #00c4001a;
+  --background: #0a1e2c; --foreground: #e8f1f8; --card: #0f2b40; --muted: #163348; --muted-foreground: #8bafc8;
+  --border: #ffffff17; --ring: #7c4dff; --device-frame: #2a4257;
+  --warning-text: #fbbf24; --warning-tint: #fbbf241f; --destructive-text: #f87171;
+}
+:root {
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --device-width: 360px; --device-height: 720px; --header-height: 60px; --bar-height: 80px; --yardage-height: 116px;
+  --tap: 56px; --tap-xl: 120px;
+  --radius-lg: 12px; --radius-2xl: 16px; --radius-sheet: 24px; --radius-device: 40px; --radius-full: 9999px;
+  --font-sans: Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
