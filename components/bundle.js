@@ -21,6 +21,7 @@
     shelter: 'M3 10 12 3l9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z',
     arrowRight: 'M5 12h14M12 5l7 7-7 7',
     arrowUp: 'M12 19V5M5 12l7-7 7 7',
+    arrowDown: 'M12 5v14M19 12l-7 7-7-7',
     chevronLeft: 'm15 18-6-6 6-6',
     chevronRight: 'm9 18 6-6-6-6',
     cart: 'M4 17h16v-5l-3-6H7l-3 6zM4 12h16M8 19a2 2 0 1 0 0-4a2 2 0 1 0 0 4ZM16 19a2 2 0 1 0 0-4a2 2 0 1 0 0 4Z',
@@ -310,18 +311,23 @@
         h('div', null, p.overline ? h('div', { style: { fontSize: 12, fontWeight: 800, letterSpacing: '.05em', textTransform: 'uppercase', color: 'var(--muted-foreground)' } }, p.overline) : null,
           h('div', { className: 'tmc-sheet-title' }, p.title))),
       p.children ? h('div', { className: 'tmc-sheet-body' }, p.children) : null,
-      p.action ? h(Button, { block: true, variant: p.actionVariant || 'secondary', onClick: p.onAction }, p.action) : null);
+      p.action ? h(Button, { block: true, variant: p.actionVariant || 'secondary', onClick: p.onAction }, p.action) : null,
+      // A warning that needs no tap: it says how it goes away instead of asking for an OK while driving.
+      p.autoDismiss ? h('div', { className: 'tmc-sheet-auto' }, h(Icon, { name: 'clock', size: 18 }), p.autoDismiss) : null);
   }
 
   var TAKE = { lightning: 'lightning', zone: 'ban', clear: 'checkCircle' };
   function AlertTakeover(p) {
     var k = p.kind || 'lightning';
     var light = k === 'zone';
-    return h('div', { className: cx('tmc-take', 'tmc-take-' + k), role: 'alert', style: p.flash && k === 'lightning' ? { background: 'var(--lightning-flash)' } : undefined },
+    return h('div', { className: cx('tmc-take', 'tmc-take-' + k, p.escalated && 'tmc-take-escalated'), role: 'alert', style: p.flash && k === 'lightning' ? { background: 'var(--lightning-flash)' } : undefined },
       h('div', { className: 'tmc-take-badge' }, h(Icon, { name: p.icon || TAKE[k], size: 52 })),
       h('div', { className: 'tmc-take-title' }, p.title),
+      // Escalated: a second, heavier panel right under the title, so it reads as a different state at a glance.
+      p.escalated ? h('div', { className: 'tmc-take-esc' }, h(Icon, { name: 'alert', size: 28 }),
+        h('div', null, h('div', { className: 'tmc-take-esc-t' }, p.escalated), p.escalatedDetail ? h('div', { className: 'tmc-take-esc-d' }, p.escalatedDetail) : null)) : null,
       p.message ? h('div', { className: 'tmc-take-msg' }, p.message) : null,
-      p.detail ? h('div', { className: 'tmc-take-detail' }, h(Icon, { name: p.detailIcon || (k === 'lightning' ? 'shelter' : 'arrowUp'), size: 26 }), h('div', { style: { flex: 1 } }, p.detail)) : null,
+      p.detail ? h('div', { className: 'tmc-take-detail' }, h(Icon, { name: p.detailIcon || (k === 'lightning' ? 'shelter' : 'arrowDown'), size: 26 }), h('div', { style: { flex: 1 } }, p.detail)) : null,
       h('div', { className: 'tmc-take-spacer' }),
       p.footnote ? h('div', { className: 'tmc-take-foot' }, p.footnote) : null,
       p.action ? h(Button, { block: true, variant: light ? 'primary' : 'onalert', onClick: p.onAction }, p.action) : null);

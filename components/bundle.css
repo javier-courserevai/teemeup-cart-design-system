@@ -86,7 +86,7 @@
 .tmc-sheet{background:var(--card);color:var(--foreground);border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;box-shadow:var(--shadow-sheet);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3)}
 .tmc-sheet-head{display:flex;align-items:center;gap:var(--space-3)}
 .tmc-sheet-title{font-size:20px;line-height:1.2;font-weight:800}
-.tmc-sheet-body{font-size:16px;line-height:1.4}
+.tmc-sheet-body{font-size:16px;line-height:1.4}.tmc-sheet-auto{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--muted-foreground)}
 .tmc-tile{width:44px;height:44px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;flex:none;background:var(--primary-tint);color:var(--primary-text)}
 .tmc-tile-zone{background:var(--zone);color:#0a1e2c}
 .tmc-tile-warning{background:var(--warning-tint);color:var(--warning-text)}
@@ -102,7 +102,7 @@
 .tmc-take-title{font-size:44px;line-height:1.05;font-weight:900;letter-spacing:1px;text-transform:uppercase}
 .tmc-take-msg{font-size:18px;line-height:1.4;font-weight:600}
 .tmc-take-detail{display:flex;align-items:center;gap:var(--space-3);padding:14px;border-radius:var(--radius-2xl);background:#ffffff26;font-size:17px;font-weight:800}
-.tmc-take-zone .tmc-take-detail{background:#ffffff;color:#0a1e2c}
+.tmc-take-zone .tmc-take-detail{background:#ffffff;color:#0a1e2c}.tmc-take-zone .tmc-take-msg{background:#ffffff;color:#0a1e2c;padding:14px;border-radius:var(--radius-2xl)}.tmc-take-zone .tmc-take-title{align-self:flex-start;background:#0a1e2c;color:#ffffff;padding:6px 12px;border-radius:var(--radius-lg)}.tmc-take-esc{display:flex;align-items:center;gap:var(--space-3);padding:16px;border-radius:var(--radius-2xl);background:var(--lightning);color:#ffffff}.tmc-take-esc-t{font-size:22px;line-height:1.15;font-weight:900}.tmc-take-esc-d{font-size:16px;font-weight:700;margin-top:2px}.tmc-take-escalated .tmc-take-badge{background:#0a1e2c;color:var(--zone)}
 .tmc-take-foot{font-size:15px;font-weight:600;opacity:.9}
 .tmc-take-spacer{flex:1}
 
