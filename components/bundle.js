@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"Keypad"},{"name":"Icon"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"Keypad"},{"name":"Icon"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
@@ -34,7 +34,9 @@
     food: 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7',
     music: 'M9 18V5l12-2v13M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6ZM18 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6Z',
     mapPinOff: 'M12.75 7.09a3 3 0 0 1 2.16 2.16M17.41 17.41A60 60 0 0 1 12 22s-8-6-8-12a8 8 0 0 1 1.6-4.8M8.42 3.24A8 8 0 0 1 20 10c0 1.4-.36 2.76-.96 4.04M2 2l20 20',
-    x: 'M18 6 6 18M6 6l12 12'
+    x: 'M18 6 6 18M6 6l12 12',
+    send: 'M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zM21.854 2.147l-10.94 10.939',
+    keyboard: 'M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10'
   };
   var ICON_NAMES = Object.keys(PATHS);
 
@@ -104,7 +106,7 @@
       kids.push(h('button', { key: 'food', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onFood }, h(Icon, { name: 'food' }), 'Food'));
       kids.push(h('button', { key: 'music', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onMusic }, h(Icon, { name: 'music' }), 'Music'));
     }
-    kids.push(h('button', { key: 'help', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onHelp }, h(Icon, { name: 'help' }), 'Help'));
+    kids.push(h('button', { key: 'help', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onHelp, 'aria-current': p.active === 'help' ? 'page' : undefined }, h(Icon, { name: 'help' }), 'Help'));
     return h('nav', { className: cx('tmc-bar', full && 'tmc-bar-full'), 'aria-label': 'Main' }, kids);
   }
 
@@ -241,6 +243,32 @@
       h('div', { className: 'tmc-mic-label' }, p.label || (listening ? 'Listening… release to send' : 'Hold to talk, or tap')));
   }
 
+  // One suggested question or quick reply. 56px tall: tapped with a glove.
+  function PromptChip(p) {
+    return h('button', { type: 'button', className: cx('tmc-chip', p.className), onClick: p.onClick },
+      p.icon ? h(Icon, { name: p.icon, size: 18 }) : null, h('span', null, p.children));
+  }
+
+  // Chat with Bob: type a message, or tap the mic to speak. The right button is the mic while the
+  // field is empty and turns into Send as soon as there is text, so voice and chat share one bar.
+  var composerSeq = 0;
+  function Composer(p) {
+    var st = R.useState(p.value || ''), v = st[0], set = st[1];
+    var ref = R.useRef(null);
+    if (ref.current === null) ref.current = 'tmc-composer-' + (++composerSeq);
+    var hasText = String(v).trim().length > 0;
+    var locked = !!p.locked;
+    return h('form', { className: 'tmc-composer', onSubmit: function (e) { e.preventDefault(); if (hasText && p.onSend) { p.onSend(v); set(''); } } },
+      h('label', { className: 'tmc-sr', htmlFor: ref.current }, 'Message Bob'),
+      h('input', { id: ref.current, className: 'tmc-composer-input', value: v, disabled: locked, autoComplete: 'off', enterKeyHint: 'send',
+        placeholder: locked ? (p.lockedHint || 'Voice only while moving') : (p.placeholder || 'Message Bob'),
+        onChange: function (e) { set(e.target.value); } }),
+      hasText && !locked
+        ? h('button', { type: 'submit', className: 'tmc-composer-btn', 'aria-label': 'Send to Bob' }, h(Icon, { name: 'send', size: 22 }))
+        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Release to send' : 'Hold to talk to Bob', onClick: p.onVoice },
+            h(Icon, { name: 'mic', size: 24 })));
+  }
+
   function AnswerCard(p) {
     return h('div', { className: 'tmc-answer' },
       p.question ? h('div', { className: 'tmc-answer-q' }, '“' + p.question + '”') : null,
@@ -323,7 +351,7 @@
 
   var api = { Icon: Icon, iconNames: ICON_NAMES, DeviceFrame: DeviceFrame, CourseMark: CourseMark, IconButton: IconButton, CartHeader: CartHeader, BobAvatar: BobAvatar,
     Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
-    AnswerCard: AnswerCard, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, Keypad: Keypad };
+    AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, Keypad: Keypad };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();

@@ -23,7 +23,7 @@
 }
 :root {
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
-  --device-width: 360px; --device-height: 720px; --header-height: 60px; --bar-height: 80px; --yardage-height: 116px;
+  --device-width: 360px; --device-height: 720px; --header-height: 64px; --bar-height: 80px; --yardage-height: 112px;
   --tap: 56px; --tap-xl: 120px;
   --radius-lg: 12px; --radius-2xl: 16px; --radius-sheet: 24px; --radius-device: 40px; --radius-full: 9999px;
   --font-sans: Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;

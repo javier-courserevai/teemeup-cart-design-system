@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard';
 
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
 export declare function Icon(props: IconProps): React.ReactElement;
@@ -54,6 +54,13 @@ export declare function MicButton(props: MicButtonProps): React.ReactElement;
 export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; children?: React.ReactNode }
 export declare function AnswerCard(props: AnswerCardProps): React.ReactElement;
 
+export interface PromptChipProps { icon?: IconName; onClick?: () => void; children?: React.ReactNode; className?: string }
+export declare function PromptChip(props: PromptChipProps): React.ReactElement;
+
+/** The chat bar on every Bob screen. Empty field: the round button is the mic. With text: it is Send. */
+export interface ComposerProps { value?: string; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void }
+export declare function Composer(props: ComposerProps): React.ReactElement;
+
 export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery'; children?: React.ReactNode }
 export declare function Banner(props: BannerProps): React.ReactElement;
 
@@ -80,7 +87,7 @@ declare global {
     TeemeupCart: {
       Icon: typeof Icon; iconNames: IconName[]; DeviceFrame: typeof DeviceFrame; CourseMark: typeof CourseMark; CartHeader: typeof CartHeader;
       BottomBar: typeof BottomBar; Button: typeof Button; IconButton: typeof IconButton; YardageReadout: typeof YardageReadout; HoleMap: typeof HoleMap;
-      StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard;
+      StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard; PromptChip: typeof PromptChip; Composer: typeof Composer;
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
       GolferRow: typeof GolferRow; Keypad: typeof Keypad;
     };

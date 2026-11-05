@@ -17,7 +17,7 @@ Point Claude at this folder: “Build the Teemeup Cart screens using the design 
 | `README.md` | This brand book: layers, voice, outdoor rules, alerts | Always, first |
 | `tokens.json` | Every token with a usage note: colours for day and dusk, type scale, spacing, radii, shadows | Any stack. The source of truth |
 | `tokens.css` | The same tokens as CSS variables; `[data-theme="dusk"]` switches the theme | Web or a WebView |
-| `components/bundle.js` | 21 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
+| `components/bundle.js` | 23 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
 | `components/bundle.css` | Styles for those components, built only on the token variables | With `bundle.js` |
 | `components/index.d.ts` | Props of every component | Reading the API |
 | `components/<Name>/README.md` | When and how to use each component, with its copy | Before building any screen |
@@ -50,7 +50,7 @@ The components are web (React). For a native build (Kotlin, Flutter or React Nat
 
 ### Components
 
-Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
+Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
 
 ## Three layers
 
@@ -64,6 +64,7 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 
 ## Content fundamentals
 
+- **Bob listens and reads.** Every Bob screen ends in the `Composer`: type a message or tap the mic. Replies are written in the thread and spoken when sound is on. Typing locks while the cart moves; voice never does.
 - **Bob is a person.** “Talk to Bob”, never “Talk to Teemeup” or “the AI”. He greets by first name: “Welcome, Sam! You're on the 9:40 tee time.”
 - **Short and concrete.** Numbers first: “Pin is 236 yards”, “Halfway house · 180 yds”, “Ready at the turn about 10:55”.
 - **Alerts say what to do in their first two words.** Lightning: “Go to shelter.” Zone: “Leave this area.” All clear: “Play may resume.”
@@ -76,7 +77,7 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 
 - **Outdoor first.** Critical text (yardages, alert titles and messages) holds **7:1**; everything else 4.5:1. Targets are at least `tap` (56px); the mic is `tap-xl` (120px). Every alert carries an icon **and** a word.
 - **Type is the system font** (Roboto on the device) at an outdoor scale: `yardage-hero` 84px, `alert-title` 44px, `button` 18px, `body` 16px. Tabular figures for every number. There is no condensed cut, so the hero yardage is 84px, not the mockup's 96px condensed.
-- **Every screen** is a `CartHeader` (60px), the content, and a `BottomBar` (80px). The MVP bar has two items, Talk to Bob and Help; Food and Music join in phase 3.
+- **Every screen** is a `CartHeader` (64px, with a 56px back button), the content, and a `BottomBar` (80px). The MVP bar has two items, Talk to Bob and Help; Food and Music join in phase 3.
 - **Day and dusk.** Day is white with navy ink. Dusk is navy (`background` #0A1E2C, `card` #0F2B40), never black, and purple lifts to #7C4DFF. The map dims to 82%. Safety colours stay the same in both.
 - **Shapes** follow the app: bottom-bar items, tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
 - **The map** is a satellite tile of the course in production. The stand-in drawing uses the `map-*` tokens. Active restricted zones are always drawn, hatched in `zone`, so golfers avoid them before anything sounds. Penalty areas keep a thin solid `map-penalty` edge; dashes are not used.
