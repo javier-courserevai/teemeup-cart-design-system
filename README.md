@@ -17,7 +17,7 @@ Point Claude at this folder: “Build the Teemeup Cart screens using the design 
 | `README.md` | This brand book: layers, voice, outdoor rules, alerts | Always, first |
 | `tokens.json` | Every token with a usage note: colours for day and dusk, type scale, spacing, radii, shadows | Any stack. The source of truth |
 | `tokens.css` | The same tokens as CSS variables; `[data-theme="dusk"]` switches the theme | Web or a WebView |
-| `components/bundle.js` | 23 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
+| `components/bundle.js` | 26 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
 | `components/bundle.css` | Styles for those components, built only on the token variables | With `bundle.js` |
 | `components/index.d.ts` | Props of every component | Reading the API |
 | `components/<Name>/README.md` | When and how to use each component, with its copy | Before building any screen |
@@ -50,7 +50,7 @@ The components are web (React). For a native build (Kotlin, Flutter or React Nat
 
 ### Components
 
-Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
+Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
 
 ## Three layers
 

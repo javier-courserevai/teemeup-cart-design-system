@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"Keypad"},{"name":"Icon"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
@@ -37,6 +37,13 @@
     x: 'M18 6 6 18M6 6l12 12',
     send: 'M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zM21.854 2.147l-10.94 10.939',
     flag: 'M7 22V2l11 5.5L7 13M4 22h7',
+    plus: 'M5 12h14M12 5v14',
+    minus: 'M5 12h14',
+    droplet: 'M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z',
+    play: 'm7 4 13 8-13 8V4z',
+    pause: 'M7 4h3v16H7zM14 4h3v16h-3z',
+    skipBack: 'M19 20 9 12l10-8v16zM5 19V5',
+    skipForward: 'm5 4 10 8-10 8V4zM19 5v14',
     lifebuoy: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20ZM12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8ZM4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24',
     keyboard: 'M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10'
   };
@@ -342,6 +349,38 @@
       p.description ? h('div', { className: 'tmc-choice-desc' }, p.description) : null);
   }
 
+  // Food and drink. The whole card is one big target that adds the item; editing happens on the review step.
+  function MenuItem(p) {
+    var q = p.qty || 0;
+    return h('button', { type: 'button', className: cx('tmc-menu-item', q && 'tmc-menu-item-on'), onClick: p.onAdd,
+        'aria-label': (q ? 'Add another ' : 'Add ') + p.name + ', ' + p.price + (q ? ', ' + q + ' in your order' : '') },
+      p.image ? h('img', { className: 'tmc-menu-img', src: p.image, alt: '' })
+        : h('span', { className: 'tmc-menu-img tmc-menu-noimg', 'aria-hidden': 'true' }, h(Icon, { name: p.icon || 'food', size: 30 })),
+      h('span', { className: 'tmc-menu-text' },
+        p.tag ? h('span', { className: 'tmc-menu-tag' }, p.tag) : null,
+        h('span', { className: 'tmc-menu-name' }, p.name),
+        p.description ? h('span', { className: 'tmc-menu-desc' }, p.description) : null,
+        h('span', { className: 'tmc-menu-price' }, p.price)),
+      h('span', { className: cx('tmc-menu-add', q && 'tmc-menu-add-on'), 'aria-hidden': 'true' }, q ? String(q) : h(Icon, { name: 'plus', size: 24 })));
+  }
+
+  function CategoryTabs(p) {
+    return h('div', { className: 'tmc-tabs', role: 'tablist', 'aria-label': p.label || 'Categories' },
+      (p.items || []).map(function (it) {
+        var on = it.id === p.active;
+        return h('button', { key: it.id, type: 'button', role: 'tab', 'aria-selected': on ? 'true' : 'false', className: cx('tmc-tab', on && 'tmc-tab-on'),
+          onClick: function () { if (p.onChange) p.onChange(it.id); } }, it.label);
+      }));
+  }
+
+  function QuantityStepper(p) {
+    var v = p.value || 0;
+    return h('div', { className: 'tmc-stepper', role: 'group', 'aria-label': (p.label || 'Quantity') },
+      h('button', { type: 'button', 'aria-label': v <= 1 ? 'Remove ' + (p.label || 'item') : 'One less', onClick: p.onDecrease }, h(Icon, { name: v <= 1 ? 'x' : 'minus', size: 22 })),
+      h('output', { 'aria-live': 'polite' }, v),
+      h('button', { type: 'button', 'aria-label': 'One more', onClick: p.onIncrease }, h(Icon, { name: 'plus', size: 22 })));
+  }
+
   function GolferRow(p) {
     var initials = p.initials || String(p.name || '').split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2);
     return h('div', { className: 'tmc-card tmc-golfer' }, h('div', { className: 'tmc-initials', 'aria-hidden': 'true' }, initials),
@@ -362,7 +401,7 @@
 
   var api = { Icon: Icon, iconNames: ICON_NAMES, DeviceFrame: DeviceFrame, CourseMark: CourseMark, IconButton: IconButton, CartHeader: CartHeader, BobAvatar: BobAvatar,
     Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
-    AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, Keypad: Keypad };
+    AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();

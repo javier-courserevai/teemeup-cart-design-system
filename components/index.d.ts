@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward';
 
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
 export declare function Icon(props: IconProps): React.ReactElement;
@@ -80,6 +80,13 @@ export declare function ChoiceCard(props: ChoiceCardProps): React.ReactElement;
 export interface GolferRowProps { name: string; initials?: string; status?: string; tone?: StatusTagProps['tone'] }
 export declare function GolferRow(props: GolferRowProps): React.ReactElement;
 
+export interface MenuItemProps { name: string; price: string; description?: string; image?: string; icon?: IconName; tag?: string; qty?: number; onAdd?: () => void }
+export declare function MenuItem(props: MenuItemProps): React.ReactElement;
+export interface CategoryTabsProps { items: { id: string; label: string }[]; active?: string; onChange?: (id: string) => void; label?: string }
+export declare function CategoryTabs(props: CategoryTabsProps): React.ReactElement;
+export interface QuantityStepperProps { value: number; label?: string; onIncrease?: () => void; onDecrease?: () => void }
+export declare function QuantityStepper(props: QuantityStepperProps): React.ReactElement;
+
 export interface KeypadProps { filled?: number; length?: number; onKey?: (key: string) => void }
 export declare function Keypad(props: KeypadProps): React.ReactElement;
 
@@ -90,7 +97,7 @@ declare global {
       BottomBar: typeof BottomBar; Button: typeof Button; IconButton: typeof IconButton; YardageReadout: typeof YardageReadout; HoleMap: typeof HoleMap;
       StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard; PromptChip: typeof PromptChip; Composer: typeof Composer;
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
-      GolferRow: typeof GolferRow; Keypad: typeof Keypad;
+      GolferRow: typeof GolferRow; Keypad: typeof Keypad; MenuItem: typeof MenuItem; CategoryTabs: typeof CategoryTabs; QuantityStepper: typeof QuantityStepper;
     };
   }
 }
