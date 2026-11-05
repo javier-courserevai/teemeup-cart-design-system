@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy';
 
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
 export declare function Icon(props: IconProps): React.ReactElement;
@@ -14,7 +14,8 @@ export declare function CourseMark(props: CourseMarkProps): React.ReactElement;
 export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; offline?: boolean; device?: string; right?: React.ReactNode }
 export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
 
-export interface BottomBarProps { items?: 'mvp' | 'full'; active?: 'talk' | 'food' | 'music' | 'help'; onTalk?: () => void; onFood?: () => void; onMusic?: () => void; onHelp?: () => void }
+/** The dock. Ask Bob sits raised in the centre: onTalk on tap (open chat), onHoldStart on press (start listening). */
+export interface BottomBarProps { items?: 'mvp' | 'full'; active?: 'hole' | 'bob' | 'food' | 'music' | 'help'; onHole?: () => void; onTalk?: () => void; onHoldStart?: () => void; onFood?: () => void; onMusic?: () => void; onHelp?: () => void }
 export declare function BottomBar(props: BottomBarProps): React.ReactElement;
 
 export interface ButtonProps { variant?: 'primary' | 'secondary' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }

@@ -36,6 +36,8 @@
     mapPinOff: 'M12.75 7.09a3 3 0 0 1 2.16 2.16M17.41 17.41A60 60 0 0 1 12 22s-8-6-8-12a8 8 0 0 1 1.6-4.8M8.42 3.24A8 8 0 0 1 20 10c0 1.4-.36 2.76-.96 4.04M2 2l20 20',
     x: 'M18 6 6 18M6 6l12 12',
     send: 'M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zM21.854 2.147l-10.94 10.939',
+    flag: 'M7 22V2l11 5.5L7 13M4 22h7',
+    lifebuoy: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20ZM12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8ZM4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24',
     keyboard: 'M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10'
   };
   var ICON_NAMES = Object.keys(PATHS);
@@ -96,18 +98,27 @@
     }, p.icon ? h(Icon, { name: p.icon }) : null, p.children);
   }
 
+  // The dock: Bob raised in the centre (tap to chat, hold to talk), destinations either side.
+  // MVP: Hole · Bob · Help. Phase 3: Hole · Food · Bob · Music · Help. Bob never moves.
+  function DockItem(p) {
+    var on = p.active === p.id;
+    return h('button', { type: 'button', className: 'tmc-dock-item', onClick: p.onClick, 'aria-current': on ? 'page' : undefined },
+      h('span', { className: 'tmc-dock-ico' }, h(Icon, { name: p.icon, size: 26, strokeWidth: on ? 2.4 : 2 })),
+      h('span', { className: 'tmc-dock-label' }, p.label));
+  }
   function BottomBar(p) {
     var full = p.items === 'full';
-    var kids = [
-      h('button', { key: 'talk', type: 'button', className: 'tmc-btn tmc-btn-primary tmc-pill', onClick: p.onTalk, 'aria-current': p.active === 'talk' ? 'page' : undefined },
-        h(BobAvatar, { size: full ? 26 : 32, onAccent: true }), full ? 'Bob' : 'Talk to Bob')
-    ];
-    if (full) {
-      kids.push(h('button', { key: 'food', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onFood }, h(Icon, { name: 'food' }), 'Food'));
-      kids.push(h('button', { key: 'music', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onMusic }, h(Icon, { name: 'music' }), 'Music'));
-    }
-    kids.push(h('button', { key: 'help', type: 'button', className: 'tmc-btn tmc-btn-secondary tmc-pill', onClick: p.onHelp, 'aria-current': p.active === 'help' ? 'page' : undefined }, h(Icon, { name: 'help' }), 'Help'));
-    return h('nav', { className: cx('tmc-bar', full && 'tmc-bar-full'), 'aria-label': 'Main' }, kids);
+    var a = p.active || 'hole';
+    var item = function (id, icon, label, fn) { return h(DockItem, { key: id, id: id, icon: icon, label: label, active: a, onClick: fn }); };
+    var bob = h('button', { key: 'bob', type: 'button', className: 'tmc-dock-bob', onClick: p.onTalk, onPointerDown: p.onHoldStart,
+        'aria-label': 'Ask Bob. Tap to chat, hold to talk', 'aria-current': a === 'bob' ? 'page' : undefined },
+      h('span', { className: 'tmc-dock-bob-btn' }, h(Icon, { name: 'sparkles', size: 30 }),
+        h('span', { className: 'tmc-dock-mic', 'aria-hidden': 'true' }, h(Icon, { name: 'mic', size: 15, strokeWidth: 2.4 }))),
+      h('span', { className: 'tmc-dock-label' }, 'Ask Bob'));
+    var kids = full
+      ? [item('hole', 'flag', 'Hole', p.onHole), item('food', 'food', 'Food', p.onFood), bob, item('music', 'music', 'Music', p.onMusic), item('help', 'lifebuoy', 'Help', p.onHelp)]
+      : [item('hole', 'flag', 'Hole', p.onHole), bob, item('help', 'lifebuoy', 'Help', p.onHelp)];
+    return h('nav', { className: cx('tmc-dock', full && 'tmc-dock-full'), 'aria-label': 'Main' }, kids);
   }
 
   function YardageReadout(p) {
