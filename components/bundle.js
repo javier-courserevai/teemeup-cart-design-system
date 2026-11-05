@@ -126,11 +126,20 @@
     if (ref.current === null) ref.current = 'tmcz' + (++mapSeq);
     var id = ref.current;
     var labels = p.hazards || [{ text: 'Water 236', x: 94, y: 153 }, { text: 'Bunker 214', x: 134, y: 249 }];
+    // Geometry in the 328 x 412 map space. Defaults fit the drawn stand-in; a real image passes its own.
+    var me = p.me || (p.walker ? { x: 160, y: 330 } : { x: 152, y: 352 });
+    var pin = p.pin || { x: 212, y: 66 };
+    var tapAt = p.tapAt || { x: 232, y: 170 };
+    var zonePath = p.zonePath || 'M248 30L312 22L320 78L262 92Z';
+    var zoneAt = p.zoneLabelAt || { x: 284, y: 107 };
+    var tapW = String(p.tap || '').length * 9 + 16;
+    var tapLabelX = Math.min(tapAt.x + 16, 324 - tapW);
     var dot = p.walker
-      ? h('g', { key: 'me' }, h('circle', { cx: 160, cy: 330, r: 19, fill: '#ffffff' }), h('circle', { cx: 160, cy: 330, r: 16, fill: 'var(--primary)' }),
+      ? h('g', { key: 'me', transform: 'translate(' + (me.x - 160) + ' ' + (me.y - 330) + ')' },
+          h('circle', { cx: 160, cy: 330, r: 19, fill: '#ffffff' }), h('circle', { cx: 160, cy: 330, r: 16, fill: 'var(--primary)' }),
           h('circle', { cx: 160, cy: 322, r: 2.8, fill: '#ffffff' }),
           h('path', { d: 'M160 326v8M155 329l5-1 5 1M156 341l4-7 4 7', stroke: '#ffffff', strokeWidth: 2, fill: 'none', strokeLinecap: 'round' }))
-      : h('g', { key: 'me' }, h('circle', { cx: 152, cy: 352, r: 14, fill: '#ffffff' }), h('circle', { cx: 152, cy: 352, r: 9, fill: 'var(--primary)' }));
+      : h('g', { key: 'me' }, h('circle', { cx: me.x, cy: me.y, r: 14, fill: '#ffffff' }), h('circle', { cx: me.x, cy: me.y, r: 9, fill: 'var(--primary)' }));
     var FAIRWAY = 'M150 400C138 320 146 262 184 214C220 168 226 126 214 76';
     var WATER = 'M36 52C78 30 128 50 142 92C150 122 112 140 80 130C42 120 22 82 36 52Z';
     var stop = function (o, c, a) { return h('stop', { offset: o, style: { stopColor: c, stopOpacity: a == null ? 1 : a } }); };
@@ -160,6 +169,7 @@
         h('radialGradient', { id: id + 'g', cx: '45%', cy: '40%', r: '65%' }, stop('0', '#8fcf68'), stop('1', 'var(--map-green)')),
         h('radialGradient', { id: id + 'b', cx: '45%', cy: '40%', r: '70%' }, stop('0', '#f4ecd0'), stop('1', 'var(--map-sand)')),
         h('linearGradient', { id: id + 'w', x1: 0, y1: 0, x2: 1, y2: 1 }, stop('0', '#3d93c6'), stop('0.6', 'var(--map-water)'), stop('1', '#1c5684'))),
+      p.image ? h('image', { className: 'tmc-map-base', href: p.image, x: 0, y: 0, width: 328, height: 412, preserveAspectRatio: 'xMidYMid slice' }) :
       h('g', { className: 'tmc-map-base' },
         h('rect', { width: 328, height: 412, fill: 'var(--map-rough)' }),
         h('rect', { width: 328, height: 412, filter: 'url(#' + id + 'm)' }),
@@ -179,13 +189,14 @@
         h('rect', { x: 138, y: 364, width: 26, height: 11, rx: 3, fill: 'var(--map-fringe)' }),
         trees,
         h('rect', { width: 328, height: 412, filter: 'url(#' + id + 'n)', opacity: 0.55 })),
-      p.zone ? h('path', { d: 'M248 30L312 22L320 78L262 92Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
-      p.inZone ? h('path', { d: 'M110 300L210 290L220 400L100 412Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
-      h('path', { d: 'M215 68l9 3', stroke: '#000000', strokeOpacity: 0.3, strokeWidth: 3, strokeLinecap: 'round' }),
-      h('circle', { cx: 212, cy: 66, r: 2.5, fill: '#0a1e2c' }),
-      h('path', { d: 'M212 66V36l16 6-16 6', stroke: '#ffffff', strokeWidth: 2.5, fill: '#ffffff' }),
-      p.tap ? h('g', null, h('path', { d: 'M152 352L232 170', stroke: '#ffffff', strokeWidth: 2, strokeDasharray: '5 5' }),
-        h('circle', { cx: 232, cy: 170, r: 12, fill: 'none', stroke: '#ffffff', strokeWidth: 3 })) : null,
+      p.zone ? h('path', { d: zonePath, fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
+      p.inZone ? h('path', { d: 'M' + (me.x - 50) + ' ' + (me.y - 60) + 'L' + (me.x + 50) + ' ' + (me.y - 70) + 'L' + (me.x + 60) + ' 412L' + (me.x - 60) + ' 412Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
+      h('g', { transform: 'translate(' + (pin.x - 212) + ' ' + (pin.y - 66) + ')' },
+        h('path', { d: 'M215 68l9 3', stroke: '#000000', strokeOpacity: 0.3, strokeWidth: 3, strokeLinecap: 'round' }),
+        h('circle', { cx: 212, cy: 66, r: 2.5, fill: '#0a1e2c' }),
+        h('path', { d: 'M212 66V36l16 6-16 6', stroke: '#ffffff', strokeWidth: 2.5, fill: '#ffffff' })),
+      p.tap ? h('g', null, h('path', { d: 'M' + me.x + ' ' + me.y + 'L' + tapAt.x + ' ' + tapAt.y, stroke: '#ffffff', strokeWidth: 2, strokeDasharray: '5 5' }),
+        h('circle', { cx: tapAt.x, cy: tapAt.y, r: 12, fill: 'none', stroke: '#ffffff', strokeWidth: 3 })) : null,
       dot,
       h('g', { fontSize: 14, fontWeight: 700, fill: '#ffffff', fontFamily: 'inherit' },
         labels.map(function (l, i) {
@@ -193,10 +204,11 @@
           return h('g', { key: i }, h('rect', { x: l.x - w / 2, y: l.y - 13, width: w, height: 26, rx: 13, fill: 'var(--map-label)' }),
             h('text', { x: l.x, y: l.y + 5, textAnchor: 'middle' }, l.text));
         }),
-        p.tap ? h('g', null, h('rect', { x: 248, y: 160, width: 72, height: 30, rx: 15, fill: '#ffffff' }),
-          h('text', { x: 284, y: 180, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 16 }, p.tap)) : null,
-        p.zone ? h('g', null, h('rect', { x: 246, y: 96, width: 76, height: 22, rx: 11, fill: 'var(--zone)' }),
-          h('text', { x: 284, y: 111, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 12 }, p.zoneLabel || 'No carts')) : null));
+        p.tap ? h('g', null, h('rect', { x: tapLabelX, y: tapAt.y - 10, width: tapW, height: 30, rx: 15, fill: '#ffffff' }),
+          h('text', { x: tapLabelX + tapW / 2, y: tapAt.y + 10, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 16 }, p.tap)) : null,
+        p.zone ? h('g', null, h('rect', { x: zoneAt.x - 38, y: zoneAt.y - 11, width: 76, height: 22, rx: 11, fill: 'var(--zone)' }),
+          h('text', { x: zoneAt.x, y: zoneAt.y + 4, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 12 }, p.zoneLabel || 'No carts')) : null),
+      p.credit ? h('text', { x: 6, y: 13, fontSize: 9, fontWeight: 600, fill: '#ffffff', opacity: 0.9, fontFamily: 'inherit', style: { paintOrder: 'stroke' }, stroke: '#0a1e2c', strokeWidth: 2, strokeOpacity: 0.5 }, p.credit) : null);
     return h('div', { className: 'tmc-map', style: p.height ? { flex: 'none', height: p.height } : undefined }, art,
       p.nav === false ? null : h(R.Fragment, null,
         h(IconButton, { icon: 'chevronLeft', label: 'Previous hole', variant: 'map', className: 'tmc-map-nav', style: { left: 12, position: 'absolute' } }),

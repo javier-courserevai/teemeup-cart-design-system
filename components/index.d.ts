@@ -26,7 +26,17 @@ export declare function IconButton(props: IconButtonProps): React.ReactElement;
 export interface YardageReadoutProps { front: number | string; middle: number | string; back: number | string; unit?: 'yds' | 'm' }
 export declare function YardageReadout(props: YardageReadoutProps): React.ReactElement;
 
-export interface HoleMapProps { zone?: boolean; zoneLabel?: string; inZone?: boolean; walker?: boolean; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string }
+export interface MapPoint { x: number; y: number }
+/** Coordinates are in the 328 x 412 map space, green at the top, tee at the bottom. */
+export interface HoleMapProps {
+  /** Aerial photo of the hole, rotated tee-to-green and cropped to 328:412. Without it the component draws an aerial-style stand-in. */
+  image?: string;
+  /** Small source line drawn bottom-left, e.g. "Imagery: USGS NAIP". */
+  credit?: string;
+  pin?: MapPoint; me?: MapPoint; tapAt?: MapPoint;
+  zone?: boolean; zonePath?: string; zoneLabelAt?: MapPoint; zoneLabel?: string; inZone?: boolean;
+  walker?: boolean; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
+}
 export declare function HoleMap(props: HoleMapProps): React.ReactElement;
 
 export interface StatusTagProps { tone?: 'neutral' | 'brand' | 'go' | 'confirmed' | 'warning' | 'lightning' | 'zone'; icon?: IconName | false; children?: React.ReactNode }
