@@ -349,19 +349,28 @@
       p.description ? h('div', { className: 'tmc-choice-desc' }, p.description) : null);
   }
 
-  // Food and drink. The whole card is one big target that adds the item; editing happens on the review step.
+  // Food and drink. Not yet ordered: the whole card is one big button that adds it.
+  // In the order: the card grows a quantity row (− / ✕, count, +) so it can be changed right there.
   function MenuItem(p) {
     var q = p.qty || 0;
-    return h('button', { type: 'button', className: cx('tmc-menu-item', q && 'tmc-menu-item-on'), onClick: p.onAdd,
-        'aria-label': (q ? 'Add another ' : 'Add ') + p.name + ', ' + p.price + (q ? ', ' + q + ' in your order' : '') },
-      p.image ? h('img', { className: 'tmc-menu-img', src: p.image, alt: '' })
-        : h('span', { className: 'tmc-menu-img tmc-menu-noimg', 'aria-hidden': 'true' }, h(Icon, { name: p.icon || 'food', size: 30 })),
-      h('span', { className: 'tmc-menu-text' },
-        p.tag ? h('span', { className: 'tmc-menu-tag' }, p.tag) : null,
-        h('span', { className: 'tmc-menu-name' }, p.name),
-        p.description ? h('span', { className: 'tmc-menu-desc' }, p.description) : null,
-        h('span', { className: 'tmc-menu-price' }, p.price)),
-      h('span', { className: cx('tmc-menu-add', q && 'tmc-menu-add-on'), 'aria-hidden': 'true' }, q ? String(q) : h(Icon, { name: 'plus', size: 24 })));
+    var media = p.image ? h('img', { className: 'tmc-menu-img', src: p.image, alt: '' })
+      : h('span', { className: 'tmc-menu-img tmc-menu-noimg', 'aria-hidden': 'true' }, h(Icon, { name: p.icon || 'food', size: 30 }));
+    var text = h('span', { className: 'tmc-menu-text' },
+      p.tag ? h('span', { className: 'tmc-menu-tag' }, p.tag) : null,
+      h('span', { className: 'tmc-menu-name' }, p.name),
+      p.description ? h('span', { className: 'tmc-menu-desc' }, p.description) : null,
+      h('span', { className: 'tmc-menu-price' }, p.price));
+    if (!q) {
+      return h('button', { type: 'button', className: 'tmc-menu-item', onClick: p.onAdd, 'aria-label': 'Add ' + p.name + ', ' + p.price },
+        media, text, h('span', { className: 'tmc-menu-add', 'aria-hidden': 'true' }, h(Icon, { name: 'plus', size: 24 })));
+    }
+    return h('div', { className: 'tmc-menu-item tmc-menu-item-on', role: 'group', 'aria-label': p.name + ', ' + q + ' in your order' },
+      h('div', { className: 'tmc-menu-row' }, media, text),
+      h('div', { className: 'tmc-menu-qty' },
+        h('button', { type: 'button', onClick: p.onRemove, 'aria-label': q === 1 ? 'Remove ' + p.name : 'One less ' + p.name },
+          h(Icon, { name: q === 1 ? 'x' : 'minus', size: 22 })),
+        h('output', { 'aria-live': 'polite' }, q + ' in your order'),
+        h('button', { type: 'button', onClick: p.onAdd, 'aria-label': 'One more ' + p.name }, h(Icon, { name: 'plus', size: 22 }))));
   }
 
   function CategoryTabs(p) {

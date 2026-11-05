@@ -155,6 +155,14 @@
 .tmc-menu-item{font:inherit;color:inherit;width:100%;display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-2xl);background:var(--card);box-shadow:var(--shadow-card);text-align:left;cursor:pointer;transition:transform .2s}
 .tmc-menu-item:active{transform:scale(.99)}
 .tmc-menu-item-on{border:2px solid var(--primary);padding:9px}
+.tmc-menu-item-on{flex-direction:column;align-items:stretch;gap:10px;cursor:default}
+.tmc-menu-item-on:active{transform:none}
+.tmc-menu-row{display:flex;align-items:center;gap:12px}
+.tmc-menu-qty{display:grid;grid-template-columns:var(--tap) 1fr var(--tap);align-items:center;border-radius:var(--radius-full);background:var(--primary-tint)}
+.tmc-menu-qty button{font:inherit;width:var(--tap);height:var(--tap);border:0;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tmc-menu-qty button:first-child{background:transparent;color:var(--primary-text)}
+.tmc-menu-qty button:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.tmc-menu-qty output{text-align:center;font-size:16px;font-weight:800;color:var(--primary-text)}
 .tmc-menu-img{width:76px;height:76px;flex:none;border-radius:var(--radius-lg);object-fit:cover;background:var(--muted)}
 .tmc-menu-noimg{display:flex;align-items:center;justify-content:center;color:var(--muted-foreground)}
 .tmc-menu-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
