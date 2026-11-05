@@ -50,7 +50,7 @@ The components are web (React). For a native build (Kotlin, Flutter or React Nat
 
 ### Components
 
-Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
+Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Layout: `Screen`, `ActionBar`, `SectionLabel`. Inputs: `SegmentedControl`, `ListRow` (in a `List`). Feedback: `Toast`, `ConfirmSheet`, `ProgressSteps`, `EmptyState`, `Skeleton`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
 
 ## Three layers
 
@@ -76,7 +76,7 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 ## Visual foundations
 
 - **Outdoor first.** Critical text (yardages, alert titles and messages) holds **7:1**; everything else 4.5:1. Targets are at least `tap` (56px); the mic is `tap-xl` (120px). Every alert carries an icon **and** a word.
-- **Type is the system font** (Roboto on the device) at an outdoor scale: `yardage-hero` 84px, `alert-title` 44px, `button` 18px, `body` 16px. Tabular figures for every number. There is no condensed cut, so the hero yardage is 84px, not the mockup's 96px condensed.
+- **Type is the system font** (Roboto on the device) at an outdoor scale: `yardage-hero` 84px, `alert-title` 44px, `button` 18px, `body` 16px. **Nothing a golfer reads is smaller than 15px** (tags, overlines, labels, metadata). Tabular figures for every number. There is no condensed cut, so the hero yardage is 84px, not the mockup's 96px condensed.
 - **Every screen** is a `CartHeader` (64px, with a 56px back button), the content, and a `BottomBar` (80px): a dock with **Ask Bob** raised in the centre (tap to chat, hold to talk) and Hole and Help either side. Food and Music join in phase 3, one on each side, so Bob never moves.
 - **Day and dusk.** Day is white with navy ink. Dusk is navy (`background` #0A1E2C, `card` #0F2B40), never black, and purple lifts to #7C4DFF. The map dims to 82%. Safety colours stay the same in both.
 - **Shapes** follow the app: bottom-bar items, tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
@@ -101,12 +101,12 @@ A zone covers everything except lightning: pace, messages, Bob and music.
 
 ## Iconography
 
-Lucide, 24px grid, 2px stroke, round caps, `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its README for names). 20px in buttons and headers, 18px in status, 28px in choice tiles, 36–56px on takeovers. Bob is always the sparkles icon in a `primary` circle (`BobAvatar`). No emoji.
+Lucide, 24px grid, 2px stroke, round caps, `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). 20px in buttons and headers, 18px in status, 28px in choice tiles, 36–56px on takeovers. Bob is always the sparkles icon in a `primary` circle (`BobAvatar`). No emoji.
 
 ## Logos
 
-The logo artwork lives in the **Teemeup App** design system: the white mark on the navy splash, the full-colour logo nowhere else on the device. This folder has no copy; components show the name in type where a mock-up needs it.
+The logo artwork lives in the **Teemeup App** design system: the white mark on the navy splash, the full-colour logo nowhere else on the device. This system has no copy; components show the name in type where a mock-up needs it.
 
 ## Building a screen
 
-Wrap a mock-up in `DeviceFrame` (its `theme` sets day or dusk), then stack `CartHeader`, the content, and `BottomBar`. Overlays (`Banner`, `AlertSheet`, `AlertTakeover`) go inside the frame, in priority order, last on top.
+Wrap a mock-up in `DeviceFrame` (its `theme` sets day or dusk), then use `Screen`: `header` (`CartHeader`), the content, `actions` (`ActionBar`) and `dock` (`BottomBar`). Group content under `SectionLabel`s; use `SegmentedControl`, `ListRow`, `ProgressSteps`, `EmptyState`, `Skeleton`, `Toast` and `ConfirmSheet` instead of drawing them inline. No hex values in screens: every colour is a token, so dusk works. Overlays (`Banner`, `AlertSheet`, `AlertTakeover`) go inside the frame, in priority order, last on top.

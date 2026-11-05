@@ -15,7 +15,7 @@
 .tmc-btn-secondary:hover{filter:brightness(.96)}
 .tmc-btn-onalert{background:#ffffff;color:#0a1e2c}
 .tmc-btn-onalert-ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
-.tmc-btn:disabled{opacity:.45;cursor:not-allowed;filter:none;transform:none}
+.tmc-btn:disabled{background:var(--muted);color:var(--muted-foreground);box-shadow:inset 0 0 0 2px var(--border);cursor:not-allowed;filter:none;transform:none}
 .tmc-block{display:flex;width:100%;min-height:60px}
 .tmc-pill{border-radius:var(--radius-full)}
 
@@ -27,7 +27,7 @@
 .tmc-hd{height:var(--header-height);flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--border);background:var(--background)}
 .tmc-hd-title{flex:1;min-width:0;font-size:19px;line-height:24px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tmc-hd-meta{color:var(--muted-foreground);font-weight:600}
-.tmc-hd-status{display:flex;align-items:center;gap:6px;color:var(--muted-foreground);font-size:14px;font-weight:700}
+.tmc-hd-status{display:flex;align-items:center;gap:6px;color:var(--muted-foreground);font-size:15px;font-weight:700}
 .tmc-mark{width:34px;height:34px;border-radius:var(--radius-full);background:var(--course-accent);color:var(--course-on-accent);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;letter-spacing:.02em}
 .tmc-bar{height:var(--bar-height);flex:none;display:grid;grid-template-columns:1.7fr 1fr;gap:var(--space-2);padding:10px var(--space-3);border-top:1px solid var(--border);background:var(--background)}
 .tmc-bar-full{grid-template-columns:1.3fr 1fr 1fr 1fr}
@@ -37,7 +37,7 @@
 
 /* Yardage and map */
 .tmc-yd{height:var(--yardage-height);flex:none;display:grid;grid-template-columns:1fr 1.6fr 1fr;align-items:end;text-align:center;padding:0 8px 10px;color:var(--foreground)}
-.tmc-yd-l{font-size:13px;line-height:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.tmc-yd-l{font-size:15px;line-height:18px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 .tmc-yd-s{font-size:40px;font-weight:700;line-height:1}
 .tmc-yd-h{font-size:84px;font-weight:800;line-height:.92;letter-spacing:-2px}
 .tmc-map{position:relative;overflow:hidden;flex:1;min-height:200px;background:var(--map-rough)}
@@ -46,7 +46,7 @@
 .tmc-map-nav{position:absolute;top:50%;margin-top:-28px}
 
 /* Tags and banners */
-.tmc-tag{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-full);padding:6px 12px;font-size:14px;line-height:18px;font-weight:700;white-space:nowrap}
+.tmc-tag{display:inline-flex;align-items:center;gap:6px;border-radius:var(--radius-full);padding:6px 12px;font-size:15px;line-height:18px;font-weight:700;white-space:nowrap}
 .tmc-tag-neutral{background:var(--muted);color:var(--foreground)}
 .tmc-tag-brand{background:var(--primary-tint);color:var(--primary-text)}
 .tmc-tag-go{background:var(--secondary-tint);color:var(--secondary-text)}
@@ -65,7 +65,7 @@
 .tmc-bob-on{background:#ffffff2e}
 .tmc-msg{display:flex;gap:var(--space-2);align-items:flex-start;max-width:100%}
 .tmc-msg-golfer{justify-content:flex-end}
-.tmc-msg-name{font-size:13px;font-weight:700;color:var(--primary-text);margin-bottom:4px}
+.tmc-msg-name{font-size:15px;font-weight:700;color:var(--primary-text);margin-bottom:4px}
 .tmc-bubble{font-size:16px;line-height:1.45;padding:12px 16px;border-radius:var(--radius-2xl);max-width:264px}
 .tmc-bubble-bob{background:var(--muted);color:var(--foreground);border-bottom-left-radius:4px}
 .tmc-bubble-golfer{background:var(--primary);color:var(--primary-foreground);border-bottom-right-radius:4px}
@@ -80,7 +80,7 @@
 .tmc-answer-q{font-size:15px;color:var(--muted-foreground)}
 .tmc-answer-h{font-size:24px;line-height:1.2;font-weight:800}
 .tmc-answer-b{font-size:16px;line-height:1.4;white-space:pre-line}
-.tmc-answer-s{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--primary-text)}
+.tmc-answer-s{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:var(--primary-text)}
 
 /* Sheets and takeovers */
 .tmc-sheet{background:var(--card);color:var(--foreground);border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;box-shadow:var(--shadow-sheet);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3)}
@@ -135,7 +135,7 @@
 .tmc-dock-item{font:inherit;min-height:66px;padding:6px 0;border:0;border-radius:var(--radius-2xl);background:transparent;color:var(--foreground);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .tmc-dock-ico{width:60px;height:34px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;transition:background-color .2s}
 .tmc-dock-full .tmc-dock-ico{width:52px}
-.tmc-dock-label{font-size:14px;line-height:16px;font-weight:700;white-space:nowrap}
+.tmc-dock-label{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap}
 .tmc-dock-item:hover .tmc-dock-ico{background:var(--muted)}
 .tmc-dock-item[aria-current="page"]{color:var(--primary-text)}
 .tmc-dock-item[aria-current="page"] .tmc-dock-ico{background:var(--primary-tint)}
@@ -166,7 +166,7 @@
 .tmc-menu-img{width:76px;height:76px;flex:none;border-radius:var(--radius-lg);object-fit:cover;background:var(--muted)}
 .tmc-menu-noimg{display:flex;align-items:center;justify-content:center;color:var(--muted-foreground)}
 .tmc-menu-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.tmc-menu-tag{align-self:flex-start;padding:2px 8px;margin-bottom:2px;border-radius:var(--radius-full);background:var(--warning-tint);color:var(--warning-text);font-size:13px;line-height:18px;font-weight:800}
+.tmc-menu-tag{align-self:flex-start;padding:2px 8px;margin-bottom:2px;border-radius:var(--radius-full);background:var(--warning-tint);color:var(--warning-text);font-size:15px;line-height:20px;font-weight:800}
 .tmc-menu-name{font-size:17px;line-height:1.25;font-weight:700}
 .tmc-menu-desc{font-size:15px;line-height:1.3;color:var(--muted-foreground);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .tmc-menu-price{margin-top:2px;font-size:16px;font-weight:800}
@@ -193,4 +193,85 @@
 .tmc-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .tmc-thread{flex:1;min-height:0;overflow:auto;padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3)}
 
-@media (prefers-reduced-motion: reduce){.tmc-btn,.tmc-mic,.tmc-chip,.tmc-composer-btn,.tmc-dock-ico,.tmc-dock-bob-btn,.tmc-tab,.tmc-menu-item{transition:none}.tmc-btn:active,.tmc-mic:active,.tmc-chip:active,.tmc-composer-btn:active{transform:none}}
+
+/* Every interactive element gets the same focus ring (keyboard, switch access and testing). */
+.tmc-root :focus-visible,.tmc-device :focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+
+/* Section label: the one overline style, used above groups on any screen. */
+.tmc-section{margin:0;font-size:15px;line-height:20px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground)}
+
+/* Screen: header, a body that scrolls, an optional action bar and dock. */
+.tmc-screen{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--background);color:var(--foreground)}
+.tmc-screen-body{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4)}.tmc-screen-body > *{flex-shrink:0}
+.tmc-actionbar{height:var(--bar-height);flex:none;display:flex;gap:var(--space-2);align-items:stretch;padding:10px 12px;border-top:1px solid var(--border);background:var(--background)}
+.tmc-actionbar > *{flex:1}
+
+/* Segmented control: 56px, the chosen option in solid primary so it reads in sun. */
+.tmc-seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px;padding:4px;border-radius:var(--radius-2xl);background:var(--muted)}
+.tmc-seg button{font:inherit;min-height:var(--tap);padding:4px 8px;border:0;border-radius:var(--radius-lg);background:transparent;color:var(--foreground);font-size:16px;line-height:1.2;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer}
+.tmc-seg button[aria-pressed="true"]{background:var(--primary);color:var(--primary-foreground)}
+.tmc-seg-note{font-size:15px;font-weight:600;opacity:.85}
+
+/* List row: settings, help actions, staff tools. */
+.tmc-list{flex:none;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius-2xl);background:var(--card);overflow:hidden}
+.tmc-row{font:inherit;color:inherit;text-align:left;width:100%;min-height:64px;display:flex;align-items:center;gap:var(--space-3);padding:10px 14px;border:0;background:transparent;text-decoration:none}
+.tmc-list > .tmc-row + .tmc-row{border-top:1px solid var(--border)}
+button.tmc-row,a.tmc-row{cursor:pointer}
+.tmc-row-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tmc-row-title{font-size:17px;line-height:1.25;font-weight:700}
+.tmc-row-desc{font-size:15px;line-height:1.3;color:var(--muted-foreground)}
+.tmc-row-value{font-size:16px;font-weight:700;color:var(--muted-foreground)}
+.tmc-row-danger .tmc-row-title,.tmc-row-danger .tmc-tile{color:var(--destructive-text)}
+.tmc-row-chev{color:var(--muted-foreground)}
+
+/* Toast: a short confirmation that needs no new screen. */
+.tmc-toast{display:flex;align-items:center;gap:var(--space-3);padding:12px 12px 12px 16px;border-radius:var(--radius-2xl);background:var(--foreground);color:var(--background);box-shadow:var(--shadow-float)}
+.tmc-toast-ico{width:40px;height:40px;flex:none;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;background:var(--primary);color:var(--primary-foreground)}
+.tmc-toast-success .tmc-toast-ico{background:var(--secondary-solid)}
+.tmc-toast-text{flex:1;min-width:0}
+.tmc-toast-title{font-size:17px;font-weight:800;line-height:1.25}
+.tmc-toast-msg{font-size:15px;line-height:1.3;opacity:.85}
+.tmc-toast-btn{font:inherit;min-height:var(--tap);padding:0 16px;border:0;border-radius:var(--radius-lg);background:var(--background);color:var(--foreground);font-size:16px;font-weight:800;cursor:pointer;flex:none}
+
+/* Progress steps: done, now, still to come. */
+.tmc-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.tmc-step{position:relative;display:flex;gap:14px;align-items:flex-start;min-height:60px}
+.tmc-step:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--border)}
+.tmc-step-dot{width:32px;height:32px;flex:none;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;border:2px solid var(--muted-foreground);color:var(--muted-foreground)}
+.tmc-step-done .tmc-step-dot{background:var(--secondary-solid);border-color:var(--secondary-solid);color:var(--primary-foreground)}
+.tmc-step-now .tmc-step-dot{background:var(--primary);border-color:var(--primary);color:var(--primary-foreground)}
+.tmc-step-text{display:flex;flex-direction:column;gap:2px;padding-top:4px}
+.tmc-step-label{font-size:17px;font-weight:600;color:var(--muted-foreground)}
+.tmc-step-done .tmc-step-label{color:var(--foreground)}
+.tmc-step-now .tmc-step-label{color:var(--foreground);font-weight:800}
+.tmc-step-note{font-size:15px;color:var(--muted-foreground)}
+
+/* Empty state and loading. */
+.tmc-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--space-3);padding:var(--space-6) var(--space-4)}
+.tmc-empty .tmc-tile{width:64px;height:64px;border-radius:var(--radius-2xl)}
+.tmc-empty-title{font-size:20px;line-height:1.25;font-weight:800}
+.tmc-empty-msg{font-size:16px;line-height:1.4;color:var(--muted-foreground);max-width:280px}
+.tmc-skel{display:flex;flex-direction:column;gap:var(--space-3)}
+.tmc-skel-row{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-2xl)}
+.tmc-skel i{display:block;border-radius:8px;background:var(--muted);background-image:linear-gradient(90deg,transparent,var(--border),transparent);background-size:200% 100%;animation:tmc-shimmer 1.4s linear infinite}
+@keyframes tmc-shimmer{from{background-position:150% 0}to{background-position:-50% 0}}
+
+/* Confirm sheet buttons, danger button, loading button, info banner, sheet extras. */
+.tmc-btn-danger{background:var(--lightning);color:#ffffff}
+.tmc-btn[aria-busy="true"]{cursor:progress}
+.tmc-spin{width:20px;height:20px;border-radius:var(--radius-full);border:3px solid currentColor;border-right-color:transparent;animation:tmc-spin .8s linear infinite;flex:none}
+@keyframes tmc-spin{to{transform:rotate(360deg)}}
+.tmc-sheet-over{font-size:15px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground)}
+.tmc-sheet-actions{display:flex;flex-direction:column;gap:var(--space-2)}
+.tmc-banner-info{background:var(--primary-tint);color:var(--primary-text)}
+.tmc-banner-action{font:inherit;margin-left:auto;align-self:center;min-height:44px;padding:0 14px;border:0;border-radius:var(--radius-lg);background:#ffffffd9;color:#0a1e2c;font-size:15px;font-weight:800;cursor:pointer;flex:none}
+.tmc-mic-thinking{background:var(--primary-tint);color:var(--primary-text)}
+.tmc-mic-error{box-shadow:0 0 0 4px var(--caution)}
+.tmc-mic:disabled{background:var(--muted);color:var(--muted-foreground);cursor:not-allowed}
+.tmc-dots3{display:flex;gap:8px}
+.tmc-dots3 i{width:12px;height:12px;border-radius:var(--radius-full);background:currentColor;animation:tmc-bounce 1s ease-in-out infinite}
+.tmc-dots3 i:nth-child(2){animation-delay:.15s}.tmc-dots3 i:nth-child(3){animation-delay:.3s}
+@keyframes tmc-bounce{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* Reduced motion: nothing moves, anywhere. Alerts keep their sound and colour, not their flashing. */
+@media (prefers-reduced-motion: reduce){.tmc-root *,.tmc-device *,.tmc-root,.tmc-device{transition:none !important;animation:none !important}.tmc-btn:active,.tmc-mic:active,.tmc-chip:active,.tmc-composer-btn:active,.tmc-menu-item:active{transform:none}}

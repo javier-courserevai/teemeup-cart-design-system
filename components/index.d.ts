@@ -18,7 +18,7 @@ export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
 export interface BottomBarProps { items?: 'mvp' | 'full'; active?: 'hole' | 'bob' | 'food' | 'music' | 'help'; onHole?: () => void; onTalk?: () => void; onHoldStart?: () => void; onFood?: () => void; onMusic?: () => void; onHelp?: () => void }
 export declare function BottomBar(props: BottomBarProps): React.ReactElement;
 
-export interface ButtonProps { variant?: 'primary' | 'secondary' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }
+export interface ButtonProps { variant?: 'primary' | 'secondary' | 'danger' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; loading?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }
 export declare function Button(props: ButtonProps): React.ReactElement;
 
 export interface IconButtonProps { icon: IconName; label: string; size?: 'md' | 'sm'; variant?: 'surface' | 'map'; onClick?: () => void; className?: string; style?: React.CSSProperties }
@@ -49,7 +49,7 @@ export declare function BobAvatar(props: BobAvatarProps): React.ReactElement;
 export interface ChatBubbleProps { from?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
 export declare function ChatBubble(props: ChatBubbleProps): React.ReactElement;
 
-export interface MicButtonProps { state?: 'ready' | 'listening'; label?: string; onClick?: () => void }
+export interface MicButtonProps { state?: 'ready' | 'listening' | 'thinking' | 'error'; disabled?: boolean; label?: string; onClick?: () => void }
 export declare function MicButton(props: MicButtonProps): React.ReactElement;
 
 export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; children?: React.ReactNode }
@@ -62,16 +62,16 @@ export declare function PromptChip(props: PromptChipProps): React.ReactElement;
 export interface ComposerProps { value?: string; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void }
 export declare function Composer(props: ComposerProps): React.ReactElement;
 
-export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery'; children?: React.ReactNode }
+export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery' | 'info'; icon?: IconName; action?: string; onAction?: () => void; children?: React.ReactNode }
 export declare function Banner(props: BannerProps): React.ReactElement;
 
-export interface AlertSheetProps { tone?: 'pace' | 'message' | 'zone' | 'battery' | 'exited'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; autoDismiss?: string; children?: React.ReactNode }
+export interface AlertSheetProps { tone?: 'pace' | 'message' | 'zone' | 'battery' | 'exited'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; autoDismiss?: string; secondaryAction?: string; onSecondary?: () => void; children?: React.ReactNode }
 export declare function AlertSheet(props: AlertSheetProps): React.ReactElement;
 
 export interface AlertTakeoverProps { kind?: 'lightning' | 'zone' | 'clear'; title: string; message?: string; detail?: React.ReactNode; detailIcon?: IconName; icon?: IconName; footnote?: string; action?: string; onAction?: () => void; flash?: boolean; escalated?: string; escalatedDetail?: string }
 export declare function AlertTakeover(props: AlertTakeoverProps): React.ReactElement;
 
-export interface QRPanelProps { title?: string; hint?: string; size?: number }
+export interface QRPanelProps { title?: string; hint?: string; size?: number; label?: string }
 export declare function QRPanel(props: QRPanelProps): React.ReactElement;
 
 export interface ChoiceCardProps { icon: IconName; title: string; description?: string; selected?: boolean; onSelect?: () => void }
@@ -87,6 +87,28 @@ export declare function CategoryTabs(props: CategoryTabsProps): React.ReactEleme
 export interface QuantityStepperProps { value: number; label?: string; onIncrease?: () => void; onDecrease?: () => void }
 export declare function QuantityStepper(props: QuantityStepperProps): React.ReactElement;
 
+export interface ScreenProps { header?: React.ReactNode; banner?: React.ReactNode; actions?: React.ReactNode; dock?: React.ReactNode; theme?: 'day' | 'dusk'; bodyStyle?: React.CSSProperties; children?: React.ReactNode; className?: string; style?: React.CSSProperties }
+export declare function Screen(props: ScreenProps): React.ReactElement;
+export interface ActionBarProps { children?: React.ReactNode; className?: string; style?: React.CSSProperties }
+export declare function ActionBar(props: ActionBarProps): React.ReactElement;
+export interface SectionLabelProps { as?: 'h2' | 'h3' | 'p'; id?: string; children?: React.ReactNode; style?: React.CSSProperties }
+export declare function SectionLabel(props: SectionLabelProps): React.ReactElement;
+export interface SegmentedControlProps { items: { id: string; label: string; note?: string }[]; value?: string; onChange?: (id: string) => void; label?: string }
+export declare function SegmentedControl(props: SegmentedControlProps): React.ReactElement;
+export interface ListRowProps { title: string; description?: string; icon?: IconName; value?: React.ReactNode; chevron?: boolean; tone?: 'default' | 'danger'; href?: string; onClick?: () => void }
+export declare function ListRow(props: ListRowProps): React.ReactElement;
+export declare function List(props: { children?: React.ReactNode }): React.ReactElement;
+export interface ToastProps { title: string; message?: string; icon?: IconName; tone?: 'neutral' | 'success'; action?: string; onAction?: () => void; style?: React.CSSProperties }
+export declare function Toast(props: ToastProps): React.ReactElement;
+export interface ConfirmSheetProps { title: string; confirm?: string; cancel?: string; destructive?: boolean; onConfirm?: () => void; onCancel?: () => void; children?: React.ReactNode }
+export declare function ConfirmSheet(props: ConfirmSheetProps): React.ReactElement;
+export interface ProgressStepsProps { steps: { label: string; note?: string; icon?: IconName }[]; current?: number; label?: string }
+export declare function ProgressSteps(props: ProgressStepsProps): React.ReactElement;
+export interface EmptyStateProps { title: string; icon?: IconName; action?: string; onAction?: () => void; children?: React.ReactNode }
+export declare function EmptyState(props: EmptyStateProps): React.ReactElement;
+export interface SkeletonProps { variant?: 'rows' | 'text'; count?: number; label?: string }
+export declare function Skeleton(props: SkeletonProps): React.ReactElement;
+
 export interface KeypadProps { filled?: number; length?: number; onKey?: (key: string) => void }
 export declare function Keypad(props: KeypadProps): React.ReactElement;
 
@@ -98,6 +120,8 @@ declare global {
       StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard; PromptChip: typeof PromptChip; Composer: typeof Composer;
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
       GolferRow: typeof GolferRow; Keypad: typeof Keypad; MenuItem: typeof MenuItem; CategoryTabs: typeof CategoryTabs; QuantityStepper: typeof QuantityStepper;
+      Screen: typeof Screen; ActionBar: typeof ActionBar; SectionLabel: typeof SectionLabel; SegmentedControl: typeof SegmentedControl; ListRow: typeof ListRow; List: typeof List;
+      Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
     };
   }
 }

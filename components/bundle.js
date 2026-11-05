@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
@@ -100,10 +100,12 @@
 
   function Button(p) {
     var v = p.variant || 'primary';
+    // loading: keeps the label, adds a spinner and stops a second tap while the request runs.
     return h('button', {
-      type: p.type || 'button', disabled: p.disabled, onClick: p.onClick, 'aria-label': p['aria-label'], style: p.style,
-      className: cx('tmc-btn', 'tmc-btn-' + v, p.block && 'tmc-block', p.pill && 'tmc-pill', p.className)
-    }, p.icon ? h(Icon, { name: p.icon }) : null, p.children);
+      type: p.type || 'button', disabled: p.disabled || p.loading, onClick: p.onClick, 'aria-label': p['aria-label'], style: p.style,
+      'aria-busy': p.loading ? 'true' : undefined,
+      className: cx('tmc-btn', 'tmc-btn-' + v, p.block && 'tmc-block', p.pill && 'tmc-pill', p.loading && 'tmc-btn-loading', p.className)
+    }, p.loading ? h('span', { className: 'tmc-spin', 'aria-hidden': 'true' }) : (p.icon ? h(Icon, { name: p.icon }) : null), p.children);
   }
 
   // The dock: Bob raised in the centre (tap to chat, hold to talk), destinations either side.
@@ -227,9 +229,9 @@
         }),
         p.tap ? h('g', null, h('rect', { x: tapLabelX, y: tapAt.y - 10, width: tapW, height: 30, rx: 15, fill: '#ffffff' }),
           h('text', { x: tapLabelX + tapW / 2, y: tapAt.y + 10, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 16 }, p.tap)) : null,
-        p.zone ? h('g', null, h('rect', { x: zoneAt.x - 38, y: zoneAt.y - 11, width: 76, height: 22, rx: 11, fill: 'var(--zone)' }),
-          h('text', { x: zoneAt.x, y: zoneAt.y + 4, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 12 }, p.zoneLabel || 'No carts')) : null),
-      p.credit ? h('text', { x: 6, y: 13, fontSize: 9, fontWeight: 600, fill: '#ffffff', opacity: 0.9, fontFamily: 'inherit', style: { paintOrder: 'stroke' }, stroke: '#0a1e2c', strokeWidth: 2, strokeOpacity: 0.5 }, p.credit) : null);
+        p.zone ? h('g', null, h('rect', { x: zoneAt.x - 44, y: zoneAt.y - 13, width: 88, height: 26, rx: 13, fill: 'var(--zone)' }),
+          h('text', { x: zoneAt.x, y: zoneAt.y + 5, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 14 }, p.zoneLabel || 'No carts')) : null),
+      p.credit ? h('text', { x: 6, y: 14, fontSize: 10, fontWeight: 600, fill: '#ffffff', opacity: 0.9, fontFamily: 'inherit', style: { paintOrder: 'stroke' }, stroke: '#0a1e2c', strokeWidth: 2, strokeOpacity: 0.5 }, p.credit) : null);
     return h('div', { className: 'tmc-map', style: p.height ? { flex: 'none', height: p.height } : undefined }, art,
       p.nav === false ? null : h(R.Fragment, null,
         h(IconButton, { icon: 'chevronLeft', label: 'Previous hole', variant: 'map', className: 'tmc-map-nav', style: { left: 12, position: 'absolute' } }),
@@ -251,15 +253,20 @@
       h('div', null, p.showName === false ? null : h('div', { className: 'tmc-msg-name' }, 'Bob'), h('div', { className: 'tmc-bubble tmc-bubble-bob' }, p.children)));
   }
 
+  // States: ready, listening, thinking (Bob is working on it), error (didn't catch that). disabled: no voice right now.
+  var MIC_LABEL = { ready: 'Hold to talk, or tap', listening: 'Listening… release to send', thinking: 'Bob is thinking…', error: 'Didn’t catch that. Try again.' };
   function MicButton(p) {
-    var listening = p.state === 'listening';
+    var st = p.state || 'ready';
+    var listening = st === 'listening', thinking = st === 'thinking';
     var bars = [];
     if (listening) for (var i = 0; i < 11; i++) bars.push(h('i', { key: i, style: { height: Math.round(18 + 50 * Math.abs(Math.sin(i * 0.9 + 1))) } }));
     return h('div', { className: 'tmc-micwrap' },
       listening ? h('div', { className: 'tmc-wave', 'aria-hidden': 'true' }, bars) : null,
-      h('button', { type: 'button', className: cx('tmc-mic', listening && 'tmc-mic-listening'), 'aria-label': listening ? 'Release to send' : 'Hold to talk to Bob', onClick: p.onClick },
-        h(Icon, { name: 'mic', size: 48 })),
-      h('div', { className: 'tmc-mic-label' }, p.label || (listening ? 'Listening… release to send' : 'Hold to talk, or tap')));
+      h('button', { type: 'button', disabled: p.disabled || thinking, onClick: p.onClick,
+          className: cx('tmc-mic', listening && 'tmc-mic-listening', thinking && 'tmc-mic-thinking', st === 'error' && 'tmc-mic-error'),
+          'aria-label': listening ? 'Release to send' : (thinking ? 'Bob is thinking' : 'Hold to talk to Bob') },
+        thinking ? h('span', { className: 'tmc-dots3', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')) : h(Icon, { name: 'mic', size: 48 })),
+      h('div', { className: 'tmc-mic-label', role: 'status' }, p.label || MIC_LABEL[st] || MIC_LABEL.ready));
   }
 
   // One suggested question or quick reply. 56px tall: tapped with a glove.
@@ -296,11 +303,12 @@
       p.spoken === false ? null : h('div', { className: 'tmc-answer-s' }, h(Icon, { name: 'volume', size: 16 }), 'Spoken through the speaker'));
   }
 
-  var BANNER_ICONS = { offline: 'wifiOff', suspended: 'lightning', clear: 'checkCircle', zone: 'alert', battery: 'batteryLow' };
+  var BANNER_ICONS = { offline: 'wifiOff', suspended: 'lightning', clear: 'checkCircle', zone: 'alert', battery: 'batteryLow', info: 'volume' };
   function Banner(p) {
     var t = p.tone || 'offline';
     return h('div', { className: cx('tmc-banner', 'tmc-banner-' + t), role: t === 'suspended' || t === 'zone' ? 'alert' : 'status' },
-      h(Icon, { name: BANNER_ICONS[t], size: 22 }), h('div', null, p.children));
+      h(Icon, { name: p.icon || BANNER_ICONS[t], size: 22 }), h('div', null, p.children),
+      p.action ? h('button', { type: 'button', className: 'tmc-banner-action', onClick: p.onAction }, p.action) : null);
   }
 
   var SHEET = { pace: ['clock', ''], message: ['message', ''], zone: ['alert', 'tmc-tile-zone'], battery: ['batteryLow', 'tmc-tile-warning'], exited: ['checkCircle', 'tmc-tile-go'] };
@@ -308,10 +316,12 @@
     var s = SHEET[p.tone || 'pace'];
     return h('div', { className: 'tmc-sheet', role: 'alertdialog', 'aria-label': p.title },
       h('div', { className: 'tmc-sheet-head' }, h('div', { className: cx('tmc-tile', s[1]) }, h(Icon, { name: s[0], size: 24 })),
-        h('div', null, p.overline ? h('div', { style: { fontSize: 12, fontWeight: 800, letterSpacing: '.05em', textTransform: 'uppercase', color: 'var(--muted-foreground)' } }, p.overline) : null,
+        h('div', null, p.overline ? h('div', { className: 'tmc-sheet-over' }, p.overline) : null,
           h('div', { className: 'tmc-sheet-title' }, p.title))),
       p.children ? h('div', { className: 'tmc-sheet-body' }, p.children) : null,
-      p.action ? h(Button, { block: true, variant: p.actionVariant || 'secondary', onClick: p.onAction }, p.action) : null,
+      p.action || p.secondaryAction ? h('div', { className: 'tmc-sheet-actions' },
+        p.action ? h(Button, { block: true, variant: p.actionVariant || 'secondary', onClick: p.onAction }, p.action) : null,
+        p.secondaryAction ? h(Button, { block: true, variant: 'secondary', onClick: p.onSecondary }, p.secondaryAction) : null) : null,
       // A warning that needs no tap: it says how it goes away instead of asking for an OK while driving.
       p.autoDismiss ? h('div', { className: 'tmc-sheet-auto' }, h(Icon, { name: 'clock', size: 18 }), p.autoDismiss) : null);
   }
@@ -341,7 +351,7 @@
     }
     var fp = function (ox, oy) { return 'M' + ox + ' ' + oy + 'h7v7h-7zM' + (ox + 1) + ' ' + (oy + 1) + 'v5h5v-5zM' + (ox + 2) + ' ' + (oy + 2) + 'h3v3h-3z'; };
     return h('div', { className: 'tmc-card tmc-qr' },
-      h('svg', { className: 'tmc-qr-code', width: p.size || 140, height: p.size || 140, viewBox: '0 0 29 29', shapeRendering: 'crispEdges', role: 'img', 'aria-label': 'Pairing code' },
+      h('svg', { className: 'tmc-qr-code', width: p.size || 140, height: p.size || 140, viewBox: '0 0 29 29', shapeRendering: 'crispEdges', role: 'img', 'aria-label': p.label || 'QR code' },
         h('path', { d: mods.join(''), fill: '#0a1e2c' }), h('path', { d: fp(0, 0) + fp(22, 0) + fp(0, 22), fill: '#0a1e2c', fillRule: 'evenodd' })),
       h('div', { className: 'tmc-qr-title' }, p.title || 'Scan with your phone camera'),
       h('div', { className: 'tmc-qr-hint' }, p.hint || 'Opens Teemeup and pairs this cart to your tee time.'));
@@ -414,9 +424,98 @@
       })));
   }
 
+  // ---- Layout -------------------------------------------------------------
+  // Screen: header on top, a body that scrolls, then an optional action bar and dock. Fills its parent.
+  function Screen(p) {
+    return h('div', { className: cx('tmc-screen', p.className), 'data-theme': p.theme, style: p.style },
+      p.header || null,
+      p.banner || null,
+      h('main', { className: 'tmc-screen-body', style: p.bodyStyle }, p.children),
+      p.actions ? h(ActionBar, null, p.actions) : null,
+      p.dock || null);
+  }
+  // The 80px bar for a screen's main action, above the dock. One or two buttons, side by side.
+  function ActionBar(p) {
+    return h('div', { className: cx('tmc-actionbar', p.className), style: p.style }, p.children);
+  }
+  function SectionLabel(p) {
+    return h(p.as || 'h2', { className: 'tmc-section', id: p.id, style: p.style }, p.children);
+  }
+
+  // ---- Inputs ------------------------------------------------------------
+  // Two to four choices, one picked. Each option is 56px; the picked one is solid primary.
+  function SegmentedControl(p) {
+    return h('div', { className: 'tmc-seg', role: 'group', 'aria-label': p.label },
+      (p.items || []).map(function (it) {
+        var on = it.id === p.value;
+        return h('button', { key: it.id, type: 'button', 'aria-pressed': on ? 'true' : 'false', onClick: function () { if (p.onChange) p.onChange(it.id); } },
+          h('span', null, it.label), it.note ? h('span', { className: 'tmc-seg-note' }, it.note) : null);
+      }));
+  }
+  // One row of a list: icon tile, title, description, a value or chevron. A button when it does something.
+  function ListRow(p) {
+    var inner = [
+      p.icon ? h('div', { key: 'i', className: 'tmc-tile' }, h(Icon, { name: p.icon, size: 24 })) : null,
+      h('div', { key: 't', className: 'tmc-row-text' }, h('div', { className: 'tmc-row-title' }, p.title), p.description ? h('div', { className: 'tmc-row-desc' }, p.description) : null),
+      p.value != null ? h('div', { key: 'v', className: 'tmc-row-value' }, p.value) : null,
+      p.chevron ? h(Icon, { key: 'c', name: 'chevronRight', size: 22, className: 'tmc-row-chev' }) : null];
+    var cls = cx('tmc-row', p.tone === 'danger' && 'tmc-row-danger');
+    if (p.href) return h('a', { className: cls, href: p.href }, inner);
+    if (p.onClick || p.chevron) return h('button', { type: 'button', className: cls, onClick: p.onClick }, inner);
+    return h('div', { className: cls }, inner);
+  }
+  function List(p) { return h('div', { className: 'tmc-list', role: 'list' === p.role ? 'list' : undefined }, p.children); }
+
+  // ---- Feedback ----------------------------------------------------------
+  // Toast: one line of confirmation with an optional 56px action. The parent places it and removes it after ~8 s.
+  function Toast(p) {
+    return h('div', { className: cx('tmc-toast', p.tone === 'success' && 'tmc-toast-success'), role: 'status', style: p.style },
+      h('div', { className: 'tmc-toast-ico' }, h(Icon, { name: p.icon || (p.tone === 'success' ? 'check' : 'arrowUp'), size: 22 })),
+      h('div', { className: 'tmc-toast-text' }, h('div', { className: 'tmc-toast-title' }, p.title), p.message ? h('div', { className: 'tmc-toast-msg' }, p.message) : null),
+      p.action ? h('button', { type: 'button', className: 'tmc-toast-btn', onClick: p.onAction }, p.action) : null);
+  }
+  // Confirm before anything that can't be undone. The safe choice is always there and always last.
+  function ConfirmSheet(p) {
+    return h('div', { className: 'tmc-sheet', role: 'alertdialog', 'aria-label': p.title },
+      h('div', { className: 'tmc-sheet-title' }, p.title),
+      p.children ? h('div', { className: 'tmc-sheet-body' }, p.children) : null,
+      h('div', { className: 'tmc-sheet-actions' },
+        h(Button, { block: true, variant: p.destructive ? 'danger' : 'primary', onClick: p.onConfirm }, p.confirm || 'Confirm'),
+        h(Button, { block: true, variant: 'secondary', onClick: p.onCancel }, p.cancel || 'Cancel')));
+  }
+  // Steps of something in progress: done (check), now (highlighted), still to come (numbered, grey).
+  function ProgressSteps(p) {
+    var at = p.current || 0;
+    return h('ol', { className: 'tmc-steps', 'aria-label': p.label },
+      (p.steps || []).map(function (s, i) {
+        var state = i < at ? 'done' : (i === at ? 'now' : 'next');
+        return h('li', { key: i, className: cx('tmc-step', 'tmc-step-' + state), 'aria-current': state === 'now' ? 'step' : undefined },
+          h('span', { className: 'tmc-step-dot', 'aria-hidden': 'true' }, state === 'done' ? h(Icon, { name: 'check', size: 18, strokeWidth: 3 }) : (state === 'now' ? h(Icon, { name: s.icon || 'clock', size: 18 }) : String(i + 1))),
+          h('span', { className: 'tmc-step-text' }, h('span', { className: 'tmc-step-label' }, s.label), s.note ? h('span', { className: 'tmc-step-note' }, s.note) : null));
+      }));
+  }
+  function EmptyState(p) {
+    return h('div', { className: 'tmc-empty' }, h('div', { className: 'tmc-tile' }, h(Icon, { name: p.icon || 'search', size: 30 })),
+      h('div', { className: 'tmc-empty-title' }, p.title), p.children ? h('div', { className: 'tmc-empty-msg' }, p.children) : null,
+      p.action ? h(Button, { variant: 'secondary', onClick: p.onAction }, p.action) : null);
+  }
+  // Loading placeholder shaped like what is coming: rows (menu, lists) or text (Bob's answer).
+  function Skeleton(p) {
+    var n = p.count || 3, kids = [];
+    for (var i = 0; i < n; i++) {
+      kids.push(p.variant === 'text'
+        ? h('i', { key: i, style: { height: 16, width: i === n - 1 ? '60%' : '100%' } })
+        : h('div', { key: i, className: 'tmc-skel-row' }, h('i', { style: { width: 56, height: 56, borderRadius: 12, flex: 'none' } }),
+            h('div', { style: { flex: 1, display: 'flex', flexDirection: 'column', gap: 8 } }, h('i', { style: { height: 16, width: '70%' } }), h('i', { style: { height: 14, width: '40%' } }))));
+    }
+    return h('div', { className: 'tmc-skel', role: 'status', 'aria-label': p.label || 'Loading' }, kids);
+  }
+
   var api = { Icon: Icon, iconNames: ICON_NAMES, DeviceFrame: DeviceFrame, CourseMark: CourseMark, IconButton: IconButton, CartHeader: CartHeader, BobAvatar: BobAvatar,
     Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
-    AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad };
+    AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad,
+    Screen: Screen, ActionBar: ActionBar, SectionLabel: SectionLabel, SegmentedControl: SegmentedControl, ListRow: ListRow, List: List,
+    Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();
