@@ -109,7 +109,7 @@
   }
 
   // The dock: Bob raised in the centre (tap to chat, hold to talk), destinations either side.
-  // MVP: Hole · Bob · Help. Phase 3: Hole · Food · Bob · Music · Help. Bob never moves.
+  // Always five: Hole · Food · Bob · Music · Help, so nothing moves between screens. items="mvp" is only for a course without food or music.
   function DockItem(p) {
     var on = p.active === p.id;
     return h('button', { type: 'button', className: 'tmc-dock-item', onClick: p.onClick, 'aria-current': on ? 'page' : undefined },
@@ -117,7 +117,7 @@
       h('span', { className: 'tmc-dock-label' }, p.label));
   }
   function BottomBar(p) {
-    var full = p.items === 'full';
+    var full = p.items !== 'mvp';
     var a = p.active || 'hole';
     var item = function (id, icon, label, fn) { return h(DockItem, { key: id, id: id, icon: icon, label: label, active: a, onClick: fn }); };
     var bob = h('button', { key: 'bob', type: 'button', className: 'tmc-dock-bob', onClick: p.onTalk, onPointerDown: p.onHoldStart,
@@ -254,7 +254,7 @@
   }
 
   // States: ready, listening, thinking (Bob is working on it), error (didn't catch that). disabled: no voice right now.
-  var MIC_LABEL = { ready: 'Hold to talk, or tap', listening: 'Listening… release to send', thinking: 'Bob is thinking…', error: 'Didn’t catch that. Try again.' };
+  var MIC_LABEL = { ready: 'Tap to talk', listening: 'Listening… tap to send', thinking: 'Bob is thinking…', error: 'Didn’t catch that. Try again.' };
   function MicButton(p) {
     var st = p.state || 'ready';
     var listening = st === 'listening', thinking = st === 'thinking';
@@ -264,7 +264,7 @@
       listening ? h('div', { className: 'tmc-wave', 'aria-hidden': 'true' }, bars) : null,
       h('button', { type: 'button', disabled: p.disabled || thinking, onClick: p.onClick,
           className: cx('tmc-mic', listening && 'tmc-mic-listening', thinking && 'tmc-mic-thinking', st === 'error' && 'tmc-mic-error'),
-          'aria-label': listening ? 'Release to send' : (thinking ? 'Bob is thinking' : 'Hold to talk to Bob') },
+          'aria-label': listening ? 'Send to Bob' : (thinking ? 'Bob is thinking' : 'Talk to Bob') },
         thinking ? h('span', { className: 'tmc-dots3', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')) : h(Icon, { name: 'mic', size: 48 })),
       h('div', { className: 'tmc-mic-label', role: 'status' }, p.label || MIC_LABEL[st] || MIC_LABEL.ready));
   }
@@ -291,7 +291,7 @@
         onChange: function (e) { set(e.target.value); } }),
       hasText && !locked
         ? h('button', { type: 'submit', className: 'tmc-composer-btn', 'aria-label': 'Send to Bob' }, h(Icon, { name: 'send', size: 22 }))
-        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Release to send' : 'Hold to talk to Bob', onClick: p.onVoice },
+        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Send to Bob' : 'Talk to Bob', onClick: p.onVoice },
             h(Icon, { name: 'mic', size: 24 })));
   }
 

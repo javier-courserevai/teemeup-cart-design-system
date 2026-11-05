@@ -77,7 +77,7 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 
 - **Outdoor first.** Critical text (yardages, alert titles and messages) holds **7:1**; everything else 4.5:1. Targets are at least `tap` (56px); the mic is `tap-xl` (120px). Every alert carries an icon **and** a word.
 - **Type is the system font** (Roboto on the device) at an outdoor scale: `yardage-hero` 84px, `alert-title` 44px, `button` 18px, `body` 16px. **Nothing a golfer reads is smaller than 15px** (tags, overlines, labels, metadata). Tabular figures for every number. There is no condensed cut, so the hero yardage is 84px, not the mockup's 96px condensed.
-- **Every screen** is a `CartHeader` (64px, with a 56px back button), the content, and a `BottomBar` (80px): a dock with **Ask Bob** raised in the centre (tap to chat, hold to talk) and Hole and Help either side. Food and Music join in phase 3, one on each side, so Bob never moves.
+- **Every screen** is a `CartHeader` (64px), the content, and a `BottomBar` (80px): a dock with **Ask Bob** raised in the centre (tap to chat, hold to talk) and Hole, Food, Music and Help either side, always all five, so Bob never moves.
 - **Day and dusk.** Day is white with navy ink. Dusk is navy (`background` #0A1E2C, `card` #0F2B40), never black, and purple lifts to #7C4DFF. The map dims to 82%. Safety colours stay the same in both.
 - **Shapes** follow the app: bottom-bar items, tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
 - **The map** is a satellite tile of the course in production. The stand-in drawing uses the `map-*` tokens. Active restricted zones are always drawn, hatched in `zone`, so golfers avoid them before anything sounds. Penalty areas keep a thin solid `map-penalty` edge; dashes are not used.
@@ -85,19 +85,43 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 
 ## Alerts
 
-Higher covers lower. Each has its own sound and vibration so the golfer knows what happened without looking.
+Higher covers lower; a covered sheet comes back when the higher alert ends. Each has its own sound and vibration so the golfer knows what happened without looking.
 
 | Priority | Alert | Shape | Sound · vibration | Dismiss |
 | --- | --- | --- | --- | --- |
 | 1 | Lightning | `AlertTakeover` kind lightning | Two-tone siren · continuous | “I understand”, then a `Banner` until all clear |
-| 2 | Inside a restricted zone | `AlertTakeover` kind zone | Looping alarm · pulse every 2 s | No; ends when the golfer leaves |
-| 3 | Pro shop message | `AlertSheet` tone message | Soft chime + voice once · 1 pulse | Yes |
-| 4 | Pace of play | `AlertSheet` tone pace | Soft chime + voice once · 1 pulse | Yes |
-| 5 | Approaching a zone | `AlertSheet` tone zone | Short chime · 1 pulse | Yes |
+| 2 | Inside a restricted zone | `AlertTakeover` kind zone (`escalated` once the pro shop is told) | Looping alarm · pulse every 2 s | No; ends when the golfer leaves |
+| 3 | Approaching a zone | `AlertSheet` tone zone, `autoDismiss` | Short chime · 1 pulse | Closes itself when the cart turns away or stops |
+| 4 | Play suspended | `Banner` suspended | — | Clears at the all clear |
+| 5 | Critical battery | `AlertSheet` tone battery | Soft chime · 1 pulse | Yes |
+| 6 | Left the course | Full screen (LeftCourse) | Soft chime | Clears when the cart is back |
+| 7 | Pace of play | `AlertSheet` tone pace | Soft chime + voice once · 1 pulse | Yes |
+| 8 | Pro shop message | `AlertSheet` tone message | Soft chime + voice once · 1 pulse | Yes |
 | — | All clear | `AlertTakeover` kind clear | Rising tone · 2 pulses | Yes |
-| — | No signal, low battery | `Banner` | None | Clears itself |
+| — | No signal, low battery | `Banner` | None | Clears itself; never covers anything |
 
 A zone covers everything except lightning: pace, messages, Bob and music.
+
+## Rules every screen follows
+
+- **Navigation.** Top-level places (Hole, Food, Music, Help) show the dock with their item active, the course mark in the header and no back button. Steps inside a flow (Review order, Staff PIN, Find your tee time) show a back button and no dock. Bob opens full-screen over wherever the golfer was, with a back button that returns there. The dock always has all five items.
+- **Header.** The right side always shows signal and battery, on every screen and for walkers too. The cart number appears only in Help.
+- **While the cart moves:** voice, the map and alerts only. Typing to Bob, ordering, signing and changing music wait until the cart stops; the screen says so in an `info` `Banner` with the `cart` icon, and Bob can still do it by voice. Walkers are never locked.
+- **Talking to Bob.** In the dock, Ask Bob: tap opens the chat, hold talks straight away. Inside Bob, the mic is tap to talk, tap again to send. Every screen words it this way.
+
+## Glossary
+
+| Say | Not | Meaning |
+| --- | --- | --- |
+| the turn | halfway window, the halfway | Where golfers pick up food between the 9th and 10th holes (“Pick up at the turn”) |
+| Halfway house | — | The building at the turn, named as a lightning shelter |
+| tee time tab | your tee time, the tab | Food charged to the booking and paid at the end |
+| Play as guest | Start without the app | Playing without a booking or the Teemeup app |
+| Cart 12 / Device 12 | Unit, Tablet | The device; “Device” when walking |
+| Pro shop | Clubhouse, front desk | Who sends messages and gets zone escalations |
+| marshal | ranger | The on-course staff member Bob can call |
+
+Sentence case everywhere (“Booking confirmed”), except alert titles, which are uppercase.
 
 ## Iconography
 
