@@ -117,6 +117,10 @@
   }
 
   var mapSeq = 0;
+  // Tree clumps along both sides of the hole: [x, y, radius] in the 328 x 412 map space.
+  var TREES = [[14, 176, 22], [34, 206, 18], [12, 240, 24], [40, 278, 22], [16, 314, 20], [44, 350, 24], [18, 392, 22],
+    [300, 136, 18], [318, 172, 20], [296, 210, 24], [320, 252, 22], [292, 292, 26], [318, 336, 22], [288, 376, 24], [316, 404, 20],
+    [100, 14, 18], [140, 8, 16], [276, 6, 14]];
   function HoleMap(p) {
     var ref = R.useRef(null);
     if (ref.current === null) ref.current = 'tmcz' + (++mapSeq);
@@ -127,19 +131,58 @@
           h('circle', { cx: 160, cy: 322, r: 2.8, fill: '#ffffff' }),
           h('path', { d: 'M160 326v8M155 329l5-1 5 1M156 341l4-7 4 7', stroke: '#ffffff', strokeWidth: 2, fill: 'none', strokeLinecap: 'round' }))
       : h('g', { key: 'me' }, h('circle', { cx: 152, cy: 352, r: 14, fill: '#ffffff' }), h('circle', { cx: 152, cy: 352, r: 9, fill: 'var(--primary)' }));
+    var FAIRWAY = 'M150 400C138 320 146 262 184 214C220 168 226 126 214 76';
+    var WATER = 'M36 52C78 30 128 50 142 92C150 122 112 140 80 130C42 120 22 82 36 52Z';
+    var stop = function (o, c, a) { return h('stop', { offset: o, style: { stopColor: c, stopOpacity: a == null ? 1 : a } }); };
+    var trees = TREES.map(function (t, i) {
+      var x = t[0], y = t[1], r = t[2];
+      return h('g', { key: 't' + i },
+        h('ellipse', { cx: x + r * 0.28, cy: y + r * 0.32, rx: r, ry: r * 0.92, fill: '#000000', opacity: 0.34 }),
+        h('circle', { cx: x, cy: y, r: r, fill: 'url(#' + id + 'c)' }),
+        h('circle', { cx: x - r * 0.38, cy: y - r * 0.3, r: r * 0.55, fill: 'url(#' + id + 'c)' }),
+        h('circle', { cx: x + r * 0.32, cy: y + r * 0.1, r: r * 0.5, fill: 'url(#' + id + 'c)', opacity: 0.9 }));
+    });
     var art = h('svg', { className: 'tmc-map-art', viewBox: '0 0 328 412', preserveAspectRatio: 'xMidYMid slice', role: 'img', 'aria-label': p.label || 'Hole map' },
-      h('defs', null, h('pattern', { id: id, width: 10, height: 10, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
-        h('rect', { width: 10, height: 10, fill: 'var(--zone-tint)' }), h('rect', { width: 4, height: 10, fill: 'var(--zone)' }))),
+      h('defs', null,
+        h('pattern', { id: id, width: 10, height: 10, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+          h('rect', { width: 10, height: 10, fill: 'var(--zone-tint)' }), h('rect', { width: 4, height: 10, fill: 'var(--zone)' })),
+        h('pattern', { id: id + 's', width: 26, height: 26, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(-38)' },
+          h('rect', { width: 13, height: 26, fill: '#ffffff', opacity: 0.09 })),
+        h('pattern', { id: id + 'gs', width: 10, height: 10, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(20)' },
+          h('rect', { width: 5, height: 10, fill: '#ffffff', opacity: 0.08 })),
+        h('filter', { id: id + 'n', x: 0, y: 0, width: '100%', height: '100%' },
+          h('feTurbulence', { type: 'fractalNoise', baseFrequency: 0.85, numOctaves: 2, seed: 4 }),
+          h('feColorMatrix', { type: 'matrix', values: '0 0 0 0 0  0 0 0 0 0.05  0 0 0 0 0  0 0 0 -1.4 0.82' })),
+        h('filter', { id: id + 'm', x: 0, y: 0, width: '100%', height: '100%' },
+          h('feTurbulence', { type: 'fractalNoise', baseFrequency: 0.018, numOctaves: 3, seed: 9 }),
+          h('feColorMatrix', { type: 'matrix', values: '0 0 0 0 0.04  0 0 0 0 0.12  0 0 0 0 0.03  0 0 0 -2.6 1.45' })),
+        h('radialGradient', { id: id + 'c', cx: '38%', cy: '35%', r: '70%' }, stop('0', '#4f8a3f'), stop('0.55', '#2f6230'), stop('1', 'var(--map-trees)')),
+        h('radialGradient', { id: id + 'g', cx: '45%', cy: '40%', r: '65%' }, stop('0', '#8fcf68'), stop('1', 'var(--map-green)')),
+        h('radialGradient', { id: id + 'b', cx: '45%', cy: '40%', r: '70%' }, stop('0', '#f4ecd0'), stop('1', 'var(--map-sand)')),
+        h('linearGradient', { id: id + 'w', x1: 0, y1: 0, x2: 1, y2: 1 }, stop('0', '#3d93c6'), stop('0.6', 'var(--map-water)'), stop('1', '#1c5684'))),
       h('g', { className: 'tmc-map-base' },
         h('rect', { width: 328, height: 412, fill: 'var(--map-rough)' }),
-        h('circle', { cx: 40, cy: 300, r: 60, fill: 'var(--map-trees)' }), h('circle', { cx: 300, cy: 320, r: 70, fill: 'var(--map-trees)' }), h('circle', { cx: 20, cy: 190, r: 40, fill: 'var(--map-trees)' }),
-        h('path', { d: 'M150 400C138 320 146 262 184 214C220 168 226 126 214 76', stroke: 'var(--map-fairway)', strokeWidth: 80, fill: 'none', strokeLinecap: 'round' }),
-        h('ellipse', { cx: 212, cy: 66, rx: 46, ry: 34, fill: 'var(--map-green)' }),
-        h('path', { d: 'M36 52C78 30 128 50 142 92C150 122 112 140 80 130C42 120 22 82 36 52Z', fill: 'var(--map-water)', stroke: 'var(--map-penalty)', strokeWidth: 2 }),
-        h('ellipse', { cx: 160, cy: 226, rx: 26, ry: 14, fill: 'var(--map-sand)' }), h('ellipse', { cx: 166, cy: 96, rx: 14, ry: 9, fill: 'var(--map-sand)' }),
-        h('rect', { x: 134, y: 380, width: 34, height: 16, rx: 4, fill: 'var(--map-green)' })),
+        h('rect', { width: 328, height: 412, filter: 'url(#' + id + 'm)' }),
+        h('path', { d: FAIRWAY, stroke: 'var(--map-rough-cut)', strokeWidth: 104, fill: 'none', strokeLinecap: 'round' }),
+        h('path', { d: FAIRWAY, stroke: 'var(--map-fairway)', strokeWidth: 80, fill: 'none', strokeLinecap: 'round' }),
+        h('path', { d: FAIRWAY, stroke: 'url(#' + id + 's)', strokeWidth: 80, fill: 'none', strokeLinecap: 'round' }),
+        h('path', { d: 'M110 405C98 330 100 272 124 230C146 192 154 160 150 124', stroke: 'var(--map-path)', strokeWidth: 5, fill: 'none', strokeLinecap: 'round', opacity: 0.85 }),
+        h('ellipse', { cx: 212, cy: 66, rx: 54, ry: 41, fill: 'var(--map-fringe)' }),
+        h('ellipse', { cx: 212, cy: 66, rx: 46, ry: 34, fill: 'url(#' + id + 'g)' }),
+        h('ellipse', { cx: 212, cy: 66, rx: 46, ry: 34, fill: 'url(#' + id + 'gs)' }),
+        h('path', { d: WATER, fill: 'none', stroke: '#9cc59a', strokeWidth: 6, opacity: 0.5 }),
+        h('path', { d: WATER, fill: 'url(#' + id + 'w)', stroke: 'var(--map-penalty)', strokeWidth: 2 }),
+        h('path', { d: 'M56 62C80 52 108 62 120 84', stroke: '#ffffff', strokeWidth: 2, fill: 'none', opacity: 0.18, strokeLinecap: 'round' }),
+        h('ellipse', { cx: 160, cy: 226, rx: 26, ry: 14, fill: 'url(#' + id + 'b)', stroke: '#000000', strokeOpacity: 0.18, strokeWidth: 1.5 }),
+        h('ellipse', { cx: 166, cy: 96, rx: 14, ry: 9, fill: 'url(#' + id + 'b)', stroke: '#000000', strokeOpacity: 0.18, strokeWidth: 1.5 }),
+        h('rect', { x: 132, y: 384, width: 38, height: 14, rx: 3, fill: 'var(--map-fringe)' }),
+        h('rect', { x: 138, y: 364, width: 26, height: 11, rx: 3, fill: 'var(--map-fringe)' }),
+        trees,
+        h('rect', { width: 328, height: 412, filter: 'url(#' + id + 'n)', opacity: 0.55 })),
       p.zone ? h('path', { d: 'M248 30L312 22L320 78L262 92Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
       p.inZone ? h('path', { d: 'M110 300L210 290L220 400L100 412Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
+      h('path', { d: 'M215 68l9 3', stroke: '#000000', strokeOpacity: 0.3, strokeWidth: 3, strokeLinecap: 'round' }),
+      h('circle', { cx: 212, cy: 66, r: 2.5, fill: '#0a1e2c' }),
       h('path', { d: 'M212 66V36l16 6-16 6', stroke: '#ffffff', strokeWidth: 2.5, fill: '#ffffff' }),
       p.tap ? h('g', null, h('path', { d: 'M152 352L232 170', stroke: '#ffffff', strokeWidth: 2, strokeDasharray: '5 5' }),
         h('circle', { cx: 232, cy: 170, r: 12, fill: 'none', stroke: '#ffffff', strokeWidth: 3 })) : null,

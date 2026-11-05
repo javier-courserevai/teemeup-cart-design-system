@@ -7,7 +7,8 @@
   --course-accent: #4817ce; --course-on-accent: #ffffff;
   --lightning: #a8071a; --lightning-flash: #8a0515; --zone: #ff8a1f; --zone-tint: #ff8a1f4d; --caution: #ffd21f; --clear: #075e30;
   --warning-text: #b45309; --warning-tint: #fffbeb; --destructive-text: #c0142f; --scrim: #0a1e2c99;
-  --map-rough: #21482a; --map-trees: #1a3b22; --map-fairway: #4a8a3a; --map-green: #6fb552; --map-sand: #e6dcb0;
+  --map-rough: #2c5a2a; --map-rough-cut: #3c7233; --map-trees: #183a1f; --map-fairway: #5a983c; --map-green: #6fb552;
+  --map-fringe: #5aa244; --map-path: #cfc9b6; --map-sand: #e6dcb0;
   --map-water: #2c78b0; --map-penalty: #e5484d; --map-label: #0a1e2cd9;
   --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
   --shadow-float: 0 4px 8px -2px rgba(0,0,0,0.25);
