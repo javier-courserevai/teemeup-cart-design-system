@@ -12,7 +12,7 @@ export declare function DeviceFrame(props: DeviceFrameProps): React.ReactElement
 export interface CourseMarkProps { monogram: string; accent?: string; onAccent?: string; size?: number; label?: string }
 export declare function CourseMark(props: CourseMarkProps): React.ReactElement;
 
-export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; offline?: boolean; device?: string; right?: React.ReactNode }
+export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; charging?: boolean; offline?: boolean; device?: string; right?: React.ReactNode }
 export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
 
 /** The dock. Ask Bob sits raised in the centre: onTalk on tap (open chat), onHoldStart on press (start listening). */

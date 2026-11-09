@@ -90,7 +90,8 @@
     var right = p.right !== undefined ? p.right
       : (p.battery != null ? h('div', { className: 'tmc-hd-status' },
           h(Icon, { name: 'signal', size: 18, label: p.offline ? 'No signal' : 'Signal' }),
-          h(Icon, { name: p.battery < 25 ? 'batteryLow' : 'battery', size: 18, label: 'Battery' }), p.battery + '%')
+          // charging: docked in the cart's cradle; the plug replaces the battery so golfers know it can stay there.
+          p.charging ? h(Icon, { name: 'plug', size: 18, label: 'Charging' }) : h(Icon, { name: p.battery < 25 ? 'batteryLow' : 'battery', size: 18, label: 'Battery' }), p.battery + '%')
         : (p.device ? h('div', { className: 'tmc-hd-status' }, p.device) : null));
     return h('header', { className: 'tmc-hd' }, lead,
       h('div', { className: 'tmc-hd-title' }, p.title, p.meta ? h('span', { className: 'tmc-hd-meta' }, ' · ' + p.meta) : null),
@@ -335,7 +336,7 @@
     return h('form', { className: cx('tmc-composer', p.focused && 'tmc-composer-focus'), onSubmit: function (e) { e.preventDefault(); if (hasText && p.onSend) { p.onSend(v); set(''); } } },
       h('label', { className: 'tmc-sr', htmlFor: ref.current }, 'Message Bob'),
       h('input', { id: ref.current, className: 'tmc-composer-input', value: v, disabled: locked, autoComplete: 'off', enterKeyHint: 'send',
-        placeholder: locked ? (p.lockedHint || 'Voice only while moving') : (p.placeholder || 'Message Bob'),
+        placeholder: locked ? (p.lockedHint || 'Lift the device to type') : (p.placeholder || 'Message Bob'),
         onChange: function (e) { set(e.target.value); } }),
       hasText && !locked
         ? h('button', { type: 'submit', className: 'tmc-composer-btn', 'aria-label': 'Send to Bob' }, h(Icon, { name: 'send', size: 22 }))

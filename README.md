@@ -94,7 +94,7 @@ Higher covers lower; a covered sheet comes back when the higher alert ends. Each
 | 2 | Inside a restricted zone | `AlertTakeover` kind zone (`escalated` once the pro shop is told) | Looping alarm · pulse every 2 s | No; ends when the golfer leaves |
 | 3 | Approaching a zone | `AlertSheet` tone zone, `autoDismiss` | Short chime · 1 pulse | Closes itself when the cart turns away or stops |
 | 4 | Play suspended | `Banner` suspended | — | Clears at the all clear |
-| 5 | Battery 15% and 5% | `AlertSheet` tone battery, once at each level, then a `Banner` | Soft chime · 1 pulse | Yes |
+| 5 | Battery 15% and 5% (only once the device is out of its cradle) | `AlertSheet` tone battery, once at each level, then a `Banner` | Soft chime · 1 pulse | Yes |
 | 6 | Left the course | Full screen (LeftCourse) | Soft chime | Clears when the cart is back |
 | 7 | Pace of play | `AlertSheet` tone pace | Soft chime + voice once · 1 pulse | Yes |
 | 8 | Pro shop message | `AlertSheet` tone message | Soft chime + voice once · 1 pulse | Yes; kept in Messages |
@@ -108,9 +108,9 @@ A zone covers everything except lightning: pace, messages, Bob and music.
 
 - **Navigation.** Top-level places (Hole, Food, Music, Help) show the dock with their item active, the course mark in the header and no back button. Steps inside a flow (Review order, Staff PIN, Find your tee time) show a back button and no dock. Bob opens full-screen over wherever the golfer was, with a back button that returns there. The dock always has all five items.
 - **Header.** The right side always shows signal and battery, on every screen with a header and for walkers too. The splash, the charger, welcome, flyover and the end of round are full-screen moments without a header. The cart number is named in Help and wherever a golfer must pick or quote this device (Spotify's device list, zone footnotes); nowhere else.
-- **While the cart moves:** voice, the map and alerts only. Typing to Bob, ordering, signing and changing music wait until the cart stops; the screen says so in an `info` `Banner` with the `cart` icon, and Bob can still do it by voice. Walkers are never locked.
+- **While the cart moves with the device in its cradle:** voice, the map and alerts only; typing to Bob, ordering, signing and changing music wait, and the screen says “Lift the device from the cradle…” in an `info` `Banner` with the `cart` icon. The device lives in a charging cradle fixed in the cart (Ulefone Rugking 2 Pro); as soon as someone lifts it out (a passenger), or when walking, nothing is locked.
 - **Talking to Bob.** In the dock, Ask Bob: tap opens the chat, hold talks straight away (the `VoiceBar` rises over the map). Inside Bob, the mic is tap to talk, tap again to send. While Bob listens the chat bar becomes the `VoiceBar`: the golfer's words live, Cancel and Send. Every screen words it this way.
-- **Moving lock looks the same everywhere:** an `info` `Banner` with the `cart` icon saying what waits, and the controls that wait are disabled, not hidden.
+- **Moving lock looks the same everywhere:** an `info` `Banner` with the `cart` icon saying what waits and how to get it back (lift the device, or ask Bob), and the controls that wait are disabled, not hidden.
 
 ## Glossary
 
