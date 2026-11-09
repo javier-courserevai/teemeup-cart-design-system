@@ -341,7 +341,9 @@
       p.question ? h('div', { className: 'tmc-answer-q' }, '“' + p.question + '”') : null,
       h('div', { className: 'tmc-answer-h' }, p.headline),
       p.children ? h('div', { className: 'tmc-answer-b' }, p.children) : null,
-      p.spoken === false ? null : h('div', { className: 'tmc-answer-s' }, h(Icon, { name: 'volume', size: 16 }), 'Spoken through the speaker'));
+      // Spoken answers say so, with a way to stop Bob speaking (the text always stays).
+      p.spoken === false ? null : h('div', { className: 'tmc-answer-s' }, h(Icon, { name: 'volume', size: 18 }), h('span', { style: { flex: 1 } }, 'Spoken through the speaker'),
+        h('button', { type: 'button', className: 'tmc-answer-mute', onClick: p.onMute }, 'Voice off')));
   }
 
   var BANNER_ICONS = { offline: 'wifiOff', suspended: 'lightning', clear: 'checkCircle', zone: 'alert', battery: 'batteryLow', info: 'volume' };

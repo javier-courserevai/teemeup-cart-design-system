@@ -53,7 +53,7 @@ export declare function ChatBubble(props: ChatBubbleProps): React.ReactElement;
 export interface MicButtonProps { state?: 'ready' | 'listening' | 'thinking' | 'error'; disabled?: boolean; label?: string; onClick?: () => void }
 export declare function MicButton(props: MicButtonProps): React.ReactElement;
 
-export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; children?: React.ReactNode }
+export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; onMute?: () => void; children?: React.ReactNode }
 export declare function AnswerCard(props: AnswerCardProps): React.ReactElement;
 
 export interface PromptChipProps { icon?: IconName; onClick?: () => void; children?: React.ReactNode; className?: string }

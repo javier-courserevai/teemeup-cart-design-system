@@ -80,7 +80,7 @@
 .tmc-answer-q{font-size:15px;color:var(--muted-foreground)}
 .tmc-answer-h{font-size:24px;line-height:1.2;font-weight:800}
 .tmc-answer-b{font-size:16px;line-height:1.4;white-space:pre-line}
-.tmc-answer-s{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:var(--primary-text)}
+.tmc-answer-mute{font:inherit;min-height:44px;padding:0 14px;border:0;border-radius:var(--radius-full);background:var(--muted);color:var(--foreground);font-size:15px;font-weight:800;cursor:pointer}.tmc-answer-s{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:var(--primary-text)}
 
 /* Sheets and takeovers */
 .tmc-sheet{background:var(--card);color:var(--foreground);border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;box-shadow:var(--shadow-sheet);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3)}
