@@ -218,8 +218,11 @@
         h('path', { d: 'M215 68l9 3', stroke: '#000000', strokeOpacity: 0.3, strokeWidth: 3, strokeLinecap: 'round' }),
         h('circle', { cx: 212, cy: 66, r: 2.5, fill: '#0a1e2c' }),
         h('path', { d: 'M212 66V36l16 6-16 6', stroke: '#ffffff', strokeWidth: 2.5, fill: '#ffffff' })),
-      p.tap ? h('g', null, h('path', { d: 'M' + me.x + ' ' + me.y + 'L' + tapAt.x + ' ' + tapAt.y, stroke: '#ffffff', strokeWidth: 2, strokeDasharray: '5 5' }),
+      p.tap ? h('g', null, h('path', { d: 'M' + me.x + ' ' + me.y + 'L' + tapAt.x + ' ' + tapAt.y, stroke: '#ffffff', strokeWidth: 2.5, strokeOpacity: 0.85 }),
         h('circle', { cx: tapAt.x, cy: tapAt.y, r: 12, fill: 'none', stroke: '#ffffff', strokeWidth: 3 })) : null,
+      p.dropZone ? h('g', null,
+        h('circle', { cx: p.dropZone.x, cy: p.dropZone.y, r: p.dropZone.r || 22, fill: 'var(--secondary-tint)', stroke: '#ffffff', strokeWidth: 3 }),
+        h('circle', { cx: p.dropZone.x, cy: p.dropZone.y, r: 4, fill: '#ffffff' })) : null,
       dot,
       h('g', { fontSize: 14, fontWeight: 700, fill: '#ffffff', fontFamily: 'inherit' },
         labels.map(function (l, i) {
@@ -229,6 +232,8 @@
         }),
         p.tap ? h('g', null, h('rect', { x: tapLabelX, y: tapAt.y - 10, width: tapW, height: 30, rx: 15, fill: '#ffffff' }),
           h('text', { x: tapLabelX + tapW / 2, y: tapAt.y + 10, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 16 }, p.tap)) : null,
+        p.dropZone ? h('g', null, h('rect', { x: p.dropZone.x - 52, y: p.dropZone.y + (p.dropZone.r || 22) + 4, width: 104, height: 26, rx: 13, fill: '#ffffff' }),
+          h('text', { x: p.dropZone.x, y: p.dropZone.y + (p.dropZone.r || 22) + 22, textAnchor: 'middle', fill: '#0a1e2c' }, p.dropZone.label || 'Drop here')) : null,
         p.zone ? h('g', null, h('rect', { x: zoneAt.x - 44, y: zoneAt.y - 13, width: 88, height: 26, rx: 13, fill: 'var(--zone)' }),
           h('text', { x: zoneAt.x, y: zoneAt.y + 5, textAnchor: 'middle', fill: '#0a1e2c', fontSize: 14 }, p.zoneLabel || 'No carts')) : null),
       p.credit ? h('text', { x: 6, y: 14, fontSize: 10, fontWeight: 600, fill: '#ffffff', opacity: 0.9, fontFamily: 'inherit', style: { paintOrder: 'stroke' }, stroke: '#0a1e2c', strokeWidth: 2, strokeOpacity: 0.5 }, p.credit) : null);
@@ -376,6 +381,10 @@
       h('span', { className: 'tmc-menu-name' }, p.name),
       p.description ? h('span', { className: 'tmc-menu-desc' }, p.description) : null,
       h('span', { className: 'tmc-menu-price' }, p.price));
+    if (p.soldOut) {
+      return h('div', { className: 'tmc-menu-item tmc-menu-item-out', 'aria-label': p.name + ', sold out' }, media, text,
+        h('span', { className: 'tmc-menu-out' }, 'Sold out'));
+    }
     if (!q) {
       return h('button', { type: 'button', className: 'tmc-menu-item', onClick: p.onAdd, 'aria-label': 'Add ' + p.name + ', ' + p.price },
         media, text, h('span', { className: 'tmc-menu-add', 'aria-hidden': 'true' }, h(Icon, { name: 'plus', size: 24 })));
@@ -485,7 +494,7 @@
   }
   // Steps of something in progress: done (check), now (highlighted), still to come (numbered, grey).
   function ProgressSteps(p) {
-    var at = p.current || 0;
+    var at = Number(p.current) || 0;
     return h('ol', { className: 'tmc-steps', 'aria-label': p.label },
       (p.steps || []).map(function (s, i) {
         var state = i < at ? 'done' : (i === at ? 'now' : 'next');

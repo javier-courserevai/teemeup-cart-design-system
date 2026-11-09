@@ -154,7 +154,7 @@
 .tmc-tab:focus-visible,.tmc-menu-item:focus-visible,.tmc-stepper button:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
 .tmc-menu-item{font:inherit;color:inherit;width:100%;display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-2xl);background:var(--card);box-shadow:var(--shadow-card);text-align:left;cursor:pointer;transition:transform .2s}
 .tmc-menu-item:active{transform:scale(.99)}
-.tmc-menu-item-on{border:2px solid var(--primary);padding:9px}
+.tmc-menu-item-on{border:2px solid var(--primary);padding:9px}.tmc-menu-item-out{cursor:default;background:var(--muted);box-shadow:none}.tmc-menu-item-out .tmc-menu-img{filter:grayscale(1)}.tmc-menu-out{flex:none;padding:6px 12px;border-radius:var(--radius-full);background:var(--card);border:1px solid var(--border);font-size:15px;font-weight:800;color:var(--muted-foreground)}
 .tmc-menu-item-on{flex-direction:column;align-items:stretch;gap:10px;cursor:default}
 .tmc-menu-item-on:active{transform:none}
 .tmc-menu-row{display:flex;align-items:center;gap:12px}

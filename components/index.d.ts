@@ -36,7 +36,7 @@ export interface HoleMapProps {
   credit?: string;
   pin?: MapPoint; me?: MapPoint; tapAt?: MapPoint;
   zone?: boolean; zonePath?: string; zoneLabelAt?: MapPoint; zoneLabel?: string; inZone?: boolean;
-  walker?: boolean; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
+  walker?: boolean; dropZone?: MapPoint & { r?: number; label?: string }; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
 }
 export declare function HoleMap(props: HoleMapProps): React.ReactElement;
 
@@ -80,7 +80,7 @@ export declare function ChoiceCard(props: ChoiceCardProps): React.ReactElement;
 export interface GolferRowProps { name: string; initials?: string; status?: string; tone?: StatusTagProps['tone'] }
 export declare function GolferRow(props: GolferRowProps): React.ReactElement;
 
-export interface MenuItemProps { name: string; price: string; description?: string; image?: string; icon?: IconName; tag?: string; qty?: number; onAdd?: () => void; onRemove?: () => void }
+export interface MenuItemProps { name: string; price: string; description?: string; image?: string; icon?: IconName; tag?: string; qty?: number; soldOut?: boolean; onAdd?: () => void; onRemove?: () => void }
 export declare function MenuItem(props: MenuItemProps): React.ReactElement;
 export interface CategoryTabsProps { items: { id: string; label: string }[]; active?: string; onChange?: (id: string) => void; label?: string }
 export declare function CategoryTabs(props: CategoryTabsProps): React.ReactElement;
