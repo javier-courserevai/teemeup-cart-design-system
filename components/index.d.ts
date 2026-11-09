@@ -15,8 +15,8 @@ export declare function CourseMark(props: CourseMarkProps): React.ReactElement;
 export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; charging?: boolean; offline?: boolean; device?: string; right?: React.ReactNode }
 export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
 
-/** The dock. Ask Bob sits raised in the centre: onTalk on tap (open chat), onHoldStart on press (start listening). */
-export interface BottomBarProps { items?: 'mvp' | 'full'; active?: 'hole' | 'bob' | 'food' | 'music' | 'help'; onHole?: () => void; onTalk?: () => void; onHoldStart?: () => void; onFood?: () => void; onMusic?: () => void; onHelp?: () => void }
+/** The dock: Hole · Score · Ask Bob · Food · Help. badges: ids with a dot ('score', 'food'). items 'nofood' puts Messages in Food's place. */
+export interface BottomBarProps { items?: 'full' | 'nofood'; active?: 'hole' | 'score' | 'bob' | 'food' | 'help' | 'messages'; badges?: string | string[]; onHole?: () => void; onScore?: () => void; onTalk?: () => void; onHoldStart?: () => void; onFood?: () => void; onMessages?: () => void; onHelp?: () => void }
 export declare function BottomBar(props: BottomBarProps): React.ReactElement;
 
 export interface ButtonProps { variant?: 'primary' | 'secondary' | 'danger' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; loading?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }

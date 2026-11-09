@@ -130,18 +130,18 @@
 .tmc-dots i.on{background:var(--foreground)}
 
 /* Dock: Bob raised in the centre, destinations either side */
-.tmc-dock{position:relative;height:var(--bar-height);flex:none;display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:end;padding:0 8px 6px;border-top:1px solid var(--border);background:var(--background)}
-.tmc-dock-full{grid-template-columns:1fr 1fr 1.25fr 1fr 1fr;padding:0 4px 6px}
+.tmc-dock{position:relative;height:calc(var(--bar-height) + 16px);flex:none;display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:end;padding:16px 8px 6px;background:linear-gradient(to bottom,transparent 16px,var(--background) 16px)}.tmc-dock::before{content:"";position:absolute;left:0;right:0;top:16px;border-top:1px solid var(--border)}
+.tmc-dock-full{grid-template-columns:1fr 1fr 1.25fr 1fr 1fr;padding:16px 4px 6px}
 .tmc-dock-item{font:inherit;min-height:66px;padding:6px 0;border:0;border-radius:var(--radius-2xl);background:transparent;color:var(--foreground);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.tmc-dock-ico{width:60px;height:34px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;transition:background-color .2s}
+.tmc-dock-ico{position:relative;width:60px;height:34px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;transition:background-color .2s}
 .tmc-dock-full .tmc-dock-ico{width:52px}
-.tmc-dock-label{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap}
+.tmc-dock-dot{position:absolute;top:2px;right:10px;width:12px;height:12px;border-radius:var(--radius-full);background:var(--lightning);box-shadow:0 0 0 2px var(--background)}.tmc-dock-label{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap}
 .tmc-dock-item:hover .tmc-dock-ico{background:var(--muted)}
 .tmc-dock-item[aria-current="page"]{color:var(--primary-text)}
 .tmc-dock-item[aria-current="page"] .tmc-dock-ico{background:var(--primary-tint)}
 .tmc-dock-item[aria-current="page"] .tmc-dock-label{font-weight:800}
 .tmc-dock-bob{font:inherit;align-self:end;padding:0 0 4px;border:0;background:transparent;color:var(--primary-text);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.tmc-dock-bob-btn{position:relative;width:68px;height:68px;margin-top:-26px;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px var(--background),0 8px 16px -6px rgba(10,30,44,.45);transition:transform .2s}
+.tmc-dock-bob-btn{position:relative;width:64px;height:64px;margin-top:-18px;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px var(--background),0 8px 16px -6px rgba(10,30,44,.45);transition:transform .2s}
 .tmc-dock-bob:active .tmc-dock-bob-btn{transform:scale(.95)}
 .tmc-dock-mic{position:absolute;right:-3px;bottom:-3px;width:26px;height:26px;border-radius:var(--radius-full);background:var(--background);color:var(--primary-text);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .tmc-dock-item:focus-visible,.tmc-dock-bob:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
@@ -298,7 +298,7 @@ button.tmc-row,a.tmc-row{cursor:pointer}
 .tmc-score-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
 .tmc-stepper button:disabled{color:var(--muted-foreground);cursor:not-allowed}
 .tmc-sc{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:17px}
-.tmc-sc th,.tmc-sc td{height:40px;text-align:center;border-bottom:1px solid var(--border);padding:0}
+.tmc-sc th,.tmc-sc td{height:36px;text-align:center;border-bottom:1px solid var(--border);padding:0}
 .tmc-sc thead th{font-size:15px;font-weight:800;color:var(--muted-foreground);height:36px}
 .tmc-sc thead th.tmc-sc-mine{color:var(--primary-text)}
 .tmc-sc tbody th{font-weight:800;width:44px}

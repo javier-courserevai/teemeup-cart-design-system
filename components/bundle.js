@@ -114,27 +114,31 @@
     }, p.loading ? h('span', { className: 'tmc-spin', 'aria-hidden': 'true' }) : (p.icon ? h(Icon, { name: p.icon }) : null), p.children);
   }
 
-  // The dock: Bob raised in the centre (tap to chat, hold to talk), destinations either side.
-  // Always five: Hole · Food · Bob · Music · Help, so nothing moves between screens. items="mvp" is only for a course without food or music.
+  // The dock: Hole · Score · Ask Bob (raised, centre) · Food · Help. Ordered by how often a golfer needs them in a round.
+  // badges: ids that carry a dot ('score' = a hole waiting for scores, 'food' = an order in progress or ready).
+  // The dock reserves the space Bob rises into, so content above it never needs extra padding.
   function DockItem(p) {
     var on = p.active === p.id;
-    return h('button', { type: 'button', className: 'tmc-dock-item', onClick: p.onClick, 'aria-current': on ? 'page' : undefined },
-      h('span', { className: 'tmc-dock-ico' }, h(Icon, { name: p.icon, size: 28, weight: on ? 'fill' : 'bold' })),
+    return h('button', { type: 'button', className: 'tmc-dock-item', onClick: p.onClick, 'aria-current': on ? 'page' : undefined,
+        'aria-label': p.badge ? p.label + ', ' + p.badgeLabel : undefined },
+      h('span', { className: 'tmc-dock-ico' }, h(Icon, { name: p.icon, size: 28, weight: on ? 'fill' : 'bold' }),
+        p.badge ? h('span', { className: 'tmc-dock-dot', 'aria-hidden': 'true' }) : null),
       h('span', { className: 'tmc-dock-label' }, p.label));
   }
+  var BADGE_LABEL = { score: 'a hole needs scores', food: 'order in progress' };
   function BottomBar(p) {
-    var full = p.items !== 'mvp';
     var a = p.active || 'hole';
-    var item = function (id, icon, label, fn) { return h(DockItem, { key: id, id: id, icon: icon, label: label, active: a, onClick: fn }); };
+    var badges = Array.isArray(p.badges) ? p.badges : String(p.badges || '').split(',').map(function (s) { return s.trim(); });
+    var item = function (id, icon, label, fn) { var on = badges.indexOf(id) >= 0; return h(DockItem, { key: id, id: id, icon: icon, label: label, active: a, onClick: fn, badge: on, badgeLabel: BADGE_LABEL[id] }); };
     var bob = h('button', { key: 'bob', type: 'button', className: 'tmc-dock-bob', onClick: p.onTalk, onPointerDown: p.onHoldStart,
         'aria-label': 'Ask Bob. Tap to chat, hold to talk', 'aria-current': a === 'bob' ? 'page' : undefined },
-      h('span', { className: 'tmc-dock-bob-btn' }, h(Icon, { name: 'sparkles', size: 32, weight: 'fill' }),
+      h('span', { className: 'tmc-dock-bob-btn' }, h(Icon, { name: 'sparkles', size: 30, weight: 'fill' }),
         h('span', { className: 'tmc-dock-mic', 'aria-hidden': 'true' }, h(Icon, { name: 'mic', size: 15, weight: 'fill' }))),
       h('span', { className: 'tmc-dock-label' }, 'Ask Bob'));
-    var kids = full
-      ? [item('hole', 'flag', 'Hole', p.onHole), item('food', 'food', 'Food', p.onFood), bob, item('music', 'music', 'Music', p.onMusic), item('help', 'lifebuoy', 'Help', p.onHelp)]
-      : [item('hole', 'flag', 'Hole', p.onHole), bob, item('help', 'lifebuoy', 'Help', p.onHelp)];
-    return h('nav', { className: cx('tmc-dock', full && 'tmc-dock-full'), 'aria-label': 'Main' }, kids);
+    // A course without food keeps five slots: Messages takes Food's place, so Bob stays centred.
+    var fourth = p.items === 'nofood' ? item('messages', 'message', 'Messages', p.onMessages) : item('food', 'food', 'Food', p.onFood);
+    var kids = [item('hole', 'flag', 'Hole', p.onHole), item('score', 'golf', 'Score', p.onScore), bob, fourth, item('help', 'lifebuoy', 'Help', p.onHelp)];
+    return h('nav', { className: 'tmc-dock tmc-dock-full', 'aria-label': 'Main' }, kids);
   }
 
   function YardageReadout(p) {

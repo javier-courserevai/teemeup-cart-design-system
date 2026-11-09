@@ -1,11 +1,11 @@
 # BottomBar
 
-The dock at the foot of every round screen: Bob raised in the centre, the places a golfer goes either side, each an icon over a word.
+The dock at the foot of every top-level screen: **Hole · Score · Ask Bob · Food · Help**, ordered by how often a golfer needs each in a round. Each is an icon over a 15px word.
 
-- **Ask Bob**, centre, 68px purple circle cut out of the bar: tap to open the chat, press and hold to talk straight away from any screen. The small mic badge says holding works. Bob is always in the centre, in every phase.
-- **Hole** (flag) brings the golfer back to the map from anywhere. **Help** (lifebuoy) is for calling the marshal or the pro shop and for units.
-- Always five items: Hole · Food · Ask Bob · Music · Help, on every screen that has a dock, so nothing shifts between screens. `items="mvp"` (Hole · Ask Bob · Help) only for a course that has no food or music.
-- **Navigation rule.** A top-level place (Hole, Food, Music, Help) shows the dock with its item active and **no back button**; its header shows the course mark. A step inside a flow (Review order, Staff PIN, Find your tee time) shows a back button and **no dock**. Bob is the one exception: it opens full-screen over wherever the golfer was, with a back button that returns there.
-- Every item is at least 64px tall with a 15px label: icons alone are not enough at arm's length in sun. `active` marks the current place with a purple pill behind its icon and a purple label.
-- Hole arrows (‹ ›) live on the map's side edges, not here, so a gloved tap aimed at the dock never changes the hole.
-- Screens where Bob is the content (the chat) replace the dock with the `Composer`; screens that end in one action replace it with a block `Button`.
+- **Ask Bob**, centre, a 64px purple circle raised out of the bar: tap to open the chat, press and hold to talk straight away from any screen (the voice bar rises over the map). Bob never moves.
+- **Hole** (flag) is home. **Score** (golf ball) opens the group scorecard; it's used after every hole, so it earns a slot. **Food** carries the current order. **Help** holds the emergency button, calls, messages, music and settings.
+- **Music is not a tab.** It's connected once and then mostly controlled by voice; while it plays, a mini player sits over the map (title, pause) and opens Music. First connection: Help → Music, or ask Bob.
+- **Badges** (`badges="score,food"`): a red dot on Score when a hole is waiting for scores, on Food while an order is in progress or ready. The dot is announced with the label.
+- A course without food (`items="nofood"`) shows Messages in Food's slot, so there are always five and Bob stays centred.
+- The dock reserves the 16px Ask Bob rises into, so screens never pad for it. `active` marks the current place with a purple pill behind a filled icon.
+- **Navigation rule:** top-level places (Hole, Score, Food, Help) show the dock and no back button; steps inside a flow (Review order, Music, Staff PIN) show a back button and no dock; Bob opens full-screen with a back button.
