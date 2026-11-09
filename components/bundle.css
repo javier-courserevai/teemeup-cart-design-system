@@ -179,7 +179,7 @@
 /* Chat with Bob */
 .tmc-chips{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .tmc-chip{font:inherit;min-height:var(--tap);max-width:100%;padding:0 18px;border:1px solid var(--border);border-radius:var(--radius-full);background:var(--card);color:var(--primary-text);font-size:16px;font-weight:600;line-height:1.25;text-align:left;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow-card);cursor:pointer;transition:background-color .2s}
-.tmc-chip:hover{background:var(--muted)}
+.tmc-chip:hover{background:var(--muted)}.tmc-chip-block{width:100%;min-height:60px;padding:8px 14px 8px 8px;border-radius:var(--radius-2xl);color:var(--foreground);gap:12px}.tmc-chip-ico{width:44px;height:44px;flex:none;border-radius:var(--radius-lg);background:var(--primary-tint);color:var(--primary-text);display:flex;align-items:center;justify-content:center}.tmc-chip-text{flex:1;min-width:0;font-weight:700}.tmc-chip-go{color:var(--primary-text);flex:none}.tmc-starters{flex:none;display:flex;flex-direction:column;gap:8px;padding:4px 16px 14px}
 .tmc-chip:active{transform:scale(.98)}
 .tmc-chip:focus-visible,.tmc-composer-btn:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
 .tmc-composer{height:var(--bar-height);flex:none;display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:var(--background)}

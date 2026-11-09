@@ -56,7 +56,7 @@ export declare function MicButton(props: MicButtonProps): React.ReactElement;
 export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; onMute?: () => void; children?: React.ReactNode }
 export declare function AnswerCard(props: AnswerCardProps): React.ReactElement;
 
-export interface PromptChipProps { icon?: IconName; onClick?: () => void; children?: React.ReactNode; className?: string }
+export interface PromptChipProps { icon?: IconName; block?: boolean; onClick?: () => void; children?: React.ReactNode; className?: string }
 export declare function PromptChip(props: PromptChipProps): React.ReactElement;
 
 /** The chat bar on every Bob screen. Empty field: the round button is the mic. With text: it is Send. */

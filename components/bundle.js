@@ -310,7 +310,14 @@
   }
 
   // One suggested question or quick reply. 56px tall: tapped with a glove.
+  // block: a full-width suggestion row (icon tile, the question, a send arrow), used as conversation starters.
   function PromptChip(p) {
+    if (p.block) {
+      return h('button', { type: 'button', className: cx('tmc-chip', 'tmc-chip-block', p.className), onClick: p.onClick },
+        p.icon ? h('span', { className: 'tmc-chip-ico', 'aria-hidden': 'true' }, h(Icon, { name: p.icon, size: 20 })) : null,
+        h('span', { className: 'tmc-chip-text' }, p.children),
+        h(Icon, { name: 'arrowUp', size: 20, className: 'tmc-chip-go' }));
+    }
     return h('button', { type: 'button', className: cx('tmc-chip', p.className), onClick: p.onClick },
       p.icon ? h(Icon, { name: p.icon, size: 18 }) : null, h('span', null, p.children));
   }
@@ -342,7 +349,7 @@
       h('div', { className: 'tmc-answer-h' }, p.headline),
       p.children ? h('div', { className: 'tmc-answer-b' }, p.children) : null,
       // Spoken answers say so, with a way to stop Bob speaking (the text always stays).
-      p.spoken === false ? null : h('div', { className: 'tmc-answer-s' }, h(Icon, { name: 'volume', size: 18 }), h('span', { style: { flex: 1 } }, 'Spoken through the speaker'),
+      p.spoken === false ? null : h('div', { className: 'tmc-answer-s' }, h(Icon, { name: 'volume', size: 18 }), h('span', { style: { flex: 1 } }, 'Spoken aloud'),
         h('button', { type: 'button', className: 'tmc-answer-mute', onClick: p.onMute }, 'Voice off')));
   }
 
