@@ -23,6 +23,7 @@
     shelter: [["M222.14,105.85l-80-80a20,20,0,0,0-28.28,0l-80,80A19.86,19.86,0,0,0,28,120v96a12,12,0,0,0,12,12h64a12,12,0,0,0,12-12V164h24v52a12,12,0,0,0,12,12h64a12,12,0,0,0,12-12V120A19.86,19.86,0,0,0,222.14,105.85ZM204,204H164V152a12,12,0,0,0-12-12H104a12,12,0,0,0-12,12v52H52V121.65l76-76,76,76Z"], ["M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"]],
     arrowRight: [["M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"], ["M221.66,133.66l-72,72A8,8,0,0,1,136,200V136H40a8,8,0,0,1,0-16h96V56a8,8,0,0,1,13.66-5.66l72,72A8,8,0,0,1,221.66,133.66Z"]],
     arrowUp: [["M208.49,120.49a12,12,0,0,1-17,0L140,69V216a12,12,0,0,1-24,0V69L64.49,120.49a12,12,0,0,1-17-17l72-72a12,12,0,0,1,17,0l72,72A12,12,0,0,1,208.49,120.49Z"], ["M207.39,115.06A8,8,0,0,1,200,120H136v96a8,8,0,0,1-16,0V120H56a8,8,0,0,1-5.66-13.66l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,207.39,115.06Z"]],
+    arrowLeft: [["M228,128a12,12,0,0,1-12,12H69l51.52,51.51a12,12,0,0,1-17,17l-72-72a12,12,0,0,1,0-17l72-72a12,12,0,0,1,17,17L69,116H216A12,12,0,0,1,228,128Z"], ["M224,128a8,8,0,0,1-8,8H120v64a8,8,0,0,1-13.66,5.66l-72-72a8,8,0,0,1,0-11.32l72-72A8,8,0,0,1,120,56v64h96A8,8,0,0,1,224,128Z"]],
     arrowDown: [["M208.49,152.49l-72,72a12,12,0,0,1-17,0l-72-72a12,12,0,0,1,17-17L116,187V40a12,12,0,0,1,24,0V187l51.51-51.52a12,12,0,0,1,17,17Z"], ["M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72A8,8,0,0,1,56,136h64V40a8,8,0,0,1,16,0v96h64a8,8,0,0,1,5.66,13.66Z"]],
     chevronLeft: [["M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"], ["M168,48V208a8,8,0,0,1-13.66,5.66l-80-80a8,8,0,0,1,0-11.32l80-80A8,8,0,0,1,168,48Z"]],
     chevronRight: [["M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"], ["M181.66,133.66l-80,80A8,8,0,0,1,88,208V48a8,8,0,0,1,13.66-5.66l80,80A8,8,0,0,1,181.66,133.66Z"]],
@@ -222,7 +223,7 @@
         h('rect', { x: 138, y: 364, width: 26, height: 11, rx: 3, fill: 'var(--map-fringe)' }),
         trees,
         h('rect', { width: 328, height: 412, filter: 'url(#' + id + 'n)', opacity: 0.55 })),
-      p.zone ? h('path', { d: zonePath, fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
+      p.zone ? h('path', { d: zonePath, fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: p.zoneAlert ? 4 : 2, className: p.zoneAlert ? 'tmc-zone-pulse' : undefined }) : null,
       p.inZone ? h('path', { d: 'M' + (me.x - 50) + ' ' + (me.y - 60) + 'L' + (me.x + 50) + ' ' + (me.y - 70) + 'L' + (me.x + 60) + ' 412L' + (me.x - 60) + ' 412Z', fill: 'url(#' + id + ')', stroke: 'var(--zone)', strokeWidth: 2 }) : null,
       h('g', { transform: 'translate(' + (pin.x - 212) + ' ' + (pin.y - 66) + ')' },
         h('path', { d: 'M215 68l9 3', stroke: '#000000', strokeOpacity: 0.3, strokeWidth: 3, strokeLinecap: 'round' }),
@@ -401,6 +402,11 @@
         h('div', null, h('div', { className: 'tmc-take-esc-t' }, p.escalated), p.escalatedDetail ? h('div', { className: 'tmc-take-esc-d' }, p.escalatedDetail) : null)) : null,
       p.message ? h('div', { className: 'tmc-take-msg' }, p.message) : null,
       p.detail ? h('div', { className: 'tmc-take-detail' }, h(Icon, { name: p.detailIcon || (k === 'lightning' ? 'shelter' : 'arrowDown'), size: 26 }), h('div', { style: { flex: 1 } }, p.detail)) : null,
+      // exit: the way out, big, for zones: { distance: '15 yds', direction: 'behind you', icon: 'arrowDown', label: 'Nearest exit' }.
+      p.exit ? h('div', { className: 'tmc-take-exit', role: 'note', 'aria-label': (p.exit.label || 'Nearest exit') + ', ' + p.exit.distance + ' ' + p.exit.direction },
+        h('div', { className: 'tmc-take-exit-arrow', 'aria-hidden': 'true' }, h(Icon, { name: p.exit.icon || 'arrowDown', size: 56, weight: 'fill' })),
+        h('div', null, h('div', { className: 'tmc-take-exit-l' }, p.exit.label || 'Nearest exit'),
+          h('div', { className: 'tmc-take-exit-d' }, p.exit.distance), h('div', { className: 'tmc-take-exit-dir' }, p.exit.direction))) : null,
       h('div', { className: 'tmc-take-spacer' }),
       p.footnote ? h('div', { className: 'tmc-take-foot' }, p.footnote) : null,
       p.action ? h(Button, { block: true, variant: light ? 'primary' : 'onalert', onClick: p.onAction }, p.action) : null);

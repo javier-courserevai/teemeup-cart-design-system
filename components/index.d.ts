@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward' | 'golf';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'arrowLeft' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward' | 'golf';
 
 /** Phosphor, Bold by default; weight 'fill' for the active dock item, Bob and safety icons. strokeWidth is ignored (kept for older call sites). */
 export interface IconProps { name: IconName; size?: number; weight?: 'bold' | 'fill'; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
@@ -36,7 +36,7 @@ export interface HoleMapProps {
   /** Small source line drawn bottom-left, e.g. "Imagery: USGS NAIP". */
   credit?: string;
   pin?: MapPoint; me?: MapPoint; tapAt?: MapPoint;
-  zone?: boolean; zonePath?: string; zoneLabelAt?: MapPoint; zoneLabel?: string; inZone?: boolean;
+  zone?: boolean; zoneAlert?: boolean; zonePath?: string; zoneLabelAt?: MapPoint; zoneLabel?: string; inZone?: boolean;
   walker?: boolean; dropZone?: MapPoint & { r?: number; label?: string }; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
 }
 export declare function HoleMap(props: HoleMapProps): React.ReactElement;
@@ -69,7 +69,7 @@ export declare function Banner(props: BannerProps): React.ReactElement;
 export interface AlertSheetProps { tone?: 'pace' | 'message' | 'zone' | 'battery' | 'exited'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; autoDismiss?: string; secondaryAction?: string; onSecondary?: () => void; children?: React.ReactNode }
 export declare function AlertSheet(props: AlertSheetProps): React.ReactElement;
 
-export interface AlertTakeoverProps { kind?: 'lightning' | 'zone' | 'clear'; title: string; message?: string; detail?: React.ReactNode; detailIcon?: IconName; icon?: IconName; footnote?: string; action?: string; onAction?: () => void; flash?: boolean; escalated?: string; escalatedDetail?: string }
+export interface AlertTakeoverProps { kind?: 'lightning' | 'zone' | 'clear'; title: string; message?: string; detail?: React.ReactNode; detailIcon?: IconName; icon?: IconName; footnote?: string; action?: string; onAction?: () => void; flash?: boolean; escalated?: string; escalatedDetail?: string; exit?: { distance: string; direction: string; icon?: IconName; label?: string } }
 export declare function AlertTakeover(props: AlertTakeoverProps): React.ReactElement;
 
 export interface QRPanelProps { title?: string; hint?: string; size?: number; label?: string }

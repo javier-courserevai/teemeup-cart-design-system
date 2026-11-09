@@ -91,8 +91,8 @@ Higher covers lower; a covered sheet comes back when the higher alert ends. Each
 | Priority | Alert | Shape | Sound · vibration | Dismiss |
 | --- | --- | --- | --- | --- |
 | 1 | Lightning | `AlertTakeover` kind lightning | Two-tone siren · continuous | “I understand”, then a `Banner` until all clear |
-| 2 | Inside a restricted zone | `AlertTakeover` kind zone (`escalated` once the pro shop is told) | Looping alarm · pulse every 2 s | No; ends when the golfer leaves |
-| 3 | Approaching a zone | `AlertSheet` tone zone, `autoDismiss` | Short chime · 1 pulse | Closes itself when the cart turns away or stops |
+| 2 | Inside a restricted zone or a closed area | `AlertTakeover` kind zone with `exit` (`escalated` once the pro shop is told) | Looping alarm · pulse every 2 s | No; ends when the golfer leaves |
+| 3 | Approaching a zone | `Banner` tone zone at the top + the zone pulsing on the map | Short chime · 1 pulse | Clears when the cart turns away or stops |
 | 4 | Play suspended | `Banner` suspended | — | Clears at the all clear |
 | 5 | Battery 15% and 5% (only once the device is out of its cradle) | `AlertSheet` tone battery, once at each level, then a `Banner` | Soft chime · 1 pulse | Yes |
 | 6 | Left the course | Full screen (LeftCourse) | Soft chime | Clears when the cart is back |

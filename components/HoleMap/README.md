@@ -6,6 +6,7 @@ The hole under the yardage: hazards with distances, the golfer's position, tap-f
 - **Without a photo**, it draws an aerial-style stand-in from the `map-*` tokens: textured rough, a first cut, a striped fairway, tree clumps with shadows, a cart path and the green with its collar. Use it for courses with no imagery yet.
 - Position: a purple dot with a white ring for a cart; a walker figure (`walker`) for a walking device.
 - `zone` draws the active zone hatched in `zone` orange with its label. Zones are always drawn, before any alert. Walkers never see cart-only zones.
+- `zoneAlert` thickens the zone's edge and pulses it while the cart approaches (still under reduced motion: thick, not pulsing).
 - `tap` shows the distance to a tapped point; tapping again clears it.
 - Penalty areas keep a thin solid red edge; dashed lines are not used anywhere on the map.
 - `dropZone` (`x`, `y`, optional `r` and `label`) marks where Bob says to drop: a green-tinted ring with a white edge and a “Drop here” pill. Shown when the golfer asks Bob “Show the drop zone”.
