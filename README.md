@@ -125,7 +125,7 @@ Sentence case everywhere (“Booking confirmed”), except alert titles, which a
 
 ## Iconography
 
-Lucide, 24px grid, 2px stroke, round caps, `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). 20px in buttons and headers, 18px in status, 28px in choice tiles, 36–56px on takeovers. Bob is always the sparkles icon in a `primary` circle (`BobAvatar`). No emoji.
+**Phosphor**, Bold by default and Fill for the active dock item, Bob and safety icons, in `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). Chosen over the earlier Lucide line set because Bold reads better in sun and Fill marks state without a second icon. 20px in buttons, 18px in status, 28px in the dock and choice tiles, 56px on takeovers. Bob is always the sparkle in a `primary` circle (`BobAvatar`). No emoji.
 
 ## Logos
 

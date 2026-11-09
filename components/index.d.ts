@@ -1,8 +1,9 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward' | 'golf';
 
-export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
+/** Phosphor, Bold by default; weight 'fill' for the active dock item, Bob and safety icons. strokeWidth is ignored (kept for older call sites). */
+export interface IconProps { name: IconName; size?: number; weight?: 'bold' | 'fill'; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
 export declare function Icon(props: IconProps): React.ReactElement;
 
 export interface DeviceFrameProps { theme?: 'day' | 'dusk'; children?: React.ReactNode; className?: string; style?: React.CSSProperties }
