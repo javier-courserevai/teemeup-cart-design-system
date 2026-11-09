@@ -257,8 +257,10 @@
 
   // Two speakers that must never be confused at a glance: Bob on the left with his avatar and name on a pale card,
   // the golfer on the right, labelled "You", on purple, never wider than three quarters of the thread.
+  // speaker: 'bob' (default) or 'golfer'. `from` is the older name and still works in React.
   function ChatBubble(p) {
-    if (p.from === 'golfer') {
+    var who = p.speaker || p.from || 'bob';
+    if (who === 'golfer' || who === 'you') {
       return h('div', { className: 'tmc-msg tmc-msg-golfer' },
         h('div', { className: 'tmc-msg-col' }, p.showName === false ? null : h('div', { className: 'tmc-msg-name tmc-msg-you' }, 'You'),
           h('div', { className: 'tmc-bubble tmc-bubble-golfer' }, p.children)));

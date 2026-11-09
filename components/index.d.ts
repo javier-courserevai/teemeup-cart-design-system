@@ -47,7 +47,7 @@ export declare function StatusTag(props: StatusTagProps): React.ReactElement;
 export interface BobAvatarProps { size?: number; onAccent?: boolean }
 export declare function BobAvatar(props: BobAvatarProps): React.ReactElement;
 
-export interface ChatBubbleProps { from?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
+export interface ChatBubbleProps { speaker?: 'bob' | 'golfer'; /** @deprecated use speaker */ from?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
 export declare function ChatBubble(props: ChatBubbleProps): React.ReactElement;
 
 export interface MicButtonProps { state?: 'ready' | 'listening' | 'thinking' | 'error'; disabled?: boolean; label?: string; onClick?: () => void }
