@@ -71,6 +71,7 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 - **Zones are firm, not angry.** Most golfers drive in by accident and have paid to play: “No carts near the 7th green. The nearest exit is 15 yds behind you.” Never “Violation” or “Warning!”.
 - **Pace is a polite request, spoken once:** “The group behind is close and the hole ahead is open. A little extra pace would be appreciated!”
 - **The name is “Teemeup”**, or “Teemeup AI” on the splash. Never “TeemeupAI”.
+- **Screens carry only what golfers and staff read.** Notes for the team (why something works the way it does, placeholders, data sources) go next to the board on the canvas as a “Dev note”, never inside the screen, so none of it reaches the product.
 - Sentence case for everything, buttons and screen titles included (“Start round”, “Find your tee time”); only alert titles are uppercase. 12-hour times, the middle dot ( · ) to join facts. No emoji on the device.
 
 ## Visual foundations
