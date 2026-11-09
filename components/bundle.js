@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"},{"name":"VoiceBar"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"},{"name":"VoiceBar"},{"name":"ScoreEntry"},{"name":"ScoreCard"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
@@ -458,7 +458,8 @@
   function QuantityStepper(p) {
     var v = p.value || 0;
     return h('div', { className: 'tmc-stepper', role: 'group', 'aria-label': (p.label || 'Quantity') },
-      h('button', { type: 'button', 'aria-label': v <= 1 ? 'Remove ' + (p.label || 'item') : 'One less', onClick: p.onDecrease }, h(Icon, { name: v <= 1 ? 'x' : 'minus', size: 22 })),
+      h('button', { type: 'button', 'aria-label': p.min == null && v <= 1 ? 'Remove ' + (p.label || 'item') : 'One less', disabled: p.min != null && v <= p.min, onClick: p.onDecrease },
+        h(Icon, { name: p.min == null && v <= 1 ? 'x' : 'minus', size: 22 })),
       h('output', { 'aria-live': 'polite' }, v),
       h('button', { type: 'button', 'aria-label': 'One more', onClick: p.onIncrease }, h(Icon, { name: 'plus', size: 22 })));
   }
@@ -568,11 +569,52 @@
     return h('div', { className: 'tmc-skel', role: 'status', 'aria-label': p.label || 'Loading' }, kids);
   }
 
+  // ---- Scorecard ---------------------------------------------------------
+  function toPar(d) { return d === 0 ? 'E' : (d > 0 ? '+' + d : String(d)); }
+  // After each hole, when the cart stops at the next tee: one row per golfer on this cart, starting at par.
+  function ScoreEntry(p) {
+    var par = Number(p.par) || 4;
+    return h('div', { className: 'tmc-sheet', role: 'dialog', 'aria-label': p.title },
+      h('div', null, h('div', { className: 'tmc-sheet-over' }, 'Hole ' + p.hole + ' · Par ' + par), h('div', { className: 'tmc-sheet-title' }, p.title || ('How did hole ' + p.hole + ' go?'))),
+      h('div', { className: 'tmc-score-rows' }, (p.players || []).map(function (pl) {
+        var s = Number(pl.strokes) || par;
+        return h('div', { key: pl.name, className: 'tmc-score-row' },
+          h('div', { className: 'tmc-initials', 'aria-hidden': 'true' }, String(pl.name).split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2)),
+          h('div', { className: 'tmc-score-who' }, h('div', { className: 'tmc-row-title' }, pl.name), h('div', { className: 'tmc-row-desc' }, toPar(s - par) + ' on this hole')),
+          h(QuantityStepper, { value: s, min: 1, label: 'Strokes for ' + pl.name, onIncrease: pl.onIncrease, onDecrease: pl.onDecrease }));
+      })),
+      h('div', { className: 'tmc-score-actions' },
+        h(Button, { variant: 'secondary', block: true, onClick: p.onLater }, p.later || 'Later'),
+        h(Button, { block: true, onClick: p.onSave }, p.save || 'Save')));
+  }
+  // The card for nine holes: a row per hole, a column per golfer. Under par is circled, two or more over is boxed.
+  function ScoreCard(p) {
+    var players = p.players || [], holes = p.holes || [];
+    var tot = players.map(function () { return 0; }), parTot = 0, played = players.map(function () { return 0; });
+    var mark = function (s, par) {
+      if (s == null) return h('span', { className: 'tmc-sc-empty' }, '–');
+      var d = s - par;
+      return h('span', { className: cx('tmc-sc-n', d < 0 && 'tmc-sc-under', d >= 2 && 'tmc-sc-over') }, s);
+    };
+    var rows = holes.map(function (ho) {
+      parTot += ho.par;
+      return h('tr', { key: ho.n, className: ho.current ? 'tmc-sc-now' : undefined },
+        h('th', { scope: 'row' }, ho.n), h('td', { className: 'tmc-sc-par' }, ho.par),
+        players.map(function (pl, i) { var s = ho.scores ? ho.scores[i] : null; if (s != null) { tot[i] += s; played[i] += ho.par; } return h('td', { key: i }, mark(s, ho.par)); }));
+    });
+    return h('table', { className: 'tmc-sc', 'aria-label': p.label || 'Scorecard' },
+      h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Hole'), h('th', { scope: 'col' }, 'Par'),
+        players.map(function (pl, i) { return h('th', { key: i, scope: 'col', className: pl.mine ? 'tmc-sc-mine' : undefined }, pl.short || pl.name); }))),
+      h('tbody', null, rows),
+      h('tfoot', null, h('tr', null, h('th', { scope: 'row' }, p.totalLabel || 'Out'), h('td', { className: 'tmc-sc-par' }, parTot),
+        players.map(function (pl, i) { return h('td', { key: i }, h('div', { className: 'tmc-sc-tot' }, tot[i] || '–'), tot[i] ? h('div', { className: 'tmc-sc-topar' }, toPar(tot[i] - played[i])) : null); }))));
+  }
+
   var api = { Icon: Icon, iconNames: ICON_NAMES, DeviceFrame: DeviceFrame, CourseMark: CourseMark, IconButton: IconButton, CartHeader: CartHeader, BobAvatar: BobAvatar,
     Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
     AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad,
     Screen: Screen, ActionBar: ActionBar, SectionLabel: SectionLabel, SegmentedControl: SegmentedControl, ListRow: ListRow, List: List,
-    VoiceBar: VoiceBar, Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
+    VoiceBar: VoiceBar, ScoreEntry: ScoreEntry, ScoreCard: ScoreCard, Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();

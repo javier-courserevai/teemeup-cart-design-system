@@ -50,7 +50,7 @@ The components are web (React). For a native build (Kotlin, Flutter or React Nat
 
 ### Components
 
-Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Layout: `Screen`, `ActionBar`, `SectionLabel`. Inputs: `SegmentedControl`, `ListRow` (in a `List`). Feedback: `Toast`, `ConfirmSheet`, `ProgressSteps`, `EmptyState`, `Skeleton`, `VoiceBar`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
+Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Layout: `Screen`, `ActionBar`, `SectionLabel`. Inputs: `SegmentedControl`, `ListRow` (in a `List`). Feedback: `Toast`, `ConfirmSheet`, `ProgressSteps`, `EmptyState`, `Skeleton`, `VoiceBar`. Scorecard: `ScoreEntry`, `ScoreCard`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
 
 ## Three layers
 

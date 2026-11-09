@@ -85,7 +85,7 @@ export interface MenuItemProps { name: string; price: string; description?: stri
 export declare function MenuItem(props: MenuItemProps): React.ReactElement;
 export interface CategoryTabsProps { items: { id: string; label: string }[]; active?: string; onChange?: (id: string) => void; label?: string }
 export declare function CategoryTabs(props: CategoryTabsProps): React.ReactElement;
-export interface QuantityStepperProps { value: number; label?: string; onIncrease?: () => void; onDecrease?: () => void }
+export interface QuantityStepperProps { value: number; min?: number; label?: string; onIncrease?: () => void; onDecrease?: () => void }
 export declare function QuantityStepper(props: QuantityStepperProps): React.ReactElement;
 
 export interface ScreenProps { header?: React.ReactNode; banner?: React.ReactNode; actions?: React.ReactNode; dock?: React.ReactNode; theme?: 'day' | 'dusk'; bodyStyle?: React.CSSProperties; children?: React.ReactNode; className?: string; style?: React.CSSProperties }
@@ -102,6 +102,13 @@ export declare function List(props: { children?: React.ReactNode }): React.React
 /** Replaces the chat bar while Bob listens: live transcript, level meter, cancel and send. */
 export interface VoiceBarProps { state?: 'listening' | 'thinking' | 'error'; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
 export declare function VoiceBar(props: VoiceBarProps): React.ReactElement;
+export interface ScorePlayer { name: string; strokes?: number; onIncrease?: () => void; onDecrease?: () => void }
+/** Score entry sheet after a hole: one row per golfer on this cart, starting at par. */
+export interface ScoreEntryProps { hole: number | string; par: number; title?: string; players: ScorePlayer[]; save?: string; later?: string; onSave?: () => void; onLater?: () => void }
+export declare function ScoreEntry(props: ScoreEntryProps): React.ReactElement;
+/** Nine holes: a row per hole, a column per golfer; scores is per player, null when not played yet. */
+export interface ScoreCardProps { players: { name: string; short?: string; mine?: boolean }[]; holes: { n: number; par: number; scores?: (number | null)[]; current?: boolean }[]; totalLabel?: string; label?: string }
+export declare function ScoreCard(props: ScoreCardProps): React.ReactElement;
 export interface ToastProps { title: string; message?: string; icon?: IconName; tone?: 'neutral' | 'success'; action?: string; onAction?: () => void; style?: React.CSSProperties }
 export declare function Toast(props: ToastProps): React.ReactElement;
 export interface ConfirmSheetProps { title: string; confirm?: string; cancel?: string; destructive?: boolean; onConfirm?: () => void; onCancel?: () => void; children?: React.ReactNode }
@@ -125,7 +132,7 @@ declare global {
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
       GolferRow: typeof GolferRow; Keypad: typeof Keypad; MenuItem: typeof MenuItem; CategoryTabs: typeof CategoryTabs; QuantityStepper: typeof QuantityStepper;
       Screen: typeof Screen; ActionBar: typeof ActionBar; SectionLabel: typeof SectionLabel; SegmentedControl: typeof SegmentedControl; ListRow: typeof ListRow; List: typeof List;
-      VoiceBar: typeof VoiceBar; Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
+      VoiceBar: typeof VoiceBar; ScoreEntry: typeof ScoreEntry; ScoreCard: typeof ScoreCard; Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
     };
   }
 }

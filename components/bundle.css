@@ -291,5 +291,26 @@ button.tmc-row,a.tmc-row{cursor:pointer}
 .tmc-voice-wait{color:var(--primary-text)}
 .tmc-voice-err{background:var(--warning-tint);color:var(--warning-text);font-size:15px;font-weight:800}
 
+/* Scorecard */
+.tmc-score-rows{display:flex;flex-direction:column;gap:8px}
+.tmc-score-row{display:flex;align-items:center;gap:12px;padding:8px 8px 8px 12px;border:1px solid var(--border);border-radius:var(--radius-2xl)}
+.tmc-score-who{flex:1;min-width:0}
+.tmc-score-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
+.tmc-stepper button:disabled{color:var(--muted-foreground);cursor:not-allowed}
+.tmc-sc{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:17px}
+.tmc-sc th,.tmc-sc td{height:40px;text-align:center;border-bottom:1px solid var(--border);padding:0}
+.tmc-sc thead th{font-size:15px;font-weight:800;color:var(--muted-foreground);height:36px}
+.tmc-sc thead th.tmc-sc-mine{color:var(--primary-text)}
+.tmc-sc tbody th{font-weight:800;width:44px}
+.tmc-sc-par{color:var(--muted-foreground);font-weight:600;width:44px}
+.tmc-sc-now{background:var(--primary-tint)}
+.tmc-sc-n{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;font-weight:700}
+.tmc-sc-under{border:2px solid var(--secondary-text);border-radius:var(--radius-full);color:var(--secondary-text)}
+.tmc-sc-over{border:2px solid var(--foreground);border-radius:4px}
+.tmc-sc-empty{color:var(--muted-foreground)}
+.tmc-sc tfoot th,.tmc-sc tfoot td{border-bottom:0;border-top:2px solid var(--foreground);height:56px;font-weight:800}
+.tmc-sc-tot{font-size:18px;font-weight:800}
+.tmc-sc-topar{font-size:15px;font-weight:700;color:var(--muted-foreground)}
+
 /* Reduced motion: nothing moves, anywhere. Alerts keep their sound and colour, not their flashing. */
 @media (prefers-reduced-motion: reduce){.tmc-root *,.tmc-device *,.tmc-root,.tmc-device{transition:none !important;animation:none !important}.tmc-btn:active,.tmc-mic:active,.tmc-chip:active,.tmc-composer-btn:active,.tmc-menu-item:active{transform:none}}
