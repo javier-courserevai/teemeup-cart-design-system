@@ -297,15 +297,22 @@
     var st = p.state || 'listening';
     var bars = [];
     for (var i = 0; i < 28; i++) bars.push(h('i', { key: i, style: { height: Math.round(8 + 26 * Math.abs(Math.sin(i * 1.7 + 0.6)) * (0.45 + 0.55 * Math.abs(Math.cos(i * 0.4)))), animationDelay: (i % 7) * 0.09 + 's' } }));
-    var caption = st === 'thinking' ? 'Bob is thinking…' : st === 'error' ? (p.errorText || 'Didn’t catch that. Try again.') : (p.caption || 'Listening… music is lowered');
-    var middle = st === 'listening'
-      ? h('div', { className: 'tmc-voice-meter', 'aria-hidden': 'true' }, bars)
+    var caption = st === 'thinking' ? 'Bob is thinking…' : st === 'error' ? (p.errorText || 'Didn’t catch that. Try again.') : st === 'holding' ? (p.caption || 'Recording · release to send') : (p.caption || 'Listening… music is lowered');
+    var middle = st === 'listening' || st === 'holding'
+      ? h('div', { className: 'tmc-voice-meter', 'aria-hidden': 'true' }, st === 'holding' ? bars.slice(0, 16) : bars)
       : st === 'thinking'
         ? h('div', { className: 'tmc-voice-meter tmc-voice-wait', 'aria-hidden': 'true' }, h('span', { className: 'tmc-dots3' }, h('i'), h('i'), h('i')))
         : h('div', { className: 'tmc-voice-meter tmc-voice-err' }, 'Tap the mic to try again');
     return h('div', { className: cx('tmc-voice', 'tmc-voice-' + st), role: 'region', 'aria-label': 'Talking to Bob', style: p.style },
       h('div', { className: 'tmc-voice-cap', role: 'status' }, h('span', { className: 'tmc-voice-dot', 'aria-hidden': 'true' }), caption),
       p.transcript ? h('div', { className: 'tmc-voice-text' }, '“' + p.transcript + '”') : null,
+      // holding (press and hold the mic, like a voice note): release sends, slide left cancels, slide up locks into tap mode.
+      st === 'holding' ? h('div', { className: 'tmc-voice-row' },
+        h('div', { className: 'tmc-voice-slide' }, h(Icon, { name: 'chevronLeft', size: 20 }), 'Slide to cancel'),
+        middle,
+        h('div', { className: 'tmc-voice-holdcol' },
+          h('div', { className: 'tmc-voice-lock', 'aria-hidden': 'true' }, h(Icon, { name: 'lock', size: 18 }), h(Icon, { name: 'arrowUp', size: 16 })),
+          h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-send tmc-voice-held', 'aria-label': 'Release to send to Bob' }, h(Icon, { name: 'mic', size: 28, weight: 'fill' })))) :
       h('div', { className: 'tmc-voice-row' },
         h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-cancel', 'aria-label': 'Cancel', onClick: p.onCancel }, h(Icon, { name: 'x', size: 24 })),
         middle,
@@ -344,7 +351,7 @@
         onChange: function (e) { set(e.target.value); } }),
       hasText && !locked
         ? h('button', { type: 'submit', className: 'tmc-composer-btn', 'aria-label': 'Send to Bob' }, h(Icon, { name: 'send', size: 22 }))
-        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Send to Bob' : 'Talk to Bob', onClick: p.onVoice },
+        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Send to Bob' : 'Talk to Bob: tap to talk, or hold and release to send', onClick: p.onVoice, onPointerDown: p.onHoldStart },
             h(Icon, { name: 'mic', size: 24 })));
   }
 

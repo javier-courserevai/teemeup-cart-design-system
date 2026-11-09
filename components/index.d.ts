@@ -60,7 +60,7 @@ export interface PromptChipProps { icon?: IconName; block?: boolean; onClick?: (
 export declare function PromptChip(props: PromptChipProps): React.ReactElement;
 
 /** The chat bar on every Bob screen. Empty field: the round button is the mic. With text: it is Send. */
-export interface ComposerProps { value?: string; focused?: boolean; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void }
+export interface ComposerProps { value?: string; focused?: boolean; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void; onHoldStart?: () => void }
 export declare function Composer(props: ComposerProps): React.ReactElement;
 
 export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery' | 'info'; icon?: IconName; action?: string; onAction?: () => void; children?: React.ReactNode }
@@ -100,7 +100,7 @@ export interface ListRowProps { title: string; description?: string; icon?: Icon
 export declare function ListRow(props: ListRowProps): React.ReactElement;
 export declare function List(props: { children?: React.ReactNode }): React.ReactElement;
 /** Replaces the chat bar while Bob listens: live transcript, level meter, cancel and send. */
-export interface VoiceBarProps { state?: 'listening' | 'thinking' | 'error'; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
+export interface VoiceBarProps { state?: 'listening' | 'holding' | 'thinking' | 'error'; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
 export declare function VoiceBar(props: VoiceBarProps): React.ReactElement;
 export interface ScorePlayer { name: string; strokes?: number; onIncrease?: () => void; onDecrease?: () => void }
 /** Score entry sheet after a hole: one row per golfer on this cart, starting at par. */
