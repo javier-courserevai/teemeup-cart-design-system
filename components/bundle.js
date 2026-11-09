@@ -255,12 +255,16 @@
     return h('span', { className: cx('tmc-tag', 'tmc-tag-' + t) }, ic ? h(Icon, { name: ic, size: 16, weight: t === 'lightning' || t === 'zone' || t === 'warning' ? 'fill' : 'bold' }) : null, p.children);
   }
 
+  // Two speakers that must never be confused at a glance: Bob on the left with his avatar and name on a pale card,
+  // the golfer on the right, labelled "You", on purple, never wider than three quarters of the thread.
   function ChatBubble(p) {
     if (p.from === 'golfer') {
-      return h('div', { className: 'tmc-msg tmc-msg-golfer' }, h('div', { className: 'tmc-bubble tmc-bubble-golfer' }, p.children));
+      return h('div', { className: 'tmc-msg tmc-msg-golfer' },
+        h('div', { className: 'tmc-msg-col' }, p.showName === false ? null : h('div', { className: 'tmc-msg-name tmc-msg-you' }, 'You'),
+          h('div', { className: 'tmc-bubble tmc-bubble-golfer' }, p.children)));
     }
-    return h('div', { className: 'tmc-msg' }, h(BobAvatar, { size: 36 }),
-      h('div', null, p.showName === false ? null : h('div', { className: 'tmc-msg-name' }, 'Bob'), h('div', { className: 'tmc-bubble tmc-bubble-bob' }, p.children)));
+    return h('div', { className: 'tmc-msg tmc-msg-bob' }, p.showName === false ? h('span', { className: 'tmc-msg-gap', 'aria-hidden': 'true' }) : h(BobAvatar, { size: 36 }),
+      h('div', { className: 'tmc-msg-col tmc-msg-col-bob' }, p.showName === false ? null : h('div', { className: 'tmc-msg-name' }, 'Bob'), h('div', { className: 'tmc-bubble tmc-bubble-bob' }, p.children)));
   }
 
   // States: ready, listening, thinking (Bob is working on it), error (didn't catch that). disabled: no voice right now.
@@ -331,6 +335,7 @@
 
   function AnswerCard(p) {
     return h('div', { className: 'tmc-answer' },
+      h('div', { className: 'tmc-answer-by' }, h(BobAvatar, { size: 28 }), 'Bob'),
       p.question ? h('div', { className: 'tmc-answer-q' }, '“' + p.question + '”') : null,
       h('div', { className: 'tmc-answer-h' }, p.headline),
       p.children ? h('div', { className: 'tmc-answer-b' }, p.children) : null,
@@ -414,17 +419,19 @@
       return h('div', { className: 'tmc-menu-item tmc-menu-item-out', 'aria-label': p.name + ', sold out' }, media, text,
         h('span', { className: 'tmc-menu-out' }, 'Sold out'));
     }
+    // disabled: the cart is moving; the menu stays readable but nothing can be added or changed.
+    var off = !!p.disabled;
     if (!q) {
-      return h('button', { type: 'button', className: 'tmc-menu-item', onClick: p.onAdd, 'aria-label': 'Add ' + p.name + ', ' + p.price },
+      return h('button', { type: 'button', disabled: off, className: 'tmc-menu-item', onClick: p.onAdd, 'aria-label': 'Add ' + p.name + ', ' + p.price },
         media, text, h('span', { className: 'tmc-menu-add', 'aria-hidden': 'true' }, h(Icon, { name: 'plus', size: 24 })));
     }
     return h('div', { className: 'tmc-menu-item tmc-menu-item-on', role: 'group', 'aria-label': p.name + ', ' + q + ' in your order' },
       h('div', { className: 'tmc-menu-row' }, media, text),
       h('div', { className: 'tmc-menu-qty' },
-        h('button', { type: 'button', onClick: p.onRemove, 'aria-label': q === 1 ? 'Remove ' + p.name : 'One less ' + p.name },
+        h('button', { type: 'button', disabled: off, onClick: p.onRemove, 'aria-label': q === 1 ? 'Remove ' + p.name : 'One less ' + p.name },
           h(Icon, { name: q === 1 ? 'x' : 'minus', size: 22 })),
         h('output', { 'aria-live': 'polite' }, q + ' in your order'),
-        h('button', { type: 'button', onClick: p.onAdd, 'aria-label': 'One more ' + p.name }, h(Icon, { name: 'plus', size: 22 }))));
+        h('button', { type: 'button', disabled: off, onClick: p.onAdd, 'aria-label': 'One more ' + p.name }, h(Icon, { name: 'plus', size: 22 }))));
   }
 
   function CategoryTabs(p) {
