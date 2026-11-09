@@ -1,5 +1,7 @@
 # MicButton
 
+> Screens now use `VoiceBar` for listening, thinking and errors; keep `MicButton` only for a standalone mic outside the chat.
+
 Talk to Bob: a 120px purple mic. Tap to talk, tap again to send (holding and releasing also works).
 
 - Ready: “Tap to talk”. Listening: live bars above the mic, a purple halo, “Listening… tap to send”.

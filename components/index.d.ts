@@ -99,6 +99,9 @@ export declare function SegmentedControl(props: SegmentedControlProps): React.Re
 export interface ListRowProps { title: string; description?: string; icon?: IconName; value?: React.ReactNode; chevron?: boolean; tone?: 'default' | 'danger'; href?: string; onClick?: () => void }
 export declare function ListRow(props: ListRowProps): React.ReactElement;
 export declare function List(props: { children?: React.ReactNode }): React.ReactElement;
+/** Replaces the chat bar while Bob listens: live transcript, level meter, cancel and send. */
+export interface VoiceBarProps { state?: 'listening' | 'thinking' | 'error'; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
+export declare function VoiceBar(props: VoiceBarProps): React.ReactElement;
 export interface ToastProps { title: string; message?: string; icon?: IconName; tone?: 'neutral' | 'success'; action?: string; onAction?: () => void; style?: React.CSSProperties }
 export declare function Toast(props: ToastProps): React.ReactElement;
 export interface ConfirmSheetProps { title: string; confirm?: string; cancel?: string; destructive?: boolean; onConfirm?: () => void; onCancel?: () => void; children?: React.ReactNode }
@@ -122,7 +125,7 @@ declare global {
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
       GolferRow: typeof GolferRow; Keypad: typeof Keypad; MenuItem: typeof MenuItem; CategoryTabs: typeof CategoryTabs; QuantityStepper: typeof QuantityStepper;
       Screen: typeof Screen; ActionBar: typeof ActionBar; SectionLabel: typeof SectionLabel; SegmentedControl: typeof SegmentedControl; ListRow: typeof ListRow; List: typeof List;
-      Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
+      VoiceBar: typeof VoiceBar; Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
     };
   }
 }

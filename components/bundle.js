@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"},{"name":"VoiceBar"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
@@ -279,6 +279,30 @@
       h('div', { className: 'tmc-mic-label', role: 'status' }, p.label || MIC_LABEL[st] || MIC_LABEL.ready));
   }
 
+  // Voice bar: what replaces the chat bar while Bob listens. No giant mic: the golfer's own words, live and large,
+  // a thin level meter, and two 56px buttons (cancel, send). Same bar for thinking and "didn't catch that".
+  // Shown in the chat, or straight over the map when the golfer holds Ask Bob in the dock.
+  function VoiceBar(p) {
+    var st = p.state || 'listening';
+    var bars = [];
+    for (var i = 0; i < 28; i++) bars.push(h('i', { key: i, style: { height: Math.round(8 + 26 * Math.abs(Math.sin(i * 1.7 + 0.6)) * (0.45 + 0.55 * Math.abs(Math.cos(i * 0.4)))), animationDelay: (i % 7) * 0.09 + 's' } }));
+    var caption = st === 'thinking' ? 'Bob is thinking…' : st === 'error' ? (p.errorText || 'Didn’t catch that. Try again.') : (p.caption || 'Listening… music is lowered');
+    var middle = st === 'listening'
+      ? h('div', { className: 'tmc-voice-meter', 'aria-hidden': 'true' }, bars)
+      : st === 'thinking'
+        ? h('div', { className: 'tmc-voice-meter tmc-voice-wait', 'aria-hidden': 'true' }, h('span', { className: 'tmc-dots3' }, h('i'), h('i'), h('i')))
+        : h('div', { className: 'tmc-voice-meter tmc-voice-err' }, 'Tap the mic to try again');
+    return h('div', { className: cx('tmc-voice', 'tmc-voice-' + st), role: 'region', 'aria-label': 'Talking to Bob', style: p.style },
+      h('div', { className: 'tmc-voice-cap', role: 'status' }, h('span', { className: 'tmc-voice-dot', 'aria-hidden': 'true' }), caption),
+      p.transcript ? h('div', { className: 'tmc-voice-text' }, '“' + p.transcript + '”') : null,
+      h('div', { className: 'tmc-voice-row' },
+        h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-cancel', 'aria-label': 'Cancel', onClick: p.onCancel }, h(Icon, { name: 'x', size: 24 })),
+        middle,
+        st === 'error'
+          ? h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-send', 'aria-label': 'Talk to Bob again', onClick: p.onRetry }, h(Icon, { name: 'mic', size: 24, weight: 'fill' }))
+          : h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-send', 'aria-label': 'Send to Bob', disabled: st === 'thinking', onClick: p.onSend }, h(Icon, { name: 'arrowUp', size: 24 }))));
+  }
+
   // One suggested question or quick reply. 56px tall: tapped with a glove.
   function PromptChip(p) {
     return h('button', { type: 'button', className: cx('tmc-chip', p.className), onClick: p.onClick },
@@ -529,7 +553,7 @@
     Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
     AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad,
     Screen: Screen, ActionBar: ActionBar, SectionLabel: SectionLabel, SegmentedControl: SegmentedControl, ListRow: ListRow, List: List,
-    Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
+    VoiceBar: VoiceBar, Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();
