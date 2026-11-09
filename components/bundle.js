@@ -331,7 +331,8 @@
     if (ref.current === null) ref.current = 'tmc-composer-' + (++composerSeq);
     var hasText = String(v).trim().length > 0;
     var locked = !!p.locked;
-    return h('form', { className: 'tmc-composer', onSubmit: function (e) { e.preventDefault(); if (hasText && p.onSend) { p.onSend(v); set(''); } } },
+    // focused: shows the field as it looks while the golfer types (for mock-ups; the real field focuses itself).
+    return h('form', { className: cx('tmc-composer', p.focused && 'tmc-composer-focus'), onSubmit: function (e) { e.preventDefault(); if (hasText && p.onSend) { p.onSend(v); set(''); } } },
       h('label', { className: 'tmc-sr', htmlFor: ref.current }, 'Message Bob'),
       h('input', { id: ref.current, className: 'tmc-composer-input', value: v, disabled: locked, autoComplete: 'off', enterKeyHint: 'send',
         placeholder: locked ? (p.lockedHint || 'Voice only while moving') : (p.placeholder || 'Message Bob'),

@@ -186,7 +186,7 @@
 .tmc-composer-input{flex:1;min-width:0;height:var(--tap);box-sizing:border-box;padding:0 20px;border:1.5px solid var(--border);border-radius:var(--radius-full);background:var(--muted);color:var(--foreground);font:inherit;font-size:17px}
 .tmc-composer-input::placeholder{color:var(--muted-foreground)}
 .tmc-composer-input:focus{outline:none;border-color:var(--ring);background:var(--card);box-shadow:0 0 0 4px var(--primary-tint)}
-.tmc-composer-input:disabled{cursor:not-allowed}
+.tmc-composer-input:disabled{cursor:not-allowed}.tmc-composer-focus .tmc-composer-input{border-color:var(--ring);background:var(--card);box-shadow:0 0 0 4px var(--primary-tint)}
 .tmc-composer-btn{width:var(--tap);height:var(--tap);flex:none;border:0;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s}
 .tmc-composer-btn:active{transform:scale(.95)}
 .tmc-composer-live{box-shadow:0 0 0 6px var(--primary-tint)}

@@ -60,7 +60,7 @@ export interface PromptChipProps { icon?: IconName; block?: boolean; onClick?: (
 export declare function PromptChip(props: PromptChipProps): React.ReactElement;
 
 /** The chat bar on every Bob screen. Empty field: the round button is the mic. With text: it is Send. */
-export interface ComposerProps { value?: string; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void }
+export interface ComposerProps { value?: string; focused?: boolean; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void }
 export declare function Composer(props: ComposerProps): React.ReactElement;
 
 export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery' | 'info'; icon?: IconName; action?: string; onAction?: () => void; children?: React.ReactNode }
