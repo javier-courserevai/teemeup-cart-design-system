@@ -63,7 +63,7 @@ Device: `DeviceFrame`, `CartHeader`, `CourseMark`. Navigation: `DriveControl` (M
 
 Besides those, a course never colours a button, Bob's avatar and answers, the rest of the map (zones, hazards, labels) or an alert. A course colour too light for white text (Copper Canyon #F4B21A) sets `course-on-accent` to ink, which Ask Bob and the music tile then use for their label and icon.
 
-**Applying a skin:** put `tmc-skin` on the screen root and set `--course-accent`, `--course-on-accent`, `--course-text` (the course colour dark enough for 4.5:1 on white; Copper Canyon #8C5E00) and `--course-tint` (the course colour at about 18%). Then Ask Bob and the `QuickActions` music tile fill with the accent, and icon tiles (`QuickActions`, `ListRow`, `PromptChip`) and any icon marked `tmc-skin-icon` (the mini player's note) take `course-text` on `course-tint`; the cart's dot (and the walker figure) on `HoleMap` fills with the accent, keeping its white ring. Courses without a colour (the pilot) skip it and stay purple. In dusk, use a lighter `course-text` that holds 4.5:1 on navy.
+**Applying a skin:** put `tmc-skin` on the screen root and set `--course-accent`, `--course-on-accent`, `--course-text` (the course colour dark enough for 4.5:1 on white; Copper Canyon #8C5E00) and `--course-tint` (the course colour at about 18%). Then Ask Bob and the `QuickActions` music tile fill with the accent, and icon tiles (`QuickActions`, `ListRow`, `PromptChip`) and any icon marked `tmc-skin-icon` (the mini player's note) take `course-text` on `course-tint`; the position dot on `HoleMap` fills with the accent, keeping its white ring. Courses without a colour (the pilot) skip it and stay purple. In dusk, use a lighter `course-text` that holds 4.5:1 on navy.
 
 ## Content fundamentals
 
@@ -85,7 +85,7 @@ Besides those, a course never colours a button, Bob's avatar and answers, the re
 - **Day and dusk.** Day is white with navy ink. Dusk is navy (`background` #0A1E2C, `card` #0F2B40), never black, and purple lifts to #7C4DFF. The map dims to 82%. Safety colours stay the same in both.
 - **Shapes** follow the app: tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
 - **The map** is a satellite tile of the course in production. The stand-in drawing uses the `map-*` tokens. Active restricted zones are always drawn, hatched in `zone`, so golfers avoid them before anything sounds. Penalty areas keep a thin solid `map-penalty` edge; dashes are not used.
-- **Walking** devices show the position as a walker instead of a dot, say “Device 12” instead of “Cart 12”, and never show cart-only zones.
+- **Walking** devices show the position with the same dot as a cart, say “Device 12” instead of “Cart 12”, and never show cart-only zones.
 
 ## Alerts
 
@@ -144,7 +144,7 @@ Sentence case everywhere (“Booking confirmed”), except alert titles, which a
 
 ## Iconography
 
-**Phosphor**, Bold by default and Fill for Bob, active states and safety icons, in `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). Chosen over the earlier Lucide line set because Bold reads better in sun and Fill marks state without a second icon. 20px in buttons, 18px in status, 24px in Menu · Ask Bob, 28px in choice tiles, 56px on takeovers. Bob is always the sparkle in a `primary` circle (`BobAvatar`). No emoji.
+**Phosphor**, Bold by default and Fill for Bob, active states and safety icons, in `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). Bold reads well in sun and Fill marks state without a second icon. 20px in buttons, 18px in status, 24px in Menu · Ask Bob, 28px in choice tiles, 56px on takeovers. Bob is always the sparkle in a `primary` circle (`BobAvatar`). No emoji.
 
 ## Logos
 

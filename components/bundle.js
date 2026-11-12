@@ -142,13 +142,8 @@
     var zoneAt = p.zoneLabelAt || { x: 284, y: 107 };
     var tapW = String(p.tap || '').length * 9 + 16;
     var tapLabelX = Math.min(tapAt.x + 16, 324 - tapW);
-    var dot = p.walker
-      ? h('g', { key: 'me', transform: 'translate(' + (me.x - 160) + ' ' + (me.y - 330) + ')' },
-          h('circle', { cx: 160, cy: 330, r: 19, fill: '#ffffff' }), h('circle', { cx: 160, cy: 330, r: 16, fill: 'var(--map-me, var(--primary))' }),
-          h('circle', { cx: 160, cy: 322, r: 2.8, fill: 'var(--map-me-on, #ffffff)' }),
-          h('path', { d: 'M160 326v8M155 329l5-1 5 1M156 341l4-7 4 7', stroke: 'var(--map-me-on, #ffffff)', strokeWidth: 2, fill: 'none', strokeLinecap: 'round' }))
-      // The cart's dot: purple, or the course colour on a skinned screen (--map-me, set by tmc-skin).
-      : h('g', { key: 'me' }, h('circle', { cx: me.x, cy: me.y, r: 14, fill: '#ffffff' }), h('circle', { cx: me.x, cy: me.y, r: 9, fill: 'var(--map-me, var(--primary))' }));
+    // The golfer's position: the same dot for carts and walkers. Purple, or the course colour on a skinned screen (--map-me, set by tmc-skin).
+    var dot = h('g', { key: 'me' }, h('circle', { cx: me.x, cy: me.y, r: 14, fill: '#ffffff' }), h('circle', { cx: me.x, cy: me.y, r: 9, fill: 'var(--map-me, var(--primary))' }));
     var FAIRWAY = 'M150 400C138 320 146 262 184 214C220 168 226 126 214 76';
     var WATER = 'M36 52C78 30 128 50 142 92C150 122 112 140 80 130C42 120 22 82 36 52Z';
     var stop = function (o, c, a) { return h('stop', { offset: o, style: { stopColor: c, stopOpacity: a == null ? 1 : a } }); };
