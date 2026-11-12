@@ -1,10 +1,10 @@
-/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"BottomBar"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"MicButton"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"},{"name":"VoiceBar"},{"name":"ScoreEntry"},{"name":"ScoreCard"}]} */
+/* @ds-bundle: {"format":4,"namespace":"TeemeupCart","components":[{"name":"DeviceFrame"},{"name":"CartHeader"},{"name":"CourseMark"},{"name":"Button"},{"name":"IconButton"},{"name":"YardageReadout"},{"name":"HoleMap"},{"name":"StatusTag"},{"name":"BobAvatar"},{"name":"ChatBubble"},{"name":"AnswerCard"},{"name":"PromptChip"},{"name":"Composer"},{"name":"Banner"},{"name":"AlertSheet"},{"name":"AlertTakeover"},{"name":"QRPanel"},{"name":"ChoiceCard"},{"name":"GolferRow"},{"name":"MenuItem"},{"name":"CategoryTabs"},{"name":"QuantityStepper"},{"name":"Keypad"},{"name":"Icon"},{"name":"Screen"},{"name":"ActionBar"},{"name":"SectionLabel"},{"name":"SegmentedControl"},{"name":"ListRow"},{"name":"List"},{"name":"Toast"},{"name":"ConfirmSheet"},{"name":"ProgressSteps"},{"name":"EmptyState"},{"name":"Skeleton"},{"name":"VoiceBar"},{"name":"DriveControl"},{"name":"TopSheet"},{"name":"QuickActions"},{"name":"OrderSummary"},{"name":"ScoreEntry"},{"name":"ScoreCard"}]} */
 (function () {
   var R = window.React, h = R.createElement;
   function cx() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
 
   // Phosphor icons (MIT), Bold and Fill, 256 grid, keyed by the cart's own names: [bold paths, fill paths].
-  // Phosphor names: sparkles=sparkle, mic=microphone, help=question, signal=cell-signal-full, battery=battery-high, batteryLow=battery-low, alert=warning, ban=prohibit, checkCircle=check-circle, wifiOff=wifi-slash, message=chat-circle, shelter=house, arrowRight=arrow-right, arrowUp=arrow-up, arrowDown=arrow-down, chevronLeft=caret-left, chevronRight=caret-right, cart=car-simple, walk=person-simple-walk, lock=lock-simple, search=magnifying-glass, nfc=contactless-payment, volume=speaker-high, food=fork-knife, music=music-notes, mapPinOff=map-pin-line, send=paper-plane-right, droplet=drop, skipBack=skip-back, skipForward=skip-forward.
+  // Phosphor names: grid=squares-four, sparkles=sparkle, mic=microphone, help=question, signal=cell-signal-full, battery=battery-high, batteryLow=battery-low, alert=warning, ban=prohibit, checkCircle=check-circle, wifiOff=wifi-slash, message=chat-circle, shelter=house, arrowRight=arrow-right, arrowUp=arrow-up, arrowDown=arrow-down, chevronLeft=caret-left, chevronRight=caret-right, cart=car-simple, walk=person-simple-walk, lock=lock-simple, search=magnifying-glass, nfc=contactless-payment, volume=speaker-high, food=fork-knife, music=music-notes, mapPinOff=map-pin-line, send=paper-plane-right, droplet=drop, skipBack=skip-back, skipForward=skip-forward.
   var PATHS = {
     sparkles: [["M199,125.31l-49.88-18.39L130.69,57a19.92,19.92,0,0,0-37.38,0L74.92,106.92,25,125.31a19.92,19.92,0,0,0,0,37.38l49.88,18.39L93.31,231a19.92,19.92,0,0,0,37.38,0l18.39-49.88L199,162.69a19.92,19.92,0,0,0,0-37.38Zm-63.38,35.16a12,12,0,0,0-7.11,7.11L112,212.28l-16.47-44.7a12,12,0,0,0-7.11-7.11L43.72,144l44.7-16.47a12,12,0,0,0,7.11-7.11L112,75.72l16.47,44.7a12,12,0,0,0,7.11,7.11L180.28,144ZM140,40a12,12,0,0,1,12-12h12V16a12,12,0,0,1,24,0V28h12a12,12,0,0,1,0,24H188V64a12,12,0,0,1-24,0V52H152A12,12,0,0,1,140,40ZM252,88a12,12,0,0,1-12,12h-4v4a12,12,0,0,1-24,0v-4h-4a12,12,0,0,1,0-24h4V72a12,12,0,0,1,24,0v4h4A12,12,0,0,1,252,88Z"], ["M208,144a15.78,15.78,0,0,1-10.42,14.94L146,178l-19,51.62a15.92,15.92,0,0,1-29.88,0L78,178l-51.62-19a15.92,15.92,0,0,1,0-29.88L78,110l19-51.62a15.92,15.92,0,0,1,29.88,0L146,110l51.62,19A15.78,15.78,0,0,1,208,144ZM152,48h16V64a8,8,0,0,0,16,0V48h16a8,8,0,0,0,0-16H184V16a8,8,0,0,0-16,0V32H152a8,8,0,0,0,0,16Zm88,32h-8V72a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16h8v8a8,8,0,0,0,16,0V96h8a8,8,0,0,0,0-16Z"]],
     mic: [["M128,180a52.06,52.06,0,0,0,52-52V64A52,52,0,0,0,76,64v64A52.06,52.06,0,0,0,128,180ZM100,64a28,28,0,0,1,56,0v64a28,28,0,0,1-56,0Zm40,155.22V240a12,12,0,0,1-24,0V219.22A92.14,92.14,0,0,1,36,128a12,12,0,0,1,24,0,68,68,0,0,0,136,0,12,12,0,0,1,24,0A92.14,92.14,0,0,1,140,219.22Z"], ["M80,128V64a48,48,0,0,1,96,0v64a48,48,0,0,1-96,0Zm128,0a8,8,0,0,0-16,0,64,64,0,0,1-128,0,8,8,0,0,0-16,0,80.11,80.11,0,0,0,72,79.6V240a8,8,0,0,0,16,0V207.6A80.11,80.11,0,0,0,208,128Z"]],
@@ -50,11 +50,12 @@
     pause: [["M200,28H160a20,20,0,0,0-20,20V208a20,20,0,0,0,20,20h40a20,20,0,0,0,20-20V48A20,20,0,0,0,200,28Zm-4,176H164V52h32ZM96,28H56A20,20,0,0,0,36,48V208a20,20,0,0,0,20,20H96a20,20,0,0,0,20-20V48A20,20,0,0,0,96,28ZM92,204H60V52H92Z"], ["M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"]],
     skipBack: [["M201.75,30.52a20,20,0,0,0-20.3.53L68,102V40a12,12,0,0,0-24,0V216a12,12,0,0,0,24,0V154l113.45,71A20,20,0,0,0,212,208.12V47.88A19.86,19.86,0,0,0,201.75,30.52ZM188,200.73,71.7,128,188,55.27Z"], ["M208,47.88V208.12a16,16,0,0,1-24.43,13.43L64,146.77V216a8,8,0,0,1-16,0V40a8,8,0,0,1,16,0v69.23L183.57,34.45A15.95,15.95,0,0,1,208,47.88Z"]],
     skipForward: [["M200,28a12,12,0,0,0-12,12v62l-113.45-71A20,20,0,0,0,44,47.88V208.12A20,20,0,0,0,74.55,225L188,154v62a12,12,0,0,0,24,0V40A12,12,0,0,0,200,28ZM68,200.73V55.27L184.3,128Z"], ["M208,40V216a8,8,0,0,1-16,0V146.77L72.43,221.55A15.95,15.95,0,0,1,48,208.12V47.88A15.95,15.95,0,0,1,72.43,34.45L192,109.23V40a8,8,0,0,1,16,0Z"]],
+    grid: [["M100,36H56A20,20,0,0,0,36,56v44a20,20,0,0,0,20,20h44a20,20,0,0,0,20-20V56A20,20,0,0,0,100,36ZM96,96H60V60H96ZM200,36H156a20,20,0,0,0-20,20v44a20,20,0,0,0,20,20h44a20,20,0,0,0,20-20V56A20,20,0,0,0,200,36Zm-4,60H160V60h36Zm-96,40H56a20,20,0,0,0-20,20v44a20,20,0,0,0,20,20h44a20,20,0,0,0,20-20V156A20,20,0,0,0,100,136Zm-4,60H60V160H96Zm104-60H156a20,20,0,0,0-20,20v44a20,20,0,0,0,20,20h44a20,20,0,0,0,20-20V156A20,20,0,0,0,200,136Zm-4,60H160V160h36Z"], ["M120,56v48a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40h48A16,16,0,0,1,120,56Zm80-16H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm-96,96H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm96,0H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Z"]],
     golf: [["M180,100a16,16,0,1,1-16-16A16,16,0,0,1,180,100Zm-48,16a16,16,0,1,0,16,16A16,16,0,0,0,132,116Zm88-20A92,92,0,1,1,128,4,92.1,92.1,0,0,1,220,96Zm-24,0a68,68,0,1,0-68,68A68.07,68.07,0,0,0,196,96ZM164,197.86a108.61,108.61,0,0,1-72,0,12,12,0,0,0-8,22.63,131.83,131.83,0,0,0,32,7V244a12,12,0,0,0,24,0V227.46a131.83,131.83,0,0,0,32-7,12,12,0,0,0-8-22.63Z"], ["M175.47,197.14a8,8,0,0,1-4.61,10.33A125.91,125.91,0,0,1,136,215.68V248a8,8,0,0,1-16,0V215.68a125.91,125.91,0,0,1-34.86-8.21,8,8,0,1,1,5.72-14.94C104,197.56,116.15,200,128,200s24-2.44,37.14-7.47A8,8,0,0,1,175.47,197.14ZM216,96A88,88,0,1,1,128,8,88.1,88.1,0,0,1,216,96Zm-72,36a12,12,0,1,0-12,12A12,12,0,0,0,144,132Zm32-32a12,12,0,1,0-12,12A12,12,0,0,0,176,100Z"]]
   };
   var ICON_NAMES = Object.keys(PATHS);
 
-  // weight: 'bold' (default) or 'fill' (the active dock item, Bob, and safety icons). strokeWidth is accepted and ignored.
+  // weight: 'bold' (default) or 'fill' (Bob, active states and safety icons). strokeWidth is accepted and ignored.
   function Icon(p) {
     var s = p.size || 20;
     var g = PATHS[p.name] || [[], []];
@@ -115,33 +116,6 @@
     }, p.loading ? h('span', { className: 'tmc-spin', 'aria-hidden': 'true' }) : (p.icon ? h(Icon, { name: p.icon }) : null), p.children);
   }
 
-  // The dock: Hole · Score · Ask Bob (raised, centre) · Food · Help. Ordered by how often a golfer needs them in a round.
-  // badges: ids that carry a dot ('score' = a hole waiting for scores, 'food' = an order in progress or ready).
-  // The dock reserves the space Bob rises into, so content above it never needs extra padding.
-  function DockItem(p) {
-    var on = p.active === p.id;
-    return h('button', { type: 'button', className: 'tmc-dock-item', onClick: p.onClick, 'aria-current': on ? 'page' : undefined,
-        'aria-label': p.badge ? p.label + ', ' + p.badgeLabel : undefined },
-      h('span', { className: 'tmc-dock-ico' }, h(Icon, { name: p.icon, size: 28, weight: on ? 'fill' : 'bold' }),
-        p.badge ? h('span', { className: 'tmc-dock-dot', 'aria-hidden': 'true' }) : null),
-      h('span', { className: 'tmc-dock-label' }, p.label));
-  }
-  var BADGE_LABEL = { score: 'a hole needs scores', food: 'order in progress' };
-  function BottomBar(p) {
-    var a = p.active || 'hole';
-    var badges = Array.isArray(p.badges) ? p.badges : String(p.badges || '').split(',').map(function (s) { return s.trim(); });
-    var item = function (id, icon, label, fn) { var on = badges.indexOf(id) >= 0; return h(DockItem, { key: id, id: id, icon: icon, label: label, active: a, onClick: fn, badge: on, badgeLabel: BADGE_LABEL[id] }); };
-    var bob = h('button', { key: 'bob', type: 'button', className: 'tmc-dock-bob', onClick: p.onTalk, onPointerDown: p.onHoldStart,
-        'aria-label': 'Ask Bob. Tap to chat, hold to talk', 'aria-current': a === 'bob' ? 'page' : undefined },
-      h('span', { className: 'tmc-dock-bob-btn' }, h(Icon, { name: 'sparkles', size: 30, weight: 'fill' }),
-        h('span', { className: 'tmc-dock-mic', 'aria-hidden': 'true' }, h(Icon, { name: 'mic', size: 15, weight: 'fill' }))),
-      h('span', { className: 'tmc-dock-label' }, 'Ask Bob'));
-    // A course without food keeps five slots: Messages takes Food's place, so Bob stays centred.
-    var fourth = p.items === 'nofood' ? item('messages', 'message', 'Messages', p.onMessages) : item('food', 'food', 'Food', p.onFood);
-    var kids = [item('hole', 'flag', 'Hole', p.onHole), item('score', 'golf', 'Score', p.onScore), bob, fourth, item('help', 'lifebuoy', 'Help', p.onHelp)];
-    return h('nav', { className: 'tmc-dock tmc-dock-full', 'aria-label': 'Main' }, kids);
-  }
-
   function YardageReadout(p) {
     var u = p.unit === 'm' ? 'm' : 'yds';
     return h('div', { className: 'tmc-yd', role: 'group', 'aria-label': 'Distance to the green in ' + (u === 'm' ? 'meters' : 'yards') },
@@ -170,10 +144,11 @@
     var tapLabelX = Math.min(tapAt.x + 16, 324 - tapW);
     var dot = p.walker
       ? h('g', { key: 'me', transform: 'translate(' + (me.x - 160) + ' ' + (me.y - 330) + ')' },
-          h('circle', { cx: 160, cy: 330, r: 19, fill: '#ffffff' }), h('circle', { cx: 160, cy: 330, r: 16, fill: 'var(--primary)' }),
-          h('circle', { cx: 160, cy: 322, r: 2.8, fill: '#ffffff' }),
-          h('path', { d: 'M160 326v8M155 329l5-1 5 1M156 341l4-7 4 7', stroke: '#ffffff', strokeWidth: 2, fill: 'none', strokeLinecap: 'round' }))
-      : h('g', { key: 'me' }, h('circle', { cx: me.x, cy: me.y, r: 14, fill: '#ffffff' }), h('circle', { cx: me.x, cy: me.y, r: 9, fill: 'var(--primary)' }));
+          h('circle', { cx: 160, cy: 330, r: 19, fill: '#ffffff' }), h('circle', { cx: 160, cy: 330, r: 16, fill: 'var(--map-me, var(--primary))' }),
+          h('circle', { cx: 160, cy: 322, r: 2.8, fill: 'var(--map-me-on, #ffffff)' }),
+          h('path', { d: 'M160 326v8M155 329l5-1 5 1M156 341l4-7 4 7', stroke: 'var(--map-me-on, #ffffff)', strokeWidth: 2, fill: 'none', strokeLinecap: 'round' }))
+      // The cart's dot: purple, or the course colour on a skinned screen (--map-me, set by tmc-skin).
+      : h('g', { key: 'me' }, h('circle', { cx: me.x, cy: me.y, r: 14, fill: '#ffffff' }), h('circle', { cx: me.x, cy: me.y, r: 9, fill: 'var(--map-me, var(--primary))' }));
     var FAIRWAY = 'M150 400C138 320 146 262 184 214C220 168 226 126 214 76';
     var WATER = 'M36 52C78 30 128 50 142 92C150 122 112 140 80 130C42 120 22 82 36 52Z';
     var stop = function (o, c, a) { return h('stop', { offset: o, style: { stopColor: c, stopOpacity: a == null ? 1 : a } }); };
@@ -265,7 +240,7 @@
   // the golfer on the right, labelled "You", on purple, never wider than three quarters of the thread.
   // speaker: 'bob' (default) or 'golfer'. `from` is the older name and still works in React.
   function ChatBubble(p) {
-    var who = p.speaker || p.from || 'bob';
+    var who = p.speaker || 'bob';
     if (who === 'golfer' || who === 'you') {
       return h('div', { className: 'tmc-msg tmc-msg-golfer' },
         h('div', { className: 'tmc-msg-col' }, p.showName === false ? null : h('div', { className: 'tmc-msg-name tmc-msg-you' }, 'You'),
@@ -276,24 +251,15 @@
   }
 
   // States: ready, listening, thinking (Bob is working on it), error (didn't catch that). disabled: no voice right now.
-  var MIC_LABEL = { ready: 'Tap to talk', listening: 'Listening… tap to send', thinking: 'Bob is thinking…', error: 'Didn’t catch that. Try again.' };
-  function MicButton(p) {
-    var st = p.state || 'ready';
-    var listening = st === 'listening', thinking = st === 'thinking';
-    var bars = [];
-    if (listening) for (var i = 0; i < 11; i++) bars.push(h('i', { key: i, style: { height: Math.round(18 + 50 * Math.abs(Math.sin(i * 0.9 + 1))) } }));
-    return h('div', { className: 'tmc-micwrap' },
-      listening ? h('div', { className: 'tmc-wave', 'aria-hidden': 'true' }, bars) : null,
-      h('button', { type: 'button', disabled: p.disabled || thinking, onClick: p.onClick,
-          className: cx('tmc-mic', listening && 'tmc-mic-listening', thinking && 'tmc-mic-thinking', st === 'error' && 'tmc-mic-error'),
-          'aria-label': listening ? 'Send to Bob' : (thinking ? 'Bob is thinking' : 'Talk to Bob') },
-        thinking ? h('span', { className: 'tmc-dots3', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')) : h(Icon, { name: 'mic', size: 48 })),
-      h('div', { className: 'tmc-mic-label', role: 'status' }, p.label || MIC_LABEL[st] || MIC_LABEL.ready));
-  }
-
   // Voice bar: what replaces the chat bar while Bob listens. No giant mic: the golfer's own words, live and large,
   // a thin level meter, and two 56px buttons (cancel, send). Same bar for thinking and "didn't catch that".
   // Shown in the chat, or straight over the map when the golfer holds Ask Bob in the dock.
+  // Docked: keep the last words of a long question (about two lines), starting at a word, with an ellipsis in front.
+  function tail(s, docked) {
+    if (!docked || s.length <= 48) return s;
+    var cut = s.slice(-48);
+    return '…' + cut.slice(cut.indexOf(' ') + 1);
+  }
   function VoiceBar(p) {
     var st = p.state || 'listening';
     var bars = [];
@@ -304,9 +270,10 @@
       : st === 'thinking'
         ? h('div', { className: 'tmc-voice-meter tmc-voice-wait', 'aria-hidden': 'true' }, h('span', { className: 'tmc-dots3' }, h('i'), h('i'), h('i')))
         : h('div', { className: 'tmc-voice-meter tmc-voice-err' }, 'Tap the mic to try again');
-    return h('div', { className: cx('tmc-voice', 'tmc-voice-' + st), role: 'region', 'aria-label': 'Talking to Bob', style: p.style },
+    return h('div', { className: cx('tmc-voice', 'tmc-voice-' + st, p.docked && 'tmc-voice-docked'), role: 'region', 'aria-label': 'Talking to Bob', style: p.style },
       h('div', { className: 'tmc-voice-cap', role: 'status' }, h('span', { className: 'tmc-voice-dot', 'aria-hidden': 'true' }), caption),
-      p.transcript ? h('div', { className: 'tmc-voice-text' }, '“' + p.transcript + '”') : null,
+      // docked (drive view, in a TopSheet): only the last two lines of a long question show, so the sheet never grows.
+      p.transcript ? h('div', { className: 'tmc-voice-text' }, h('span', null, '“' + tail(p.transcript, p.docked) + '”')) : null,
       // holding (press and hold the mic, like a voice note): release sends, slide left cancels, slide up locks into tap mode.
       st === 'holding' ? h('div', { className: 'tmc-voice-row' },
         h('div', { className: 'tmc-voice-slide' }, h(Icon, { name: 'chevronLeft', size: 20 }), 'Slide to cancel'),
@@ -315,7 +282,10 @@
           h('div', { className: 'tmc-voice-lock', 'aria-hidden': 'true' }, h(Icon, { name: 'lock', size: 18 }), h(Icon, { name: 'arrowUp', size: 16 })),
           h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-send tmc-voice-held', 'aria-label': 'Release to send to Bob' }, h(Icon, { name: 'mic', size: 28, weight: 'fill' })))) :
       h('div', { className: 'tmc-voice-row' },
-        h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-cancel', 'aria-label': 'Cancel', onClick: p.onCancel }, h(Icon, { name: 'x', size: 24 })),
+        // typeInstead (held, in a bottom TopSheet with its own close X): the left button switches to typing in the chat.
+        p.typeInstead
+          ? h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-cancel', 'aria-label': 'Type instead', onClick: p.onType }, h(Icon, { name: 'keyboard', size: 24 }))
+          : h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-cancel', 'aria-label': 'Cancel', onClick: p.onCancel }, h(Icon, { name: 'x', size: 24 })),
         middle,
         st === 'error'
           ? h('button', { type: 'button', className: 'tmc-voice-btn tmc-voice-send', 'aria-label': 'Talk to Bob again', onClick: p.onRetry }, h(Icon, { name: 'mic', size: 24, weight: 'fill' }))
@@ -348,11 +318,11 @@
     return h('form', { className: cx('tmc-composer', p.focused && 'tmc-composer-focus'), onSubmit: function (e) { e.preventDefault(); if (hasText && p.onSend) { p.onSend(v); set(''); } } },
       h('label', { className: 'tmc-sr', htmlFor: ref.current }, 'Message Bob'),
       h('input', { id: ref.current, className: 'tmc-composer-input', value: v, disabled: locked, autoComplete: 'off', enterKeyHint: 'send',
-        placeholder: locked ? (p.lockedHint || 'Lift the device to type') : (p.placeholder || 'Message Bob'),
+        placeholder: locked ? (p.lockedHint || 'Typing is unavailable') : (p.placeholder || 'Message Bob'),
         onChange: function (e) { set(e.target.value); } }),
       hasText && !locked
         ? h('button', { type: 'submit', className: 'tmc-composer-btn', 'aria-label': 'Send to Bob' }, h(Icon, { name: 'send', size: 22 }))
-        : h('button', { type: 'button', className: cx('tmc-composer-btn', p.listening && 'tmc-composer-live'), 'aria-label': p.listening ? 'Send to Bob' : 'Talk to Bob: tap to talk, or hold and release to send', onClick: p.onVoice, onPointerDown: p.onHoldStart },
+        : h('button', { type: 'button', className: 'tmc-composer-btn', 'aria-label': 'Talk to Bob: tap to talk, or hold and release to send', onClick: p.onVoice, onPointerDown: p.onHoldStart },
             h(Icon, { name: 'mic', size: 24 })));
   }
 
@@ -375,7 +345,7 @@
       p.action ? h('button', { type: 'button', className: 'tmc-banner-action', onClick: p.onAction }, p.action) : null);
   }
 
-  var SHEET = { pace: ['clock', ''], message: ['message', ''], zone: ['alert', 'tmc-tile-zone'], battery: ['batteryLow', 'tmc-tile-warning'], exited: ['checkCircle', 'tmc-tile-go'] };
+  var SHEET = { pace: ['clock', ''], message: ['message', ''], battery: ['batteryLow', 'tmc-tile-warning'] };
   function AlertSheet(p) {
     var s = SHEET[p.tone || 'pace'];
     return h('div', { className: 'tmc-sheet', role: 'alertdialog', 'aria-label': p.title },
@@ -449,7 +419,7 @@
       return h('div', { className: 'tmc-menu-item tmc-menu-item-out', 'aria-label': p.name + ', sold out' }, media, text,
         h('span', { className: 'tmc-menu-out' }, 'Sold out'));
     }
-    // disabled: the cart is moving; the menu stays readable but nothing can be added or changed.
+    // disabled: the item can't be ordered right now (no signal); the card stays readable but nothing can be added or changed.
     var off = !!p.disabled;
     if (!q) {
       return h('button', { type: 'button', disabled: off, className: 'tmc-menu-item', onClick: p.onAdd, 'aria-label': 'Add ' + p.name + ', ' + p.price },
@@ -510,7 +480,7 @@
       p.actions ? h(ActionBar, null, p.actions) : null,
       p.dock || null);
   }
-  // The 80px bar for a screen's main action, above the dock. One or two buttons, side by side.
+  // The 80px bar for a screen's main action, at the foot of a step. One or two buttons, side by side.
   function ActionBar(p) {
     return h('div', { className: cx('tmc-actionbar', p.className), style: p.style }, p.children);
   }
@@ -628,11 +598,82 @@
         players.map(function (pl, i) { return h('td', { key: i }, h('div', { className: 'tmc-sc-tot' }, tot[i] || '–'), tot[i] ? h('div', { className: 'tmc-sc-topar' }, toPar(tot[i] - played[i])) : null); }))));
   }
 
+
+  // ---- Menu · Ask Bob: the app's one navigation control, in both layouts ----
+  // placement 'top' (default): the drive view, docked in the cart's cradle; top right of the map, narrow because the green is top centre.
+  // placement 'bottom': held in the hand; bottom centre, where the thumb is. The parent must be position: relative.
+  // Ask Bob is tap and talk in both: Bob listens in a TopSheet and sends when the golfer stops talking (or on Send / a second tap).
+  // accent / onAccent: a course skin paints the Ask Bob button in its colour (onAccent for the label and icon, ink on light colours).
+  function DriveControl(p) {
+    var on = p.state === 'listening';
+    return h('div', { className: cx('tmc-drive', p.placement === 'bottom' && 'tmc-drive-bottom'), role: 'group', 'aria-label': 'Menu and Ask Bob', style: p.style },
+      h('button', { type: 'button', className: 'tmc-drive-btn tmc-drive-menu', 'aria-label': 'Menu: music, score, food, help' + (p.badge ? ', ' + p.badge : ''), 'aria-expanded': !!p.menuOpen, onClick: p.onMenu },
+        h(Icon, { name: 'grid', size: 24 }), h('span', null, 'Menu'),
+        p.badge ? h('span', { className: 'tmc-drive-dot', 'aria-hidden': 'true' }) : null),
+      h('button', { type: 'button', className: cx('tmc-drive-btn tmc-drive-bob', on && 'tmc-drive-on'), 'aria-label': on ? 'Bob is listening. Tap to send' : 'Ask Bob. Tap and talk',
+        onClick: p.onTalk, style: p.accent ? { background: p.accent, color: p.onAccent || 'var(--primary-foreground)' } : undefined },
+        h(Icon, { name: 'sparkles', size: 24, weight: 'fill' }), h('span', null, on ? 'Listening' : 'Ask Bob')));
+  }
+
+  // A sheet anchored to an edge for what Menu · Ask Bob opens: QuickActions, VoiceBar, AnswerCard, ScoreEntry.
+  // edge 'top' (default, drive view: rounded bottom corners) or 'bottom' (held: rounded top corners). scrim dims the map under it.
+  function TopSheet(p) {
+    return h(R.Fragment, null,
+      p.scrim ? h('div', { className: 'tmc-topsheet-scrim', 'aria-hidden': 'true', onClick: p.onClose }) : null,
+      h('div', { className: cx('tmc-topsheet', p.edge === 'bottom' && 'tmc-topsheet-bottom', p.padded && 'tmc-topsheet-pad'), role: p.label ? 'dialog' : undefined, 'aria-label': p.label, style: p.style }, p.children));
+  }
+
+  // What Menu opens: music controls, up to three tiles (Score, Food, Help) and the hole picked by GPS.
+  function QuickActions(p) {
+    var m = p.music;
+    var tiles = (p.items || []).slice(0, 3);
+    return h('div', { className: 'tmc-qa' },
+      h('div', { className: 'tmc-qa-head' }, h('p', { className: 'tmc-qa-title' }, p.title || 'Quick actions'), h(IconButton, { icon: 'x', label: 'Close', onClick: p.onClose })),
+      // music.status: playing or paused (default) shows the controls; 'off' (Spotify not connected) offers Connect;
+      // 'error' (connected but not responding) says so and offers Try again. The row never disappears, so music is always findable.
+      m ? h('div', { className: cx('tmc-qa-music', m.status && 'tmc-qa-music-' + m.status) },
+        h('span', { className: cx('tmc-qa-art', m.status && 'tmc-qa-art-' + m.status), 'aria-hidden': 'true' }, h(Icon, { name: m.status === 'error' ? 'alert' : 'music', size: 24, weight: 'fill' })),
+        h('div', { className: 'tmc-qa-mtext' }, h('b', null, m.title || (m.status === 'error' ? 'Spotify isn’t responding' : 'Music')),
+          h('span', null, m.source || (m.status === 'off' ? 'Play your Spotify on the cart' : m.status === 'error' ? 'Check Spotify on your phone' : 'Playing'))),
+        m.status
+          ? h(Button, { pill: true, variant: m.status === 'error' ? 'secondary' : 'primary', className: 'tmc-qa-mact', onClick: p.onMusicAction }, m.action || (m.status === 'error' ? 'Try again' : 'Connect'))
+          : h('div', { className: 'tmc-qa-mbtns' },
+            h(IconButton, { icon: m.playing === false ? 'play' : 'pause', label: m.playing === false ? 'Play' : 'Pause', onClick: p.onPlayPause }),
+            h(IconButton, { icon: 'skipForward', label: 'Next song', onClick: p.onNextSong }))) : null,
+      tiles.length ? h('div', { className: 'tmc-qa-tiles' }, tiles.map(function (it, i) {
+        return h('button', { key: it.id || i, type: 'button', className: 'tmc-qa-tile', disabled: it.disabled, 'aria-disabled': it.disabled ? 'true' : undefined, onClick: it.onClick },
+          it.badge ? h('span', { className: 'tmc-qa-dot', 'aria-hidden': 'true' }) : null,
+          h('span', { className: 'tmc-qa-ic', 'aria-hidden': 'true' }, h(Icon, { name: it.disabled ? 'lock' : it.icon, size: 24 })),
+          h('span', { className: 'tmc-qa-tl' }, h('b', null, it.label), it.detail ? h('span', { className: cx('tmc-qa-detail', it.tone === 'ready' && 'tmc-qa-ready') }, it.detail) : null));
+      })) : null,
+      p.hole ? h('div', { className: 'tmc-qa-hole' },
+        h(IconButton, { icon: 'chevronLeft', label: 'Previous hole', onClick: p.onPrevHole }),
+        h('div', null, h('b', null, p.hole.title), h('span', null, p.hole.detail || 'Picked by GPS')),
+        h(IconButton, { icon: 'chevronRight', label: 'Next hole', onClick: p.onNextHole })) : null);
+  }
+
+  // What Bob reads back before he sends a food order, and what the golfer confirms: the lines, how to get it and pay, the total.
+  // Bob never sends on his own: the screen around it carries Change and Place order (or the golfer says "Send it").
+  function OrderSummary(p) {
+    var items = p.items || [], facts = p.facts || [];
+    return h('div', { className: 'tmc-osum', role: 'group', 'aria-label': p.label || 'Order to confirm' },
+      h('div', { className: 'tmc-osum-lines' }, items.map(function (l, i) {
+        return h('div', { key: i, className: 'tmc-osum-line' },
+          h('span', { className: 'tmc-osum-qty' }, (l.qty || 1) + ' ×'),
+          h('span', { className: 'tmc-osum-name' }, l.name, l.tag ? h('span', { className: 'tmc-tag tmc-tag-neutral' }, l.tag) : null),
+          h('span', { className: 'tmc-osum-price' }, l.price));
+      })),
+      facts.length ? h('div', { className: 'tmc-osum-facts' }, facts.map(function (f, i) {
+        return h('div', { key: i, className: 'tmc-osum-fact' }, h('span', { className: 'tmc-osum-label' }, f.label), h('span', null, f.value));
+      })) : null,
+      p.total ? h('div', { className: 'tmc-osum-total' }, h('span', null, 'Total'), h('span', null, p.total)) : null);
+  }
+
   var api = { Icon: Icon, iconNames: ICON_NAMES, DeviceFrame: DeviceFrame, CourseMark: CourseMark, IconButton: IconButton, CartHeader: CartHeader, BobAvatar: BobAvatar,
-    Button: Button, BottomBar: BottomBar, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble, MicButton: MicButton,
+    Button: Button, YardageReadout: YardageReadout, HoleMap: HoleMap, StatusTag: StatusTag, ChatBubble: ChatBubble,
     AnswerCard: AnswerCard, PromptChip: PromptChip, Composer: Composer, Banner: Banner, AlertSheet: AlertSheet, AlertTakeover: AlertTakeover, QRPanel: QRPanel, ChoiceCard: ChoiceCard, GolferRow: GolferRow, MenuItem: MenuItem, CategoryTabs: CategoryTabs, QuantityStepper: QuantityStepper, Keypad: Keypad,
     Screen: Screen, ActionBar: ActionBar, SectionLabel: SectionLabel, SegmentedControl: SegmentedControl, ListRow: ListRow, List: List,
-    VoiceBar: VoiceBar, ScoreEntry: ScoreEntry, ScoreCard: ScoreCard, Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
+    VoiceBar: VoiceBar, DriveControl: DriveControl, TopSheet: TopSheet, QuickActions: QuickActions, OrderSummary: OrderSummary, ScoreEntry: ScoreEntry, ScoreCard: ScoreCard, Toast: Toast, ConfirmSheet: ConfirmSheet, ProgressSteps: ProgressSteps, EmptyState: EmptyState, Skeleton: Skeleton };
   window.TeemeupCart = window.TeemeupCart || {};
   Object.assign(window.TeemeupCart, api);
 })();

@@ -1,8 +1,8 @@
 import type * as React from 'react';
 
-export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'arrowLeft' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward' | 'golf';
+export type IconName = 'sparkles' | 'mic' | 'help' | 'signal' | 'battery' | 'batteryLow' | 'lightning' | 'alert' | 'ban' | 'check' | 'checkCircle' | 'wifiOff' | 'clock' | 'message' | 'shelter' | 'arrowRight' | 'arrowUp' | 'arrowDown' | 'arrowLeft' | 'chevronLeft' | 'chevronRight' | 'cart' | 'walk' | 'phone' | 'lock' | 'plug' | 'search' | 'nfc' | 'volume' | 'food' | 'music' | 'mapPinOff' | 'x' | 'send' | 'keyboard' | 'flag' | 'lifebuoy' | 'plus' | 'minus' | 'droplet' | 'play' | 'pause' | 'skipBack' | 'skipForward' | 'golf' | 'grid';
 
-/** Phosphor, Bold by default; weight 'fill' for the active dock item, Bob and safety icons. strokeWidth is ignored (kept for older call sites). */
+/** Phosphor, Bold by default; weight 'fill' for Bob, active states and safety icons. strokeWidth is ignored (kept for older call sites). */
 export interface IconProps { name: IconName; size?: number; weight?: 'bold' | 'fill'; strokeWidth?: number; label?: string; className?: string; style?: React.CSSProperties }
 export declare function Icon(props: IconProps): React.ReactElement;
 
@@ -14,10 +14,6 @@ export declare function CourseMark(props: CourseMarkProps): React.ReactElement;
 
 export interface CartHeaderProps { title: string; meta?: string; monogram?: string; course?: string; accent?: string; onAccent?: string; back?: boolean; onBack?: () => void; battery?: number; charging?: boolean; offline?: boolean; device?: string; right?: React.ReactNode }
 export declare function CartHeader(props: CartHeaderProps): React.ReactElement;
-
-/** The dock: Hole · Score · Ask Bob · Food · Help. badges: ids with a dot ('score', 'food'). items 'nofood' puts Messages in Food's place. */
-export interface BottomBarProps { items?: 'full' | 'nofood'; active?: 'hole' | 'score' | 'bob' | 'food' | 'help' | 'messages'; badges?: string | string[]; onHole?: () => void; onScore?: () => void; onTalk?: () => void; onHoldStart?: () => void; onFood?: () => void; onMessages?: () => void; onHelp?: () => void }
-export declare function BottomBar(props: BottomBarProps): React.ReactElement;
 
 export interface ButtonProps { variant?: 'primary' | 'secondary' | 'danger' | 'onalert' | 'onalert-ghost'; block?: boolean; pill?: boolean; icon?: IconName; disabled?: boolean; loading?: boolean; type?: 'button' | 'submit'; onClick?: () => void; children?: React.ReactNode; 'aria-label'?: string; className?: string; style?: React.CSSProperties }
 export declare function Button(props: ButtonProps): React.ReactElement;
@@ -47,11 +43,9 @@ export declare function StatusTag(props: StatusTagProps): React.ReactElement;
 export interface BobAvatarProps { size?: number; onAccent?: boolean }
 export declare function BobAvatar(props: BobAvatarProps): React.ReactElement;
 
-export interface ChatBubbleProps { speaker?: 'bob' | 'golfer'; /** @deprecated use speaker */ from?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
+export interface ChatBubbleProps { speaker?: 'bob' | 'golfer'; showName?: boolean; children?: React.ReactNode }
 export declare function ChatBubble(props: ChatBubbleProps): React.ReactElement;
 
-export interface MicButtonProps { state?: 'ready' | 'listening' | 'thinking' | 'error'; disabled?: boolean; label?: string; onClick?: () => void }
-export declare function MicButton(props: MicButtonProps): React.ReactElement;
 
 export interface AnswerCardProps { question?: string; headline: string; spoken?: boolean; onMute?: () => void; children?: React.ReactNode }
 export declare function AnswerCard(props: AnswerCardProps): React.ReactElement;
@@ -60,13 +54,13 @@ export interface PromptChipProps { icon?: IconName; block?: boolean; onClick?: (
 export declare function PromptChip(props: PromptChipProps): React.ReactElement;
 
 /** The chat bar on every Bob screen. Empty field: the round button is the mic. With text: it is Send. */
-export interface ComposerProps { value?: string; focused?: boolean; placeholder?: string; locked?: boolean; lockedHint?: string; listening?: boolean; onSend?: (text: string) => void; onVoice?: () => void; onHoldStart?: () => void }
+export interface ComposerProps { value?: string; focused?: boolean; placeholder?: string; locked?: boolean; lockedHint?: string; onSend?: (text: string) => void; onVoice?: () => void; onHoldStart?: () => void }
 export declare function Composer(props: ComposerProps): React.ReactElement;
 
 export interface BannerProps { tone?: 'offline' | 'suspended' | 'clear' | 'zone' | 'battery' | 'info'; icon?: IconName; action?: string; onAction?: () => void; children?: React.ReactNode }
 export declare function Banner(props: BannerProps): React.ReactElement;
 
-export interface AlertSheetProps { tone?: 'pace' | 'message' | 'zone' | 'battery' | 'exited'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; autoDismiss?: string; secondaryAction?: string; onSecondary?: () => void; children?: React.ReactNode }
+export interface AlertSheetProps { tone?: 'pace' | 'message' | 'battery'; overline?: string; title: string; action?: string; actionVariant?: 'primary' | 'secondary'; onAction?: () => void; autoDismiss?: string; secondaryAction?: string; onSecondary?: () => void; children?: React.ReactNode }
 export declare function AlertSheet(props: AlertSheetProps): React.ReactElement;
 
 export interface AlertTakeoverProps { kind?: 'lightning' | 'zone' | 'clear'; title: string; message?: string; detail?: React.ReactNode; detailIcon?: IconName; icon?: IconName; footnote?: string; action?: string; onAction?: () => void; flash?: boolean; escalated?: string; escalatedDetail?: string; exit?: { distance: string; direction: string; icon?: IconName; label?: string } }
@@ -100,8 +94,21 @@ export interface ListRowProps { title: string; description?: string; icon?: Icon
 export declare function ListRow(props: ListRowProps): React.ReactElement;
 export declare function List(props: { children?: React.ReactNode }): React.ReactElement;
 /** Replaces the chat bar while Bob listens: live transcript, level meter, cancel and send. */
-export interface VoiceBarProps { state?: 'listening' | 'holding' | 'thinking' | 'error'; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
+export interface VoiceBarProps { state?: 'listening' | 'holding' | 'thinking' | 'error'; /** drive view: in a TopSheet, listening only, transcript clamped to its last two lines */ docked?: boolean; /** held, in a bottom TopSheet: the left button types in the chat instead of cancelling (the sheet has its own close) */ typeInstead?: boolean; onType?: () => void; transcript?: string; caption?: string; errorText?: string; onCancel?: () => void; onSend?: () => void; onRetry?: () => void; style?: React.CSSProperties }
 export declare function VoiceBar(props: VoiceBarProps): React.ReactElement;
+/** Menu · Ask Bob, the app's one navigation control. placement 'top' (docked in the cradle: top right of the map) or 'bottom' (held: bottom centre). Ask Bob is tap and talk in both. The parent must be position: relative. badge: what the dot on Menu means, e.g. 'order in progress'. */
+export interface DriveControlProps { placement?: 'top' | 'bottom'; state?: 'idle' | 'listening'; badge?: string; /** course skin: Ask Bob in the course colour, onAccent for its label and icon */ accent?: string; onAccent?: string; menuOpen?: boolean; onMenu?: () => void; onTalk?: () => void; style?: React.CSSProperties }
+export declare function DriveControl(props: DriveControlProps): React.ReactElement;
+/** A sheet anchored to an edge for what Menu · Ask Bob opens: 'top' in the cradle, 'bottom' when held. scrim dims what is under it; padded adds the standard inner spacing. */
+export interface TopSheetProps { edge?: 'top' | 'bottom'; scrim?: boolean; padded?: boolean; label?: string; onClose?: () => void; children?: React.ReactNode; style?: React.CSSProperties }
+export declare function TopSheet(props: TopSheetProps): React.ReactElement;
+export interface QuickActionItem { id?: string; icon: IconName; label: string; detail?: string; tone?: 'ready'; badge?: boolean; disabled?: boolean; onClick?: () => void }
+/** What Menu opens, in a TopSheet (top in the cradle, bottom when held): music controls, up to three tiles, the hole picked by GPS. */
+export interface QuickActionsProps { title?: string; music?: { title?: string; source?: string; playing?: boolean; /** 'off': Spotify not connected (Connect); 'error': not responding (Try again) */ status?: 'off' | 'error'; action?: string }; items?: QuickActionItem[]; hole?: { title: string; detail?: string }; onClose?: () => void; onMusicAction?: () => void; onPlayPause?: () => void; onNextSong?: () => void; onPrevHole?: () => void; onNextHole?: () => void }
+export declare function QuickActions(props: QuickActionsProps): React.ReactElement;
+/** What Bob reads back before sending a food order. items: the lines; facts: label/value rows such as Pick up and Pay; total. The screen around it carries Change and Place order. */
+export interface OrderSummaryProps { items: { name: string; qty?: number; price: string; tag?: string }[]; facts?: { label: string; value: string }[]; total?: string; label?: string }
+export declare function OrderSummary(props: OrderSummaryProps): React.ReactElement;
 export interface ScorePlayer { name: string; strokes?: number; onIncrease?: () => void; onDecrease?: () => void }
 /** Score entry sheet after a hole: one row per golfer on this cart, starting at par. */
 export interface ScoreEntryProps { hole: number | string; par: number; title?: string; players: ScorePlayer[]; save?: string; later?: string; onSave?: () => void; onLater?: () => void }
@@ -127,12 +134,12 @@ declare global {
   interface Window {
     TeemeupCart: {
       Icon: typeof Icon; iconNames: IconName[]; DeviceFrame: typeof DeviceFrame; CourseMark: typeof CourseMark; CartHeader: typeof CartHeader;
-      BottomBar: typeof BottomBar; Button: typeof Button; IconButton: typeof IconButton; YardageReadout: typeof YardageReadout; HoleMap: typeof HoleMap;
-      StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; MicButton: typeof MicButton; AnswerCard: typeof AnswerCard; PromptChip: typeof PromptChip; Composer: typeof Composer;
+      Button: typeof Button; IconButton: typeof IconButton; YardageReadout: typeof YardageReadout; HoleMap: typeof HoleMap;
+      StatusTag: typeof StatusTag; BobAvatar: typeof BobAvatar; ChatBubble: typeof ChatBubble; AnswerCard: typeof AnswerCard; PromptChip: typeof PromptChip; Composer: typeof Composer;
       Banner: typeof Banner; AlertSheet: typeof AlertSheet; AlertTakeover: typeof AlertTakeover; QRPanel: typeof QRPanel; ChoiceCard: typeof ChoiceCard;
       GolferRow: typeof GolferRow; Keypad: typeof Keypad; MenuItem: typeof MenuItem; CategoryTabs: typeof CategoryTabs; QuantityStepper: typeof QuantityStepper;
       Screen: typeof Screen; ActionBar: typeof ActionBar; SectionLabel: typeof SectionLabel; SegmentedControl: typeof SegmentedControl; ListRow: typeof ListRow; List: typeof List;
-      VoiceBar: typeof VoiceBar; ScoreEntry: typeof ScoreEntry; ScoreCard: typeof ScoreCard; Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
+      VoiceBar: typeof VoiceBar; DriveControl: typeof DriveControl; TopSheet: typeof TopSheet; QuickActions: typeof QuickActions; OrderSummary: typeof OrderSummary; ScoreEntry: typeof ScoreEntry; ScoreCard: typeof ScoreCard; Toast: typeof Toast; ConfirmSheet: typeof ConfirmSheet; ProgressSteps: typeof ProgressSteps; EmptyState: typeof EmptyState; Skeleton: typeof Skeleton;
     };
   }
 }
