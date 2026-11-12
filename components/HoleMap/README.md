@@ -4,7 +4,8 @@ The hole under the yardage: hazards with distances, the golfer's position, tap-f
 
 - **With a course's aerial photo** (`image`), the hole shows as it really is. The photo is rotated tee-to-green (green at the top) and cropped to 328:412; pass `pin`, `me`, `tapAt`, `zonePath` and `zoneLabelAt` in that 328 × 412 space, and `credit` for the source line. The pilot, Waterford Golf Club in Rock Hill, uses public-domain USGS NAIP imagery (0.6 m per pixel), so yardages can be measured straight off it (about 1 yard per map unit).
 - **Without a photo**, it draws an aerial-style stand-in from the `map-*` tokens: textured rough, a first cut, a striped fairway, tree clumps with shadows, a cart path and the green with its collar. Use it for courses with no imagery yet.
-- Position: a purple dot with a white ring for a cart; a walker figure (`walker`) for a walking device. On a course skin (`tmc-skin`) the dot takes the course colour, and the walker's figure its `course-on-accent`; the white ring stays so it reads on any aerial.
+- Position: a purple dot with a white ring, the same for carts and walking devices. On a course skin (`tmc-skin`) the dot takes the course colour; the white ring stays so it reads on any aerial.
+- `walker` only matters for zones: walking devices never see cart-only zones (the screen passes `zone={false}` for those).
 - `zone` draws the active zone hatched in `zone` orange with its label. Zones are always drawn, before any alert. Walkers never see cart-only zones.
 - `zoneAlert` thickens the zone's edge and pulses it while the cart approaches (still under reduced motion: thick, not pulsing).
 - `tap` shows the distance to a tapped point; tapping again clears it.

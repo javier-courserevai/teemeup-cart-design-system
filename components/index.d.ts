@@ -33,7 +33,7 @@ export interface HoleMapProps {
   credit?: string;
   pin?: MapPoint; me?: MapPoint; tapAt?: MapPoint;
   zone?: boolean; zoneAlert?: boolean; zonePath?: string; zoneLabelAt?: MapPoint; zoneLabel?: string; inZone?: boolean;
-  walker?: boolean; dropZone?: MapPoint & { r?: number; label?: string }; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
+  /** walking device: same position dot as a cart */ walker?: boolean; dropZone?: MapPoint & { r?: number; label?: string }; tap?: string; hazards?: { text: string; x: number; y: number }[]; nav?: boolean; height?: number; label?: string;
 }
 export declare function HoleMap(props: HoleMapProps): React.ReactElement;
 
