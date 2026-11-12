@@ -21,8 +21,7 @@
     return h(T.DeviceFrame, { theme: theme },
       h(T.CartHeader, { monogram: 'PR', course: 'Pine Ridge Golf Club', accent: '#0F5B3A', title: 'Hole 7', meta: 'Par 4', battery: 82 }),
       h(T.YardageReadout, { front: 398, middle: 412, back: 427 }),
-      h(T.HoleMap, { zone: true, tap: theme === 'day' ? '176 yds' : undefined }),
-      h(T.BottomBar, null));
+      h('div', { style: { position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' } }, h(T.HoleMap, { zone: true, nav: false, tap: theme === 'day' ? '176 yds' : undefined }), h(T.DriveControl, { placement: 'bottom' })));
   }
 
   function BobAnswer() {

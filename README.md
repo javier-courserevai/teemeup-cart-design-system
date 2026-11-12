@@ -2,7 +2,7 @@
 
 Teemeup Cart is the app on the course's own device, a 360 × 720 Android phone mounted on a golf cart or carried by a walker. The golfer pairs their phone, sees the yardage, talks to **Bob**, and gets safety alerts. This system covers that device only. It takes its palette, voice and shapes from the **Teemeup App** design system and adds what the cart needs: a bigger outdoor scale, fixed safety colours, restricted zones and a course skin.
 
-Built from the Teemeup Cart prototype (13 core screens, 9 pairing steps, 6 alerts, the component sheet and two course skins), the Teemeup Cart design plan, and the Teemeup App tokens, 2026-11-05. This folder is an export of the **Teemeup Cart Design System** artifact on claude.ai.
+Built from the Teemeup Cart prototype (13 core screens, 9 pairing steps, 6 alerts, the component sheet and two course skins), the Teemeup Cart design plan, and the Teemeup App tokens, 2026-11-05. This folder is an export of the **Teemeup Cart Design System** artifact on claude.ai (updated 2026-11-12); the screens live on the Teemeup Cart canvas.
 
 ## Using this system
 
@@ -17,7 +17,7 @@ Point Claude at this folder: “Build the Teemeup Cart screens using the design 
 | `README.md` | This brand book: layers, voice, outdoor rules, alerts | Always, first |
 | `tokens.json` | Every token with a usage note: colours for day and dusk, type scale, spacing, radii, shadows | Any stack. The source of truth |
 | `tokens.css` | The same tokens as CSS variables; `[data-theme="dusk"]` switches the theme | Web or a WebView |
-| `components/bundle.js` | 26 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
+| `components/bundle.js` | 40 React 18 components as one script that sets `window.TeemeupCart` | Web prototypes and mock-ups |
 | `components/bundle.css` | Styles for those components, built only on the token variables | With `bundle.js` |
 | `components/index.d.ts` | Props of every component | Reading the API |
 | `components/<Name>/README.md` | When and how to use each component, with its copy | Before building any screen |
@@ -37,8 +37,9 @@ Point Claude at this folder: “Build the Teemeup Cart screens using the design 
     h(T.DeviceFrame, { theme: 'day' },
       h(T.CartHeader, { monogram: 'PR', accent: '#0F5B3A', title: 'Hole 7', meta: 'Par 4', battery: 82 }),
       h(T.YardageReadout, { front: 398, middle: 412, back: 427 }),
-      h(T.HoleMap, { zone: true }),
-      h(T.BottomBar, null)));
+      h('div', { style: { position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' } },
+        h(T.HoleMap, { zone: true, nav: false }),
+        h(T.DriveControl, { placement: 'bottom' }))));
 </script>
 ```
 
@@ -50,21 +51,23 @@ The components are web (React). For a native build (Kotlin, Flutter or React Nat
 
 ### Components
 
-Device: `DeviceFrame`, `CartHeader`, `CourseMark`, `BottomBar`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `MicButton`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`. Layout: `Screen`, `ActionBar`, `SectionLabel`. Inputs: `SegmentedControl`, `ListRow` (in a `List`). Feedback: `Toast`, `ConfirmSheet`, `ProgressSteps`, `EmptyState`, `Skeleton`, `VoiceBar`. Scorecard: `ScoreEntry`, `ScoreCard`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
+Device: `DeviceFrame`, `CartHeader`, `CourseMark`. Navigation: `DriveControl` (Menu · Ask Bob), `TopSheet`, `QuickActions`. Actions: `Button`, `IconButton`. Course: `YardageReadout`, `HoleMap`, `StatusTag`. Bob: `BobAvatar`, `ChatBubble`, `AnswerCard`, `PromptChip`, `Composer`. Alerts: `Banner`, `AlertSheet`, `AlertTakeover`. Check-in: `QRPanel`, `ChoiceCard`, `GolferRow`, `Keypad`. Food and music: `MenuItem`, `CategoryTabs`, `QuantityStepper`, `OrderSummary`. Layout: `Screen`, `ActionBar`, `SectionLabel`. Inputs: `SegmentedControl`, `ListRow` (in a `List`). Feedback: `Toast`, `ConfirmSheet`, `ProgressSteps`, `EmptyState`, `Skeleton`, `VoiceBar`. Scorecard: `ScoreEntry`, `ScoreCard`. Foundations: `Icon` (`TeemeupCart.iconNames` lists the names).
 
 ## Three layers
 
 | Layer | What it paints | Tokens |
 | --- | --- | --- |
 | Teemeup | Talk to Bob, every action, Bob, the splash, the frame | `primary`, `foreground`, `background`, `muted` |
-| Course skin | The course mark, the welcome band, the end-of-round thank-you | `course-accent`, `course-on-accent` (set in Drive, falls back to `primary`) |
+| Course skin | The course mark, the welcome band, the end-of-round thank-you, the Ask Bob button, icons where Teemeup would use purple, and the cart's dot on the map | `course-accent`, `course-on-accent`, `course-text`, `course-tint` (set in Drive, fall back to the `primary` family) |
 | Fixed safety | Lightning, restricted zones, no signal, all clear | `lightning`, `zone`, `caution`, `clear`. Never themed, never a course colour |
 
-A course never colours a button, Bob, the map or an alert. A course colour too light for white text (Copper Canyon #F4B21A) sets `course-on-accent` to ink.
+Besides those, a course never colours a button, Bob's avatar and answers, the rest of the map (zones, hazards, labels) or an alert. A course colour too light for white text (Copper Canyon #F4B21A) sets `course-on-accent` to ink, which Ask Bob and the music tile then use for their label and icon.
+
+**Applying a skin:** put `tmc-skin` on the screen root and set `--course-accent`, `--course-on-accent`, `--course-text` (the course colour dark enough for 4.5:1 on white; Copper Canyon #8C5E00) and `--course-tint` (the course colour at about 18%). Then Ask Bob and the `QuickActions` music tile fill with the accent, and icon tiles (`QuickActions`, `ListRow`, `PromptChip`) and any icon marked `tmc-skin-icon` (the mini player's note) take `course-text` on `course-tint`; the cart's dot (and the walker figure) on `HoleMap` fills with the accent, keeping its white ring. Courses without a colour (the pilot) skip it and stay purple. In dusk, use a lighter `course-text` that holds 4.5:1 on navy.
 
 ## Content fundamentals
 
-- **Bob listens and reads.** Every Bob screen ends in the `Composer`: type a message or tap the mic. Replies are written in the thread and spoken when sound is on. Typing locks while the cart moves; voice never does.
+- **Bob listens and reads.** Every Bob screen ends in the `Composer`: type a message or tap the mic. Replies are written in the thread and spoken when sound is on.
 - **Bob is a person.** “Talk to Bob”, never “Talk to Teemeup” or “the AI”. He greets by first name: “Welcome, Sam! You're on the 9:40 tee time.”
 - **Short and concrete.** Numbers first: “Pin is 236 yards”, “Halfway house · 180 yds”, “Ready at the turn about 10:55”.
 - **Alerts say what to do in their first two words.** Lightning: “Go to shelter.” Zone: “Leave this area.” All clear: “Play may resume.”
@@ -76,11 +79,11 @@ A course never colours a button, Bob, the map or an alert. A course colour too l
 
 ## Visual foundations
 
-- **Outdoor first.** Critical text (yardages, alert titles and messages) holds **7:1**; everything else 4.5:1. Targets are at least `tap` (56px); the mic is `tap-xl` (120px). Every alert carries an icon **and** a word.
+- **Outdoor first.** Critical text (yardages, alert titles and messages) holds **7:1**; everything else 4.5:1. Targets are at least `tap` (56px). Every alert carries an icon **and** a word.
 - **Type is the system font** (Roboto on the device) at an outdoor scale: `yardage-hero` 84px, `alert-title` 44px, `button` 18px, `body` 16px. **Nothing a golfer reads is smaller than 15px** (tags, overlines, labels, metadata). Tabular figures for every number. There is no condensed cut, so the hero yardage is 84px, not the mockup's 96px condensed.
-- **A round screen** is a `CartHeader` (64px), the content, and a `BottomBar` (80px) when it is a top-level place (see the rules below): a dock with **Ask Bob** raised in the centre (tap to chat, hold to talk) and Hole, Score, Food and Help either side, always five, so Bob never moves.
+- **The hole screen** is a `CartHeader` (64px), the `YardageReadout` and the map, with one `DriveControl` (**Menu · Ask Bob**) floating over it: bottom centre when the device is held, top right in the cradle (see Drive view). There is no tab bar. Everything else is a step opened from Menu, with a back button.
 - **Day and dusk.** Day is white with navy ink. Dusk is navy (`background` #0A1E2C, `card` #0F2B40), never black, and purple lifts to #7C4DFF. The map dims to 82%. Safety colours stay the same in both.
-- **Shapes** follow the app: bottom-bar items, tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
+- **Shapes** follow the app: tags and round buttons are pills; cards and block buttons `radius-2xl`; fields and tiles `radius-lg`. One hairline, `border`.
 - **The map** is a satellite tile of the course in production. The stand-in drawing uses the `map-*` tokens. Active restricted zones are always drawn, hatched in `zone`, so golfers avoid them before anything sounds. Penalty areas keep a thin solid `map-penalty` edge; dashes are not used.
 - **Walking** devices show the position as a walker instead of a dot, say “Device 12” instead of “Cart 12”, and never show cart-only zones.
 
@@ -102,15 +105,28 @@ Higher covers lower; a covered sheet comes back when the higher alert ends. Each
 | — | All clear | `AlertTakeover` kind clear | Rising tone · 2 pulses | Yes |
 | — | No signal; battery after its sheet | `Banner` | None | Clears itself; never covers anything |
 
-A zone covers everything except lightning: pace, messages, Bob and music.
+A zone covers everything except lightning: pace, messages, Bob and music. In the cradle, sheets drop from the top instead (see Drive view).
 
 ## Rules every screen follows
 
-- **Navigation.** Top-level places (Hole, Score, Food, Help) show the dock with their item active, the course mark in the header and no back button. Steps inside a flow (Review order, Music, Staff PIN, Find your tee time) show a back button and no dock. Music has no tab: a mini player over the map while it plays, and Help → Music to connect. Bob opens full-screen over wherever the golfer was, with a back button that returns there. The dock always has all five items.
+- **Navigation.** One place, the hole, and one control, `DriveControl` (Menu · Ask Bob), the same in both layouts so golfers learn it once. Held in the hand it sits bottom centre (`placement="bottom"`) and what it opens rises from the bottom; in the cradle it sits top right and everything drops from the top (see Drive view). **Menu** opens `QuickActions` in a `TopSheet` (`edge="bottom"` when held): music controls, Score, Food and Help tiles, and the hole picked by GPS. Score, Food, Help and Your order are steps opened from there: back button, no control, the main button at the foot (in the cradle, pinned under the header). The Menu button carries a dot (`badge`) while an order is in progress or a hole is waiting for scores. Music has no screen of its own on the hole: a mini player sits centred above the control while it plays, and Help → Music connects. **Ask Bob** is tap and talk in both layouts: Bob listens in a `TopSheet` over the hole that covers the control (`edge="bottom"` when held, with a close X and a keyboard button to type instead), sends when the golfer stops talking, and answers in the same sheet, spoken aloud, with Open chat and Done. The chat (history and typing) opens full-screen from the keyboard or Open chat, with a back button that returns to the hole. The map has no hole arrows; the hole is fixed from Menu.
 - **Header.** The right side always shows signal and battery, on every screen with a header and for walkers too. The splash, the charger, welcome, flyover and the end of round are full-screen moments without a header. The cart number is named in Help and wherever a golfer must pick or quote this device (Spotify's device list, zone footnotes); nowhere else.
-- **While the cart moves with the device in its cradle:** voice, the map and alerts only; typing to Bob, ordering, signing and changing music wait, and the screen says “Lift the device from the cradle…” in an `info` `Banner` with the `cart` icon. The device lives in a charging cradle fixed in the cart (Ulefone Rugking 2 Pro); as soon as someone lifts it out (a passenger), or when walking, nothing is locked.
-- **Talking to Bob, two ways, like a voice note:** **tap** the mic to talk hands-free, then Send or Cancel; or **press and hold**, talk, and **release to send** (slide left to cancel, slide up to lock into hands-free). Holding Ask Bob in the dock works the same from any screen, with the `VoiceBar` rising over the map. While Bob listens the chat bar becomes the `VoiceBar`.
-- **Moving lock looks the same everywhere:** an `info` `Banner` with the `cart` icon saying what waits and how to get it back (lift the device, or ask Bob), and the controls that wait are disabled, not hidden.
+- **Nothing locks while the cart moves.** Typing, ordering, signing and music work at any speed. The device lives in a charging cradle fixed in the cart (Ulefone Rugking 2 Pro): docked, the drive view keeps every control in reach and puts voice first; lifted out, the same Menu · Ask Bob control moves to the bottom centre.
+- **Ordering food through Bob, always confirmed.** “Get me a hot dog and two beers at the turn” works from Ask Bob or the chat. Bob builds the order from the course menu, reads it back in an `OrderSummary` with **Change** and **Place order · $20**, and sends nothing until the golfer taps Place order or says “Send it”. Held, it all happens in the same bottom sheet over the hole (Bob's read-back, then the pick-up code); in the chat, as a message with the two buttons; in the cradle, from the top with Place order right under Bob's line. Change opens the food menu with the items already in the order. Items not on the menu or sold out: Bob asks or offers the closest, never guesses.
+- **In the chat, the mic works two ways, like a voice note:** **tap** to talk hands-free, then Send or Cancel; or **press and hold**, talk, and **release to send** (slide left to cancel, slide up to lock into hands-free). While Bob listens the chat bar becomes the `VoiceBar`. Hold to talk exists only there; Ask Bob on the hole is tap and talk.
+
+## Drive view (in the cart's cradle)
+
+The device lives in a charging cradle fixed in the cart. From the seat the bottom of the screen is hard to reach, so docked the app switches to the **drive view**; lifted out, the same control moves to the bottom centre at once.
+
+- **Reach.** Buttons only in the top 300px. 300–470px for rare controls; nothing tappable below 470px: the map and the cart's dot are there to look at.
+- **One screen: the hole.** `CartHeader` (with `charging`), `YardageReadout`, the map, and one `DriveControl` (Menu · Ask Bob) floating top right. No hole arrows on the map.
+- **Everything opens from the top** in a `TopSheet` and returns to the hole by itself: `QuickActions` (Menu), the `VoiceBar` and Bob's `AnswerCard`, `ScoreEntry` after the green. Alert takeovers put their button right under the title.
+- **Alerts with an OK** (pace of play, pro shop message) drop from the top too: the `AlertSheet` inside a `TopSheet` with `scrim`, OK right under the text, spoken aloud, and `autoDismiss` so no tap is needed while driving (pace closes after 15 s; a message after 20 s and stays in Messages). Battery sheets never show docked (the device is charging), and order ready already closes by itself.
+- **Steps that need room** (the food menu, Your order, and before the round the waiver) open full screen as steps: back at the top left, the main button pinned right under the header (“Review order · 3 items · $20”, “Place order · $20”, “Sign to continue · 1 of 2” then “Start round”), choices next, and lists last, ending with 320px of space so any row scrolls up into reach. The waiver keeps the golfers' names right under its button, inside the top 300px, and the text to read below them; signing still waits until the text has been scrolled to the end. Placing an order goes straight back to the hole with the pick-up code in a `TopSheet` that closes after 10 s; the Food tile in `QuickActions` then shows the order's progress.
+- **Ask Bob first, tap only.** Tap Ask Bob and talk; Bob sends by himself when the golfer stops talking (about 1.5 s of silence, 15 s at most), or with Send in the `VoiceBar` or a second tap on Ask Bob. No hold to talk while docked: it keeps a hand on the screen while driving, and a bump would cancel or cut the question. The question shows only its last two lines, so the sheet never grows. Bob answers on top of the hole, spoken aloud, and the sheet closes 8 s after he finishes. Chat history and typing are for when the device is lifted.
+- **First time docked in a round,** a `Toast` under the control for 6 s: “In the cradle, Menu and Ask Bob live up here. Lift the device for the full app.”
+- Docked is detected from charging in the cart (the cradle's charger or an NFC tag in the cradle, plus GPS on the course), with a 1 s debounce so a bump doesn't flip layouts.
 
 ## Glossary
 
@@ -128,7 +144,7 @@ Sentence case everywhere (“Booking confirmed”), except alert titles, which a
 
 ## Iconography
 
-**Phosphor**, Bold by default and Fill for the active dock item, Bob and safety icons, in `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). Chosen over the earlier Lucide line set because Bold reads better in sun and Fill marks state without a second icon. 20px in buttons, 18px in status, 28px in the dock and choice tiles, 56px on takeovers. Bob is always the sparkle in a `primary` circle (`BobAvatar`). No emoji.
+**Phosphor**, Bold by default and Fill for Bob, active states and safety icons, in `currentColor`, carried in the bundle as `TeemeupCart.Icon` (see its card for names). Chosen over the earlier Lucide line set because Bold reads better in sun and Fill marks state without a second icon. 20px in buttons, 18px in status, 24px in Menu · Ask Bob, 28px in choice tiles, 56px on takeovers. Bob is always the sparkle in a `primary` circle (`BobAvatar`). No emoji.
 
 ## Logos
 
@@ -136,4 +152,4 @@ The logo artwork lives in the **Teemeup App** design system: the white mark on t
 
 ## Building a screen
 
-Wrap a mock-up in `DeviceFrame` (its `theme` sets day or dusk), then use `Screen`: `header` (`CartHeader`), the content, `actions` (`ActionBar`) and `dock` (`BottomBar`). Group content under `SectionLabel`s; use `SegmentedControl`, `ListRow`, `ProgressSteps`, `EmptyState`, `Skeleton`, `Toast`, `ConfirmSheet` and `VoiceBar` instead of drawing them inline. No hex values in screens: every colour is a token, so dusk works. Overlays (`Banner`, `AlertSheet`, `AlertTakeover`) go inside the frame, in priority order, last on top.
+Wrap a mock-up in `DeviceFrame` (its `theme` sets day or dusk), then use `Screen`: `header` (`CartHeader`), the content and `actions` (`ActionBar`). Group content under `SectionLabel`s; use `SegmentedControl`, `ListRow`, `ProgressSteps`, `EmptyState`, `Skeleton`, `Toast`, `ConfirmSheet` and `VoiceBar` instead of drawing them inline. On the hole, navigation is `DriveControl` (`placement="bottom"` held, default top in the cradle), with `TopSheet` (`edge="bottom"` held) and `QuickActions` for what it opens. No hex values in screens: every colour is a token, so dusk works. Overlays (`Banner`, `AlertSheet`, `AlertTakeover`) go inside the frame, in priority order, last on top.
